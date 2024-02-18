@@ -1,0 +1,226 @@
+#MainWindow {
+    background-color: #1e1f22;
+}
+
+* {
+    font-family: Consolas;
+    letter-spacing: 0px;
+}
+
+#TopBarQWidget QPushButton{
+    height: 30px;
+    width: 30px;
+    border: none;
+}
+
+#TopBarQWidget QPushButton:hover {
+    background-color: rgba(86, 101, 115, 0.5);
+}
+
+#TopBarQWidget QPushButton:pressed {
+    background-color: rgba(46, 61, 75, 0.5);
+}
+
+#IconSidebarQWidget {
+    background-color: #2b2d30;
+    width: 50px;
+}
+
+#IconSidebarQWidget QPushButton{
+    height: 30px;
+    width: 30px;
+    border: none;
+}
+
+#IconSidebarQWidget QPushButton:hover{
+    background-color: rgba(86, 101, 115, 0.5);
+}
+
+#IconSidebarQWidget QPushButton:pressed{
+    background-color: rgba(46, 61, 75, 0.5);
+}
+
+#IconSidebarQWidget QFrame {
+    color: #1e1f22;
+}
+
+#FullSidebarQWidget {
+    background-color: #2b2d30;
+    width: 250px;
+}
+
+#FullSidebarQWidget QPushButton{
+    height: 30px;
+    width: 30px;
+    border: none;
+    color: #acacac;
+}
+
+#FullSidebarQWidget QPushButton:hover{
+    background-color: rgba(86, 101, 115, 0.5);
+}
+
+#FullSidebarQWidget QPushButton:pressed{
+    background-color: rgba(46, 61, 75, 0.5);
+}
+
+#FullSidebarQWidget QFrame{
+    color: #1e1f22;
+}
+
+#FullSidebarQWidget #label_light{
+    color: #acacac;
+}
+
+#FullSidebarQWidget #label_dark{
+    color: #ffffff;
+}
+
+#labelWelcome {
+    font-size: 24px;
+    color: rgb(200, 200, 200);
+}
+
+#labelWelcomeDrop {
+    font-size: 14px;
+    color: #acacac;
+}
+
+#labelCurrentProject {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+}
+
+#TaskPage QScrollArea {
+    background-color: #2b2d30;
+    border: none;
+}
+
+#labelOpenOutOf {
+    color: #acacac;
+}
+
+#labelInProgressOutOf {
+    color: #acacac;
+}
+
+#labelStuckTestOutOf {
+    color: #acacac;
+}
+
+#labelDoneOutOf {
+    color: #acacac;
+}
+
+#labelOpen {
+    color: #acacac;
+}
+
+#labelInProgress {
+    color: #acacac;
+}
+
+#labelStuckTest {
+    color: #acacac;
+}
+
+#labelDone {
+    color: #acacac;
+}
+
+#AddProjectDialog {
+    background-color: #2b2d30;
+}
+
+#AddProjectDialog QLineEdit {
+    border: 1px;
+    background-color: #43454a;
+    color: #ffffff;
+}
+
+#AddProjectDialog QPlainTextEdit {
+    border: 1px;
+    background-color: #43454a;
+    color: #ffffff;
+}
+
+#InfoProjectDialog {
+    background-color: #2b2d30;
+}
+
+#InfoProjectDialog QLabel {
+    color: #ffffff;
+}
+
+#InfoProjectDialog QPlainTextEdit {
+    border: 1px;
+    background-color: #43454a;
+    color: #ffffff;
+}
+
+#AddTaskDialog {
+    background-color: #2b2d30;
+}
+
+#AddTaskDialog QLineEdit {
+    border: 1px;
+    background-color: #43454a;
+    color: #ffffff;
+}
+
+#AddTaskDialog QPlainTextEdit {
+    border: 1px;
+    background-color: #43454a;
+    color: #ffffff;
+}
+
+#InfoTaskDialog {
+    background-color: #2b2d30;
+}
+
+#InfoTaskDialog QLabel {
+    color: #ffffff;
+}
+
+#InfoTaskDialog QPlainTextEdit {
+    border: 1px;
+    background-color: #43454a;
+    color: #ffffff;
+}
+
+#TaskWidget {
+    border-radius: 5px;
+}
+
+#labelTask {
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#labelTaskCreated {
+    font-size: 11px;
+    color: #ffffff;
+}
+
+#TaskWidget QPushButton{
+    height: 30px;
+    width: 30px;
+    border: none;
+}
+
+#scrollAreaWidgetContentsOpen {
+    background-color: #43454a;
+}
+
+#scrollAreaWidgetContentsInProgress {
+    background-color: #43454a;
+}
+
+#scrollAreaWidgetContentsStuckTest {
+    background-color: #43454a;
+}
+
+#scrollAreaWidgetContentsDone {
+    background-color: #43454a;
+}

@@ -1,0 +1,45 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Pycharm dirs
+__pycache__
+.idea
+
+# Generated python files 
+resources_rc.py
+ui_windows/add_project_ui.py
+ui_windows/add_task_ui.py
+ui_windows/info_project_ui.py
+ui_windows/info_task_ui.py
+ui_windows/main_ui.py
+ui_windows/task_ui.py

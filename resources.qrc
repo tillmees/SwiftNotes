@@ -1,0 +1,37 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/toggle-left.svg</file>
+    <file>icons/toggle-left-light.svg</file>
+    <file>icons/toggle-right.svg</file>
+    <file>icons/toggle-right-light.svg</file>
+    <file>icons/arrow-left-circle-light.svg</file>
+    <file>icons/arrow-right-circle-light.svg</file>
+    <file>icons/edit-3-light.svg</file>
+    <file>icons/file-light.svg</file>
+    <file>icons/file-plus-light.svg</file>
+    <file>icons/info-light.svg</file>
+    <file>icons/menu-light.svg</file>
+    <file>icons/minimize-2-light.svg</file>
+    <file>icons/move-light.svg</file>
+    <file>icons/plus-circle-light.svg</file>
+    <file>icons/plus-square-light.svg</file>
+    <file>icons/save-as-light.svg</file>
+    <file>icons/save-light.svg</file>
+    <file>icons/trash-2-light.svg</file>
+    <file>icons/arrow-left-circle.svg</file>
+    <file>icons/arrow-right-circle.svg</file>
+    <file>icons/move.svg</file>
+    <file>icons/trash-2.svg</file>
+    <file>icons/edit-3.svg</file>
+    <file>icons/file.svg</file>
+    <file>icons/file-plus.svg</file>
+    <file>icons/info.svg</file>
+    <file>icons/menu.svg</file>
+    <file>icons/minimize-2.svg</file>
+    <file>icons/plus-circle.svg</file>
+    <file>icons/plus-square.svg</file>
+    <file>icons/save.svg</file>
+    <file>icons/save-as.svg</file>
+    <file>icons/swift-notes.svg</file>
+  </qresource>
+</RCC>

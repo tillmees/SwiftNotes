@@ -18,6 +18,12 @@ class ProjectHandler:
     def get_project_by_title(self, title):
         return self.projects[title]
 
+    def get_project_by_hash(self, hash_value):
+        for project in self.projects.values():
+            if project.get_hash() == hash_value:
+                return project
+        return None
+
     def get_current_project(self):
         if self.current_project is not None:
             return self.projects[self.current_project]

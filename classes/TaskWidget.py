@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Qt, Signal
 
 from ui_windows.task_ui import Ui_TaskWidget
-from classes.EditTask import EditTask
+from classes.EditWindow import AddEditWindow
 from classes.TaskCreator import TaskCreator
 from functions.UtilityFunctions import get_current_time_string
 
@@ -18,7 +18,7 @@ class TaskWidget(QDialog):
 
         self.ui = Ui_TaskWidget()
         self.ui.setupUi(self)
-        self.edit_task_window = EditTask()
+        self.edit_task_window = AddEditWindow()
 
         self.title = task_creator.title
         self.description = task_creator.description
@@ -148,7 +148,7 @@ class TaskWidget(QDialog):
         self.edit_task_window.set_description(old_description)
         self.edit_task_window.set_color_checked_box(old_color_string)
 
-        result = self.edit_task_window.exec()
+        result = self.edit_task_window.exec_edit()
         if result == QDialog.Accepted:
             new_title = self.edit_task_window.get_title()
             new_description = self.edit_task_window.get_description()

@@ -8,10 +8,8 @@ from PySide6.QtGui import QIcon
 
 from ui_windows.main_ui import Ui_MainWindow
 
-from classes.AddProject import AddProject
-from classes.AddTask import AddTask
-from classes.InfoProject import InfoProject
-from classes.InfoTask import InfoTask
+from classes.EditWindow import AddEditWindow
+from classes.InfoWindow import InfoWindow
 from classes.ProjectHandler import ProjectHandler
 
 from functions import ComboBoxFunctions
@@ -35,10 +33,8 @@ class MainWindow(QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.add_project_window = AddProject()
-        self.add_task_window = AddTask()
-        self.info_project_window = InfoProject()
-        self.info_task_window = InfoTask()
+        self.add_edit_window = AddEditWindow()
+        self.info_window = InfoWindow()
         self.project_handler = ProjectHandler()
         self.file_name = None
 
@@ -50,11 +46,11 @@ class MainWindow(QMainWindow):
         self.use_light_mode()
 
     def on_add_project_pushed(self):
-        self.add_project_window.clear_edits()
-        self.add_project_window.setWindowTitle("Add Project")
-        result = self.add_project_window.exec()
+        self.add_edit_window.clear_edits()
+        self.add_edit_window.setWindowTitle("Add Project")
+        result = self.add_edit_window.exec_add()
         if result == QDialog.Accepted:
-            project = self.add_project_window.get_project_from_user_input()
+            project = self.add_edit_window.get_project_from_user_input()
             self.project_handler.add_project(project)
             ComboBoxFunctions.update_combo_box(
                 self.ui.comboBoxProjects,
@@ -64,50 +60,57 @@ class MainWindow(QMainWindow):
 
     def on_close_project_pushed(self):
         self.project_handler.set_current_project(None)
+        self.update_project_view()
         self.show_project_screen()
 
-    def on_info_project_pushed(self):
-        self.info_project_window.execute(
-            self.project_handler.get_current_project()
+    def on_info_project_pushed(self, project):
+        self.info_window.setWindowTitle("Info Project")
+        self.info_window.execute(
+            project
         )
 
-    def on_edit_project_pushed(self):
-        current_project = self.project_handler.get_current_project()
-        old_title = current_project.get_title()
-        old_description = current_project.get_description()
+    def on_edit_project_pushed(self, project):
+        old_title = project.get_title()
+        old_description = project.get_description()
+        old_color_string = project.get_color_string()
 
-        self.add_project_window.clear_edits()
-        self.add_project_window.setWindowTitle("Edit Project")
-        self.add_project_window.set_title(old_title)
-        self.add_project_window.set_description(old_description)
+        self.add_edit_window.clear_edits()
+        self.add_edit_window.setWindowTitle("Edit Project")
+        self.add_edit_window.set_title(old_title)
+        self.add_edit_window.set_description(old_description)
+        self.add_edit_window.set_color_checked_box(old_color_string)
 
-        result = self.add_project_window.exec()
+        result = self.add_edit_window.exec_edit()
         if result == QDialog.Accepted:
-            new_title = self.add_project_window.get_title()
-            new_description = self.add_project_window.get_description()
-            current_project.set_title(new_title)
-            current_project.set_description(new_description)
+            new_title = self.add_edit_window.get_title()
+            new_description = self.add_edit_window.get_description()
+            new_color_string = self.add_edit_window.get_color_string()
+            project.set_title(new_title)
+            project.set_description(new_description)
+            project.set_color_string(new_color_string)
             self.project_handler.project_edited(
                 old_title,
                 new_title,
                 new_description
             )
-            ComboBoxFunctions.update_combo_box(
-                self.ui.comboBoxProjects,
-                new_title
-            )
-            ComboBoxFunctions.delete_string_from_combo_box(
-                self.ui.comboBoxProjects,
-                old_title
-            )
-            self.update_task_view()
+            if new_title != old_title:
+                ComboBoxFunctions.add_string_to_combo_box(
+                    self.ui.comboBoxProjects,
+                    new_title
+                )
+                ComboBoxFunctions.delete_string_from_combo_box(
+                    self.ui.comboBoxProjects,
+                    old_title
+                )
+            self.update_project_view()
 
     def on_add_task_pushed(self):
-        result = self.add_task_window.exec()
+        self.add_edit_window.setWindowTitle("Add Task")
+        result = self.add_edit_window.exec_add()
         if result == QDialog.Accepted:
             current_project = self.project_handler.get_current_project()
             task_creator = \
-                self.add_task_window.get_task_creator_from_user_input()
+                self.add_edit_window.get_task_creator_from_user_input()
             current_project.add_task(task_creator)
             self.update_task_view()
 
@@ -137,11 +140,7 @@ class MainWindow(QMainWindow):
         )
         self.ui.comboBoxProjects.hide()
         self.ui.pushButtonIconClose.hide()
-        self.ui.pushButtonIconInfo.hide()
-        self.ui.pushButtonIconEdit.hide()
         self.ui.pushButtonFullClose.hide()
-        self.ui.pushButtonFullInfo.hide()
-        self.ui.pushButtonFullEdit.hide()
         self.ui.pushButtonIconTask.hide()
         self.ui.pushButtonFullTask.hide()
 
@@ -155,11 +154,7 @@ class MainWindow(QMainWindow):
         )
         self.ui.comboBoxProjects.show()
         self.ui.pushButtonIconClose.show()
-        self.ui.pushButtonIconInfo.show()
-        self.ui.pushButtonIconEdit.show()
         self.ui.pushButtonFullClose.show()
-        self.ui.pushButtonFullInfo.show()
-        self.ui.pushButtonFullEdit.show()
         self.ui.pushButtonIconTask.show()
         self.ui.pushButtonFullTask.show()
 
@@ -173,11 +168,7 @@ class MainWindow(QMainWindow):
         )
         self.ui.comboBoxProjects.show()
         self.ui.pushButtonIconClose.hide()
-        self.ui.pushButtonIconInfo.hide()
-        self.ui.pushButtonIconEdit.hide()
         self.ui.pushButtonFullClose.hide()
-        self.ui.pushButtonFullInfo.hide()
-        self.ui.pushButtonFullEdit.hide()
         self.ui.pushButtonIconTask.hide()
         self.ui.pushButtonFullTask.hide()
 
@@ -188,18 +179,18 @@ class MainWindow(QMainWindow):
         self.ui.pushButtonIconTask.hide()
 
         self.ui.TaskWindowstackedWidget.setCurrentIndex(0)
+        self.ui.ProjectPagestackedWidget.setCurrentIndex(0)
+
         self.ui.comboBoxProjects.hide()
         self.ui.pushButtonIconClose.hide()
-        self.ui.pushButtonIconInfo.hide()
-        self.ui.pushButtonIconEdit.hide()
         self.ui.pushButtonFullClose.hide()
-        self.ui.pushButtonFullInfo.hide()
-        self.ui.pushButtonFullEdit.hide()
 
         self.ui.scrollAreaWidgetContentsOpen.layout().setAlignment(Qt.AlignTop)
         self.ui.scrollAreaWidgetContentsInProgress.layout().setAlignment(Qt.AlignTop)
         self.ui.scrollAreaWidgetContentsStuckTest.layout().setAlignment(Qt.AlignTop)
         self.ui.scrollAreaWidgetContentsDone.layout().setAlignment(Qt.AlignTop)
+
+        self.ui.scrollAreaWidgetContentsProjectsList.layout().setAlignment(Qt.AlignTop)
 
         self.stacked_widget_state = StackedWidgetState.WELCOME.value
 
@@ -235,20 +226,6 @@ class MainWindow(QMainWindow):
         )
         self.ui.pushButtonFullAdd.clicked.connect(
             self.on_add_project_pushed
-        )
-
-        self.ui.pushButtonIconInfo.clicked.connect(
-            self.on_info_project_pushed
-        )
-        self.ui.pushButtonFullInfo.clicked.connect(
-            self.on_info_project_pushed
-        )
-
-        self.ui.pushButtonIconEdit.clicked.connect(
-            self.on_edit_project_pushed
-        )
-        self.ui.pushButtonFullEdit.clicked.connect(
-            self.on_edit_project_pushed
         )
 
         self.ui.pushButtonIconClose.clicked.connect(
@@ -335,7 +312,8 @@ class MainWindow(QMainWindow):
     def task_info_in_scroll_area(self, info_tasks_hash):
         current_project = self.project_handler.get_current_project()
         task = current_project.get_task_by_hash(info_tasks_hash)
-        self.info_task_window.execute(task)
+        self.info_window.setWindowTitle("Info Task")
+        self.info_window.execute(task)
 
     def task_move_in_scroll_area(self, move_tasks_hash, new_task_bin):
         current_project = self.project_handler.get_current_project()
@@ -425,16 +403,14 @@ class MainWindow(QMainWindow):
             u"save-as-light.svg",
             u"plus-circle-light.svg",
             u"plus-circle-light.svg",
-            u"info-light.svg",
-            u"info-light.svg",
-            u"edit-3-light.svg",
-            u"edit-3-light.svg",
             u"minimize-2-light.svg",
             u"minimize-2-light.svg",
             u"plus-square-light.svg",
             u"plus-square-light.svg",
             u"menu-light.svg",
             u"toggle-right-light.svg",
+            u"sliders-light.svg",
+            u"list-light.svg",
         ]
 
         self.change_layout_mode(icon_paths)
@@ -455,16 +431,14 @@ class MainWindow(QMainWindow):
             u"save-as.svg",
             u"plus-circle.svg",
             u"plus-circle.svg",
-            u"info.svg",
-            u"info.svg",
-            u"edit-3.svg",
-            u"edit-3.svg",
             u"minimize-2.svg",
             u"minimize-2.svg",
             u"plus-square.svg",
             u"plus-square.svg",
             u"menu.svg",
             u"toggle-left.svg",
+            u"sliders.svg",
+            u"list.svg",
         ]
 
         self.change_layout_mode(icon_paths)
@@ -482,16 +456,14 @@ class MainWindow(QMainWindow):
             self.ui.pushButtonFullSaveAs,
             self.ui.pushButtonIconAdd,
             self.ui.pushButtonFullAdd,
-            self.ui.pushButtonIconInfo,
-            self.ui.pushButtonFullInfo,
-            self.ui.pushButtonIconEdit,
-            self.ui.pushButtonFullEdit,
             self.ui.pushButtonIconClose,
             self.ui.pushButtonFullClose,
             self.ui.pushButtonIconTask,
             self.ui.pushButtonFullTask,
             self.ui.pushButtonToggleMenu,
-            self.ui.pushButtonFullLayout
+            self.ui.pushButtonFullLayout,
+            self.ui.toolButtonSort,
+            self.ui.pushButtonView,
         ]
         for button, icon_path in zip(buttons, icon_paths):
             icon = QIcon()
@@ -504,3 +476,32 @@ class MainWindow(QMainWindow):
             self.use_light_mode()
         elif self.layout == "light":
             self.use_dark_mode()
+
+    def get_project_signal_functions(self):
+        return [
+            self.deleted_pushed_in_project_view,
+            self.info_pushed_in_project_view,
+            self.edit_pushed_in_project_view
+        ]
+
+    def deleted_pushed_in_project_view(self, deleted_project_hash):
+        return
+
+    def info_pushed_in_project_view(self, info_project_hash):
+        project = self.project_handler.get_project_by_hash(info_project_hash)
+        self.on_info_project_pushed(project)
+
+    def edit_pushed_in_project_view(self, edit_project_hash):
+        project = self.project_handler.get_project_by_hash(edit_project_hash)
+        self.on_edit_project_pushed(project)
+
+    def update_project_view(self):
+        ScrollAreaFunctions.clear_scroll_area(
+            self.ui.scrollAreaWidgetContentsProjectsList
+        )
+
+        ScrollAreaFunctions.fill_project_scroll_area(
+            self.ui.scrollAreaWidgetContentsProjectsList,
+            self.project_handler.projects,
+            self.get_project_signal_functions()
+        )

@@ -2,14 +2,15 @@ from PySide6.QtWidgets import QDialogButtonBox, QDialog
 
 from classes.TaskCreator import TaskCreator
 from classes.TaskColors import TaskColors
-from ui_windows.add_task_ui import Ui_AddTaskDialog
+from classes.Project import Project
+from ui_windows.add_edit_window_ui import Ui_AddEditDialog
 
 
-class AddTask(QDialog):
+class AddWindow(QDialog):
     def __init__(self):
-        super(AddTask, self).__init__()
+        super(AddWindow, self).__init__()
 
-        self.ui = Ui_AddTaskDialog()
+        self.ui = Ui_AddEditDialog()
         self.ui.setupUi(self)
 
         self.ui.buttonBoxAddCancelTask.button(
@@ -23,18 +24,10 @@ class AddTask(QDialog):
         self.setup_checkbox_ids()
         self.setup_stylesheets()
 
-    @staticmethod
-    def get_color_string_from_frame(frame):
-        background_color = frame.palette().color(frame.backgroundRole())
-        r = background_color.red()
-        g = background_color.green()
-        b = background_color.blue()
-        return f"rgb: ({r}, {g}, {b})"
-
     def exec(self):
         self.clear_edits()
         self.ui.lineEditTaskname.setFocus()
-        return super(AddTask, self).exec()
+        return super(AddWindow, self).exec()
 
     def clear_edits(self):
         self.ui.lineEditTaskname.clear()
@@ -47,6 +40,14 @@ class AddTask(QDialog):
             self.get_color_string()
         )
         return task_creator
+
+    def get_project_from_user_input(self):
+        project = Project(
+            self.get_title(),
+            self.get_description(),
+            color_string=self.get_color_string()
+        )
+        return project
 
     def on_task_name_changed(self):
         self.enable_ok_button()

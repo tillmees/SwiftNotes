@@ -17,6 +17,12 @@
    <iconset resource="../resources.qrc">
     <normaloff>:/icons/icons/swift-notes.svg</normaloff>:/icons/icons/swift-notes.svg</iconset>
   </property>
+  <property name="iconSize">
+   <size>
+    <width>55</width>
+    <height>55</height>
+   </size>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true"/>
@@ -200,34 +206,6 @@
            <property name="icon">
             <iconset resource="../resources.qrc">
              <normaloff>:/icons/icons/minimize-2.svg</normaloff>:/icons/icons/minimize-2.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="pushButtonIconInfo">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../resources.qrc">
-             <normaloff>:/icons/icons/info.svg</normaloff>:/icons/icons/info.svg</iconset>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="pushButtonIconEdit">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../resources.qrc">
-             <normaloff>:/icons/icons/edit-3.svg</normaloff>:/icons/icons/edit-3.svg</iconset>
            </property>
           </widget>
          </item>
@@ -478,52 +456,6 @@
            </property>
           </widget>
          </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="pushButtonFullInfo">
-           <property name="minimumSize">
-            <size>
-             <width>190</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Show Project Info</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../resources.qrc">
-             <normaloff>:/icons/icons/info.svg</normaloff>:/icons/icons/info.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>14</width>
-             <height>14</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignHCenter">
-          <widget class="QPushButton" name="pushButtonFullEdit">
-           <property name="minimumSize">
-            <size>
-             <width>190</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string> Edit Project</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../resources.qrc">
-             <normaloff>:/icons/icons/edit-3.svg</normaloff>:/icons/icons/edit-3.svg</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>14</width>
-             <height>14</height>
-            </size>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
        <item>
@@ -754,7 +686,7 @@
        <item>
         <widget class="QStackedWidget" name="TaskWindowstackedWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="WelcomePage">
           <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -784,7 +716,7 @@
            <item>
             <widget class="QLabel" name="labelWelcomeDrop">
              <property name="text">
-              <string>or drop a .todo file here</string>
+              <string>or open an existing .todo file</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -808,6 +740,9 @@
          </widget>
          <widget class="QWidget" name="TaskPage">
           <layout class="QGridLayout" name="gridLayout">
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
            <item row="0" column="0" alignment="Qt::AlignLeft">
             <widget class="QLabel" name="labelOpen">
              <property name="text">
@@ -864,8 +799,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>174</width>
-                <height>422</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_6"/>
@@ -900,8 +835,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>173</width>
-                <height>422</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_10"/>
@@ -936,8 +871,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>174</width>
-                <height>422</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_12"/>
@@ -972,8 +907,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>173</width>
-                <height>422</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_13"/>
@@ -1010,7 +945,161 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="ProjectPage"/>
+         <widget class="QWidget" name="ProjectPage">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>29</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <property name="spacing">
+              <number>5</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <item alignment="Qt::AlignVCenter">
+              <widget class="QLabel" name="label">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Projects</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item alignment="Qt::AlignRight|Qt::AlignVCenter">
+              <widget class="QToolButton" name="toolButtonSort">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources.qrc">
+                 <normaloff>:/icons/icons/sliders.svg</normaloff>:/icons/icons/sliders.svg</iconset>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignRight|Qt::AlignVCenter">
+              <widget class="QPushButton" name="pushButtonView">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources.qrc">
+                 <normaloff>:/icons/icons/list.svg</normaloff>:/icons/icons/list.svg</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QStackedWidget" name="ProjectPagestackedWidget">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="pageList">
+              <layout class="QVBoxLayout" name="verticalLayout_9">
+               <property name="spacing">
+                <number>5</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QScrollArea" name="scrollAreaProjectsList">
+                 <property name="verticalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAsNeeded</enum>
+                 </property>
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scrollAreaWidgetContentsProjectsList">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>718</width>
+                    <height>420</height>
+                   </rect>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_11"/>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="pageGrid">
+              <layout class="QVBoxLayout" name="verticalLayout_14">
+               <item>
+                <widget class="QScrollArea" name="scrollArea">
+                 <property name="widgetResizable">
+                  <bool>true</bool>
+                 </property>
+                 <widget class="QWidget" name="scrollAreaWidgetContents">
+                  <property name="geometry">
+                   <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>700</width>
+                    <height>402</height>
+                   </rect>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_15"/>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>

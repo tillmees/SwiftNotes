@@ -12,7 +12,8 @@ class Project:
                  created_string=None,
                  last_changed_string=None,
                  hash_value=None,
-                 tasks=None):
+                 tasks=None,
+                 color_string=f"#8ac6d1"):
         self.title = title
         self.description = description
 
@@ -25,6 +26,8 @@ class Project:
 
         self.tasks = self._set_tasks(
             tasks)
+
+        self.color_string = color_string
 
     def add_task(self, task):
         self.tasks.append(task)
@@ -103,3 +106,10 @@ class Project:
 
     def get_task_count(self):
         return len(self.tasks)
+
+    def set_color_string(self, color_string):
+        self.color_string = color_string
+        self.update_last_changed_string()
+
+    def get_color_string(self):
+        return self.color_string

@@ -1,12 +1,14 @@
+from PySide6.QtWidgets import QDialog
+
 from classes.TaskWidget import TaskWidget
+from classes.ProjectWidget import ProjectWidget
 
 
 def clear_scroll_area(scroll_area):
-    tasks_to_remove = scroll_area.findChildren(
-        TaskWidget)
-    for task in tasks_to_remove:
-        task.setParent(None)
-        task.deleteLater()
+    widget_to_remove = scroll_area.findChildren(QDialog)
+    for widget in widget_to_remove:
+        widget.setParent(None)
+        widget.deleteLater()
 
 
 def fill_scroll_area(scroll_area, tasks, signal_functions):
@@ -24,3 +26,25 @@ def fill_scroll_area(scroll_area, tasks, signal_functions):
         task.move_signal.connect(move_func)
         task.edit_signal.connect(edit_func)
         task.delete_signal.connect(del_func)
+
+
+def fill_project_scroll_area(scroll_area, projects, signal_functions):
+    for project in projects.values():
+        scroll_area_widget = ProjectWidget(
+            project.get_title(),
+            project.get_task_count() - project.get_task_count_in("done"),
+            project.get_last_changed_string(),
+            project.get_created_string(),
+            project.get_hash(),
+            project.get_color_string()
+        )
+        scroll_area.layout().addWidget(
+            scroll_area_widget
+        )
+
+    project_to_put_signal_on = scroll_area.findChildren(QDialog)
+    del_func, info_func, edit_func = signal_functions
+    for project in project_to_put_signal_on:
+        project.delete_signal.connect(del_func)
+        project.info_signal.connect(info_func)
+        project.edit_signal.connect(edit_func)

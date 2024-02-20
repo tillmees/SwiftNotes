@@ -1,6 +1,12 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/list.svg</file>
+    <file>icons/list-light.svg</file>
     <file>icons/toggle-left.svg</file>
+    <file>icons/grid.svg</file>
+    <file>icons/grid-light.svg</file>
+    <file>icons/sliders.svg</file>
+    <file>icons/sliders-light.svg</file>
     <file>icons/toggle-left-light.svg</file>
     <file>icons/toggle-right.svg</file>
     <file>icons/toggle-right-light.svg</file>

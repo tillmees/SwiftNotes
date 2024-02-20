@@ -37,9 +37,15 @@ __pycache__
 
 # Generated python files 
 resources_rc.py
-ui_windows/add_project_ui.py
-ui_windows/add_task_ui.py
-ui_windows/info_project_ui.py
-ui_windows/info_task_ui.py
+
+ui_windows/add_edit_window_ui.py
+ui_windows/info_window_ui.py
 ui_windows/main_ui.py
 ui_windows/task_ui.py
+ui_windows/project_ui.py
+
+build
+dist
+*.spec
+
+*.todo

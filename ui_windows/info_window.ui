@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InfoProjectDialog</class>
- <widget class="QDialog" name="InfoProjectDialog">
+ <class>InfoDialog</class>
+ <widget class="QDialog" name="InfoDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -41,7 +41,7 @@
         <string notr="true">color: rgb(150, 150, 150);</string>
        </property>
        <property name="text">
-        <string>Projectname:</string>
+        <string>Title:</string>
        </property>
       </widget>
      </item>
@@ -243,7 +243,7 @@
   <connection>
    <sender>buttonBoxAddCancelProject</sender>
    <signal>accepted()</signal>
-   <receiver>InfoProjectDialog</receiver>
+   <receiver>InfoDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -259,7 +259,7 @@
   <connection>
    <sender>buttonBoxAddCancelProject</sender>
    <signal>rejected()</signal>
-   <receiver>InfoProjectDialog</receiver>
+   <receiver>InfoDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

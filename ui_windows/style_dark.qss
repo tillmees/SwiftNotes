@@ -192,6 +192,10 @@
     border-radius: 5px;
 }
 
+#ProjectWidget {
+    border-radius: 5px;
+}
+
 #labelTask {
     color: #000000;
     font-size: 14px;
@@ -223,4 +227,44 @@
 
 #scrollAreaWidgetContentsDone {
     background-color: #43454a;
+}
+
+#ProjectPage QLabel {
+    color: #acacac;
+}
+
+#ProjectPage QToolButton{
+    height: 30px;
+    width: 30px;
+    border: none;
+}
+
+#ProjectPage QToolButton:hover {
+    background-color: rgba(86, 101, 115, 0.5);
+}
+
+#ProjectPage QToolButton:pressed {
+    background-color: rgba(46, 61, 75, 0.5);
+}
+
+#ProjectPage QPushButton{
+    height: 30px;
+    width: 30px;
+    border: none;
+}
+
+#ProjectPage QPushButton:hover {
+    background-color: rgba(86, 101, 115, 0.5);
+}
+
+#ProjectPage QPushButton:pressed {
+    background-color: rgba(46, 61, 75, 0.5);
+}
+
+#scrollAreaWidgetContentsProjectsList {
+    background-color: #43454a;
+}
+
+#ProjectPage QScrollArea {
+    border: none;
 }

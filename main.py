@@ -15,9 +15,11 @@ def main():
     main_window = MainWindow(app)
     main_window.show()
 
-    sys.exit(
-        app.exec()
-    )
+    app.exec()
+
+    # sys.exit(
+    #     app.exec()
+    # )
 
 
 if __name__ == "__main__":

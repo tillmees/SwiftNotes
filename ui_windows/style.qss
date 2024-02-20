@@ -1,5 +1,5 @@
 #MainWindow {
-    background-color: #fffff;
+    background-color: #eeeeee;
 }
 
 * {
@@ -154,6 +154,10 @@
     border-radius: 5px;
 }
 
+#ProjectWidget {
+    border-radius: 5px;
+}
+
 #labelTask {
     font-size: 14px;
     font-weight: bold;
@@ -189,4 +193,40 @@
 
 #scrollAreaWidgetContentsDone {
     background-color: #ffffff;
+}
+
+#ProjectPage QToolButton{
+    height: 30px;
+    width: 30px;
+    border: none;
+}
+
+#ProjectPage QToolButton:hover {
+    background-color: rgba(86, 101, 115, 0.5);
+}
+
+#ProjectPage QToolButton:pressed {
+    background-color: rgba(46, 61, 75, 0.5);
+}
+
+#ProjectPage QPushButton{
+    height: 30px;
+    width: 30px;
+    border: none;
+}
+
+#ProjectPage QPushButton:hover {
+    background-color: rgba(86, 101, 115, 0.5);
+}
+
+#ProjectPage QPushButton:pressed {
+    background-color: rgba(46, 61, 75, 0.5);
+}
+
+#scrollAreaWidgetContentsProjectsList {
+    background-color: #ffffff;
+}
+
+#ProjectPage QScrollArea {
+    border: none;
 }

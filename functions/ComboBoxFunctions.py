@@ -1,11 +1,20 @@
-def update_combo_box(combo_box_obj, project_name):
-    index = combo_box_obj.findText(project_name)
+def update_combo_box(combo_box_obj, string):
+    index = combo_box_obj.findText(string)
     if index != -1:
         # a project with that name already exists
         return
-    combo_box_obj.addItems([project_name])
-    index = combo_box_obj.findText(project_name)
+    combo_box_obj.addItems([string])
+    index = combo_box_obj.findText(string)
     combo_box_obj.setCurrentIndex(index)
+    combo_box_obj.model().sort(0)
+
+
+def add_string_to_combo_box(combo_box_obj, string):
+    index = combo_box_obj.findText(string)
+    if index != -1:
+        # a project with that name already exists
+        return
+    combo_box_obj.addItems([string])
     combo_box_obj.model().sort(0)
 
 

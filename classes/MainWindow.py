@@ -7,6 +7,7 @@ from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 
 from ui_windows.main_ui import Ui_MainWindow
+from ui_windows.stylesheets import get_stylesheet_dark, get_stylesheet_light
 
 from classes.EditWindow import AddEditWindow
 from classes.InfoWindow import InfoWindow
@@ -389,8 +390,7 @@ class MainWindow(QMainWindow):
         self.update_task_counter()
 
     def use_dark_mode(self):
-        with open(os.path.join("ui_windows", "style_dark.qss")) as style_file:
-            style_sheet = style_file.read()
+        style_sheet = get_stylesheet_dark()
         self.app.setStyleSheet(style_sheet)
         icon_paths = [
             u"file-plus-light.svg",
@@ -417,8 +417,7 @@ class MainWindow(QMainWindow):
         self.layout = "dark"
 
     def use_light_mode(self):
-        with open(os.path.join("ui_windows", "style.qss")) as style_file:
-            style_sheet = style_file.read()
+        style_sheet = get_stylesheet_light()
         self.app.setStyleSheet(style_sheet)
         icon_paths = [
             u"file-plus.svg",

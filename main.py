@@ -12,7 +12,7 @@ def main():
     #     style_sheet = style_file.read()
     # app.setStyleSheet(style_sheet)
 
-    main_window = MainWindow(app)
+    main_window = MainWindow(app, version="0.1.0")
     main_window.show()
 
     app.exec()

@@ -46,6 +46,11 @@ def get_stylesheet_dark():
         color: #1e1f22;
     }
     
+    #FullSidebarQWidget #labelVersion {
+        color: #acacac;
+        font-size: 11px;
+    }
+    
     #FullSidebarQWidget {
         background-color: #2b2d30;
         width: 250px;
@@ -130,61 +135,31 @@ def get_stylesheet_dark():
         color: #acacac;
     }
     
-    #AddProjectDialog {
+    #AddEditDialog {
         background-color: #2b2d30;
     }
     
-    #AddProjectDialog QLineEdit {
+    #AddEditDialog QLineEdit {
         border: 1px;
         background-color: #43454a;
         color: #ffffff;
     }
     
-    #AddProjectDialog QPlainTextEdit {
+    #AddEditDialog QPlainTextEdit {
         border: 1px;
         background-color: #43454a;
         color: #ffffff;
     }
     
-    #InfoProjectDialog {
+    #InfoDialog {
         background-color: #2b2d30;
     }
     
-    #InfoProjectDialog QLabel {
+    #InfoDialog QLabel {
         color: #ffffff;
     }
     
-    #InfoProjectDialog QPlainTextEdit {
-        border: 1px;
-        background-color: #43454a;
-        color: #ffffff;
-    }
-    
-    #AddTaskDialog {
-        background-color: #2b2d30;
-    }
-    
-    #AddTaskDialog QLineEdit {
-        border: 1px;
-        background-color: #43454a;
-        color: #ffffff;
-    }
-    
-    #AddTaskDialog QPlainTextEdit {
-        border: 1px;
-        background-color: #43454a;
-        color: #ffffff;
-    }
-    
-    #InfoTaskDialog {
-        background-color: #2b2d30;
-    }
-    
-    #InfoTaskDialog QLabel {
-        color: #ffffff;
-    }
-    
-    #InfoTaskDialog QPlainTextEdit {
+    #InfoDialog QPlainTextEdit {
         border: 1px;
         background-color: #43454a;
         color: #ffffff;
@@ -273,6 +248,7 @@ def get_stylesheet_dark():
     """
     return style_content
 
+
 def get_stylesheet_light():
     style_content = """
     #MainWindow {
@@ -319,6 +295,11 @@ def get_stylesheet_light():
     
     #IconSidebarQWidget QFrame {
         color: rgb(180, 180, 180);
+    }
+    
+    #FullSidebarQWidget #labelVersion {
+        color: #000000;
+        font-size: 11px;
     }
     
     #FullSidebarQWidget {
@@ -389,40 +370,21 @@ def get_stylesheet_light():
         color: rgba(86, 101, 115, 0.5);
     }
     
-    #AddProjectDialog {
+    #AddEditDialog {
         background-color: rgb(245, 245, 245);
     }
     
-    #AddProjectDialog QLineEdit {
+    #AddEditDialog QLineEdit {
         border: none;
         background-color: #ffffff;
     }
     
-    #AddProjectDialog QPlainTextEdit {
+    #AddEditDialog QPlainTextEdit {
         border: none;
         background-color: #ffffff;
     }
     
-    #InfoProjectDialog QPlainTextEdit {
-        border: none;
-        background-color: #ffffff;
-    }
-    
-    #AddTaskDialog {
-        background-color: rgb(245, 245, 245);
-    }
-    
-    #AddTaskDialog QLineEdit {
-        border: none;
-        background-color: #ffffff;
-    }
-    
-    #AddTaskDialog QPlainTextEdit {
-        border: none;
-        background-color: #ffffff;
-    }
-    
-    #InfoTaskDialog QPlainTextEdit {
+    #InfoDialog QPlainTextEdit {
         border: none;
         background-color: #ffffff;
     }

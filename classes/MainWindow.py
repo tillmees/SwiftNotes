@@ -27,10 +27,11 @@ class StackedWidgetState(Enum):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, app):
+    def __init__(self, app, version):
         super(MainWindow, self).__init__()
 
         self.app = app
+        self.version = version
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -175,6 +176,9 @@ class MainWindow(QMainWindow):
 
     def setup_for_clean_start(self):
         self.file_name = None
+
+        self.ui.labelVersion.setText(f"{self.version}")
+
         self.ui.FullSidebarQWidget.hide()
         self.ui.pushButtonFullTask.hide()
         self.ui.pushButtonIconTask.hide()

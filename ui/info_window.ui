@@ -14,7 +14,7 @@
    <string>Project Info</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources.qrc">
+   <iconset resource="resources.qrc">
     <normaloff>:/icons/icons/swift-notes.svg</normaloff>:/icons/icons/swift-notes.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -237,7 +237,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../resources.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections>
   <connection>

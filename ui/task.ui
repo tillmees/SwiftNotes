@@ -128,7 +128,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
+        <iconset resource="resources.qrc">
          <normaloff>:/icons/icons/info.svg</normaloff>:/icons/icons/info.svg</iconset>
        </property>
        <property name="iconSize">
@@ -145,7 +145,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
+        <iconset resource="resources.qrc">
          <normaloff>:/icons/icons/arrow-right-circle.svg</normaloff>:/icons/icons/arrow-right-circle.svg</iconset>
        </property>
        <property name="iconSize">
@@ -162,7 +162,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
+        <iconset resource="resources.qrc">
          <normaloff>:/icons/icons/arrow-left-circle.svg</normaloff>:/icons/icons/arrow-left-circle.svg</iconset>
        </property>
        <property name="iconSize">
@@ -179,7 +179,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
+        <iconset resource="resources.qrc">
          <normaloff>:/icons/icons/edit-3.svg</normaloff>:/icons/icons/edit-3.svg</iconset>
        </property>
        <property name="iconSize">
@@ -196,7 +196,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../resources.qrc">
+        <iconset resource="resources.qrc">
          <normaloff>:/icons/icons/trash-2.svg</normaloff>:/icons/icons/trash-2.svg</iconset>
        </property>
        <property name="iconSize">
@@ -212,7 +212,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../resources.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections/>
 </ui>

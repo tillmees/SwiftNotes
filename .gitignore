@@ -44,6 +44,7 @@ ui_windows/main_ui.py
 ui_windows/task_ui.py
 ui_windows/project_ui.py
 
+exe
 build
 dist
 *.spec

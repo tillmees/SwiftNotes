@@ -1,494 +1,312 @@
 def get_stylesheet_dark():
-    style_content = """
-    #MainWindow {
-    background-color: #1e1f22;
-    }
-    
-    * {
-        font-family: Consolas;
-        letter-spacing: 0px;
-    }
-    
-    #TopBarQWidget QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #TopBarQWidget QPushButton:hover {
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #TopBarQWidget QPushButton:pressed {
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #IconSidebarQWidget {
-        background-color: #2b2d30;
-        width: 50px;
-    }
-    
-    #IconSidebarQWidget QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #IconSidebarQWidget QPushButton:hover{
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #IconSidebarQWidget QPushButton:pressed{
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #IconSidebarQWidget QFrame {
-        color: #1e1f22;
-    }
-    
-    #FullSidebarQWidget #labelVersion {
-        color: #acacac;
-        font-size: 11px;
-    }
-    
-    #FullSidebarQWidget {
-        background-color: #2b2d30;
-        width: 250px;
-    }
-    
-    #FullSidebarQWidget QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-        color: #acacac;
-    }
-    
-    #FullSidebarQWidget QPushButton:hover{
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #FullSidebarQWidget QPushButton:pressed{
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #FullSidebarQWidget QFrame{
-        color: #1e1f22;
-    }
-    
-    #FullSidebarQWidget #label_light{
-        color: #acacac;
-    }
-    
-    #FullSidebarQWidget #label_dark{
-        color: #ffffff;
-    }
-    
-    #labelWelcome {
-        font-size: 24px;
-        color: rgb(200, 200, 200);
-    }
-    
-    #labelWelcomeDrop {
-        font-size: 14px;
-        color: #acacac;
-    }
-    
-    #labelCurrentProject {
-        font-size: 14px;
-        color: rgb(0, 0, 0);
-    }
-    
-    #TaskPage QScrollArea {
-        background-color: #2b2d30;
-        border: none;
-    }
-    
-    #labelOpenOutOf {
-        color: #acacac;
-    }
-    
-    #labelInProgressOutOf {
-        color: #acacac;
-    }
-    
-    #labelStuckTestOutOf {
-        color: #acacac;
-    }
-    
-    #labelDoneOutOf {
-        color: #acacac;
-    }
-    
-    #labelOpen {
-        color: #acacac;
-    }
-    
-    #labelInProgress {
-        color: #acacac;
-    }
-    
-    #labelStuckTest {
-        color: #acacac;
-    }
-    
-    #labelDone {
-        color: #acacac;
-    }
-    
-    #AddEditDialog {
-        background-color: #2b2d30;
-    }
-    
-    #AddEditDialog QLineEdit {
-        border: 1px;
-        background-color: #43454a;
-        color: #ffffff;
-    }
-    
-    #AddEditDialog QPlainTextEdit {
-        border: 1px;
-        background-color: #43454a;
-        color: #ffffff;
-    }
-    
-    #InfoDialog {
-        background-color: #2b2d30;
-    }
-    
-    #InfoDialog QLabel {
-        color: #ffffff;
-    }
-    
-    #InfoDialog QPlainTextEdit {
-        border: 1px;
-        background-color: #43454a;
-        color: #ffffff;
-    }
-    
-    #TaskWidget {
-        border-radius: 5px;
-    }
-    
-    #ProjectWidget {
-        border-radius: 5px;
-    }
-    
-    #labelTask {
-        color: #000000;
-        font-size: 14px;
-        font-weight: bold;
-    }
-    
-    #labelTaskCreated {
-        font-size: 11px;
-        color: #ffffff;
-    }
-    
-    #TaskWidget QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #scrollAreaWidgetContentsOpen {
-        background-color: #43454a;
-    }
-    
-    #scrollAreaWidgetContentsInProgress {
-        background-color: #43454a;
-    }
-    
-    #scrollAreaWidgetContentsStuckTest {
-        background-color: #43454a;
-    }
-    
-    #scrollAreaWidgetContentsDone {
-        background-color: #43454a;
-    }
-    
-    #ProjectPage QLabel {
-        color: #acacac;
-    }
-    
-    #ProjectPage QToolButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #ProjectPage QToolButton:hover {
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #ProjectPage QToolButton:pressed {
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #ProjectPage QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #ProjectPage QPushButton:hover {
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #ProjectPage QPushButton:pressed {
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #scrollAreaWidgetContentsProjectsList {
-        background-color: #43454a;
-    }
-    
-    #ProjectPage QScrollArea {
-        border: none;
-    }
-    """
+    style_content = get_stylesheet(
+        main_background="#1e1f22",
+        popup_background="#2b2d30",
+        popup_fields="#43454a",
+        popup_fields_font="#ffffff",
+        sidebar="#2b2d30",
+        sidebar_divider="#1e1f22",
+        sidebar_label="#acacac",
+        task_area="#2b2d30",
+        project_area="#2b2d30",
+        button_hover="rgba(86, 101, 115, 0.5)",
+        button_pressed="rgba(46, 61, 75, 0.5)",
+        label_view="#acacac",
+        label_light="#acacac",
+        label_dark="#ffffff",
+        label_welcome="rgb(200, 200, 200)",
+    )
     return style_content
 
 
 def get_stylesheet_light():
-    style_content = """
-    #MainWindow {
-    background-color: #eeeeee;
-    }
-    
-    * {
-        font-family: Consolas;
-        letter-spacing: 0px;
-    }
-    
-    #TopBarQWidget QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #TopBarQWidget QPushButton:hover {
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #TopBarQWidget QPushButton:pressed {
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #IconSidebarQWidget {
-        background-color: rgb(200, 200, 200);
-        width: 50px;
-    }
-    
-    #IconSidebarQWidget QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #IconSidebarQWidget QPushButton:hover{
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #IconSidebarQWidget QPushButton:pressed{
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #IconSidebarQWidget QFrame {
-        color: rgb(180, 180, 180);
-    }
-    
-    #FullSidebarQWidget #labelVersion {
-        color: #000000;
-        font-size: 11px;
-    }
-    
-    #FullSidebarQWidget {
-        background-color: rgb(200, 200, 200);
-        width: 250px;
-    }
-    
-    #FullSidebarQWidget QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #FullSidebarQWidget QPushButton:hover{
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #FullSidebarQWidget QPushButton:pressed{
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #FullSidebarQWidget QFrame {
-        color: rgb(180, 180, 180);
-    }
-    
-    
-    #FullSidebarQWidget #label_light{
-        color: #000000;
-    }
-    
-    #FullSidebarQWidget #label_dark{
-        color: #8a8a8a;
-    }
-    
-    #labelWelcome {
-        font-size: 24px;
-        color: rgb(200, 200, 200);
-    }
-    
-    #labelWelcomeDrop {
-        font-size: 14px;
-        color: rgb(30, 30, 30);
-    }
-    
-    #labelCurrentProject {
-        font-size: 14px;
-        color: rgb(0, 0, 0);
-    }
-    
-    #TaskPage QScrollArea {
-        background-color: rgb(245, 245, 245);
-        border: none;
-    }
-    
-    #labelOpenOutOf {
-        color: rgba(86, 101, 115, 0.5);
-    }
-    
-    #labelInProgressOutOf {
-        color: rgba(86, 101, 115, 0.5);
-    }
-    
-    #labelStuckTestOutOf {
-        color: rgba(86, 101, 115, 0.5);
-    }
-    
-    #labelDoneOutOf {
-        color: rgba(86, 101, 115, 0.5);
-    }
-    
-    #AddEditDialog {
-        background-color: rgb(245, 245, 245);
-    }
-    
-    #AddEditDialog QLineEdit {
-        border: none;
-        background-color: #ffffff;
-    }
-    
-    #AddEditDialog QPlainTextEdit {
-        border: none;
-        background-color: #ffffff;
-    }
-    
-    #InfoDialog QPlainTextEdit {
-        border: none;
-        background-color: #ffffff;
-    }
-    
-    #TaskWidget {
-        border-radius: 5px;
-    }
-    
-    #ProjectWidget {
-        border-radius: 5px;
-    }
-    
-    #labelTask {
-        font-size: 14px;
-        font-weight: bold;
-    }
-    
-    #plainTextEditTaskDescription {
-        background-color: rgb(255, 180, 180);
-        border: none
-    }
-    
-    #labelTaskCreated {
-        font-size: 11px;
-        color: #ffffff;
-    }
-    
-    #TaskWidget QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #scrollAreaWidgetContentsOpen {
-        background-color: #ffffff;
-    }
-    
-    #scrollAreaWidgetContentsInProgress {
-        background-color: #ffffff;
-    }
-    
-    #scrollAreaWidgetContentsStuckTest {
-        background-color: #ffffff;
-    }
-    
-    #scrollAreaWidgetContentsDone {
-        background-color: #ffffff;
-    }
-    
-    #ProjectPage QToolButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #ProjectPage QToolButton:hover {
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #ProjectPage QToolButton:pressed {
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #ProjectPage QPushButton{
-        height: 30px;
-        width: 30px;
-        border: none;
-    }
-    
-    #ProjectPage QPushButton:hover {
-        background-color: rgba(86, 101, 115, 0.5);
-        border-radius: 4px;
-    }
-    
-    #ProjectPage QPushButton:pressed {
-        background-color: rgba(46, 61, 75, 0.5);
-        border-radius: 4px;
-    }
-    
-    #scrollAreaWidgetContentsProjectsList {
-        background-color: #ffffff;
-    }
-    
-    #ProjectPage QScrollArea {
-        border: none;
-    }
-    """
+    style_content = get_stylesheet(
+        main_background="#eeeeee",
+        popup_background="rgb(245, 245, 245)",
+        popup_fields="#ffffff",
+        popup_fields_font="#000000",
+        sidebar="rgb(200, 200, 200)",
+        sidebar_divider="rgb(180, 180, 180)",
+        sidebar_label="#000000",
+        task_area="rgb(245, 245, 245)",
+        project_area="rgb(245, 245, 245)",
+        button_hover="rgba(86, 101, 115, 0.5)",
+        button_pressed="rgba(46, 61, 75, 0.5)",
+        label_view="rgba(86, 101, 115, 0.5)",
+        label_light="#000000",
+        label_dark="#8a8a8a",
+        label_welcome="rgb(200, 200, 200)",
+    )
     return style_content
 
+
+def get_stylesheet(
+        main_background,
+        popup_background,
+        popup_fields,
+        popup_fields_font,
+        sidebar,
+        sidebar_divider,
+        sidebar_label,
+        task_area,
+        project_area,
+        button_hover,
+        button_pressed,
+        label_view,
+        label_light,
+        label_dark,
+        label_welcome
+):
+    style_content = f"""
+        #MainWindow {{
+        background-color: {main_background};
+        }}
+
+        * {{
+            font-family: Consolas;
+            letter-spacing: 0px;
+        }}
+
+        #TopBarQWidget QPushButton{{
+            height: 30px;
+            width: 30px;
+            border: none;
+        }}
+
+        #TopBarQWidget QPushButton:hover {{
+            background-color: {button_hover};
+            border-radius: 4px;
+        }}
+
+        #TopBarQWidget QPushButton:pressed {{
+            background-color: {button_pressed};
+            border-radius: 4px;
+        }}
+
+        #IconSidebarQWidget {{
+            background-color: {sidebar};
+            width: 50px;
+        }}
+
+        #IconSidebarQWidget QPushButton{{
+            height: 30px;
+            width: 30px;
+            border: none;
+        }}
+
+        #IconSidebarQWidget QPushButton:hover{{
+            background-color: {button_hover};
+            border-radius: 4px;
+        }}
+
+        #IconSidebarQWidget QPushButton:pressed{{
+            background-color: {button_pressed};
+            border-radius: 4px;
+        }}
+
+        #IconSidebarQWidget QFrame {{
+            color: {sidebar_divider};
+        }}
+
+        #FullSidebarQWidget #labelVersion {{
+            color: {sidebar_label};
+            font-size: 11px;
+        }}
+
+        #FullSidebarQWidget {{
+            background-color: {sidebar};
+            width: 250px;
+        }}
+
+        #FullSidebarQWidget QPushButton{{
+            height: 30px;
+            width: 30px;
+            border: none;
+            color: {sidebar_label};
+        }}
+
+        #FullSidebarQWidget QPushButton:hover{{
+            background-color: {button_hover};
+            border-radius: 4px;
+        }}
+
+        #FullSidebarQWidget QPushButton:pressed{{
+            background-color: {button_pressed};
+            border-radius: 4px;
+        }}
+
+        #FullSidebarQWidget QFrame{{
+            color: {sidebar_divider};
+        }}
+
+        #FullSidebarQWidget #label_light{{
+            color: {label_light};
+        }}
+
+        #FullSidebarQWidget #label_dark{{
+            color: {label_dark};
+        }}
+
+        #labelWelcome {{
+            font-size: 24px;
+            color: {label_welcome};
+        }}
+
+        #labelWelcomeDrop {{
+            font-size: 14px;
+            color: {label_view};
+        }}
+
+        #TaskPage QScrollArea {{
+            background-color: {task_area};
+            border: none;
+        }}
+
+        #labelOpenOutOf {{
+            color: {label_view};
+        }}
+
+        #labelInProgressOutOf {{
+            color: {label_view};
+        }}
+
+        #labelStuckTestOutOf {{
+            color: {label_view};
+        }}
+
+        #labelDoneOutOf {{
+            color: {label_view};
+        }}
+
+        #labelOpen {{
+            color: {label_view};
+        }}
+
+        #labelInProgress {{
+            color: {label_view};
+        }}
+
+        #labelStuckTest {{
+            color: {label_view};
+        }}
+
+        #labelDone {{
+            color: {label_view};
+        }}
+
+        #AddEditDialog {{
+            background-color: {popup_background};
+        }}
+
+        #AddEditDialog QLineEdit {{
+            border: 1px;
+            background-color: {popup_fields};
+            color: {popup_fields_font};
+        }}
+
+        #AddEditDialog QPlainTextEdit {{
+            border-radius: 5px;
+            background-color: {popup_fields};
+            color: {popup_fields_font};
+        }}
+
+        #InfoDialog {{
+            background-color: {popup_background};
+        }}
+
+        #InfoDialog QLabel {{
+            color: {popup_fields_font};
+        }}
+
+        #InfoDialog QPlainTextEdit {{
+            border-radius: 5px;
+            background-color: {popup_fields};
+            color: {popup_fields_font};
+        }}
+
+        #TaskWidget {{
+            border-radius: 5px;
+        }}
+
+        #ProjectWidget {{
+            border-radius: 5px;
+        }}
+
+        #labelTask {{
+            color: #000000;
+            font-size: 14px;
+            font-weight: bold;
+        }}
+
+        #labelTaskCreated {{
+            font-size: 11px;
+            color: #ffffff;
+        }}
+
+        #TaskWidget QPushButton{{
+            height: 30px;
+            width: 30px;
+            border: none;
+        }}
+
+        #scrollAreaWidgetContentsOpen {{
+            background-color: {task_area};
+        }}
+
+        #scrollAreaWidgetContentsInProgress {{
+            background-color: {task_area};
+        }}
+
+        #scrollAreaWidgetContentsStuckTest {{
+            background-color: {task_area};
+        }}
+
+        #scrollAreaWidgetContentsDone {{
+            background-color: {task_area};
+        }}
+
+        #ProjectPage QLabel {{
+            color: {label_view};
+        }}
+
+        #ProjectPage QToolButton{{
+            height: 30px;
+            width: 30px;
+            border: none;
+        }}
+
+        #ProjectPage QToolButton:hover {{
+            background-color: {button_hover};
+            border-radius: 4px;
+        }}
+
+        #ProjectPage QToolButton:pressed {{
+            background-color: {button_pressed};
+            border-radius: 4px;
+        }}
+
+        #ProjectPage QPushButton{{
+            height: 30px;
+            width: 30px;
+            border: none;
+        }}
+
+        #ProjectPage QPushButton:hover {{
+            background-color: {button_hover};
+            border-radius: 4px;
+        }}
+
+        #ProjectPage QPushButton:pressed {{
+            background-color: {button_pressed};
+            border-radius: 4px;
+        }}
+
+        #scrollAreaWidgetContentsProjectsList {{
+            background-color: {project_area}
+        }}
+
+        #ProjectPage QScrollArea {{
+            border: none;
+        }}
+        """
+    return style_content

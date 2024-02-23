@@ -9,6 +9,13 @@ class ProjectHandler:
     def add_project(self, project):
         self.projects[project.get_title()] = project
 
+    def remove_project_by_hash(self, hash_value):
+        for project in self.projects.values():
+            if project.get_hash() == hash_value:
+                self.projects.pop(project.title)
+                return
+        return None
+
     def get_all_project_titles(self):
         project_names = [
             project.get_title() for project in self.projects.values()

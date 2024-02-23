@@ -12,6 +12,7 @@ def get_stylesheet_dark():
         button_hover="rgba(86, 101, 115, 0.5)",
         button_pressed="rgba(46, 61, 75, 0.5)",
         label_view="#acacac",
+        label_projects_header="#acacac",
         label_light="#acacac",
         label_dark="#ffffff",
         label_welcome="rgb(200, 200, 200)",
@@ -33,6 +34,7 @@ def get_stylesheet_light():
         button_hover="rgba(86, 101, 115, 0.5)",
         button_pressed="rgba(46, 61, 75, 0.5)",
         label_view="rgba(86, 101, 115, 0.5)",
+        label_projects_header="#000000",
         label_light="#000000",
         label_dark="#8a8a8a",
         label_welcome="rgb(200, 200, 200)",
@@ -53,6 +55,7 @@ def get_stylesheet(
         button_hover,
         button_pressed,
         label_view,
+        label_projects_header,
         label_light,
         label_dark,
         label_welcome
@@ -266,7 +269,7 @@ def get_stylesheet(
         }}
 
         #ProjectPage QLabel {{
-            color: {label_view};
+            color: {label_projects_header};
         }}
 
         #ProjectPage QToolButton{{

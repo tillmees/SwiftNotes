@@ -497,7 +497,14 @@ class MainWindow(QMainWindow):
         )
 
     def deleted_pushed_in_project_view(self, deleted_project_hash):
-        return
+        project = self.project_handler.get_project_by_hash(
+            deleted_project_hash)
+        title = project.get_title()
+        ComboBoxFunctions.delete_string_from_combo_box(
+            self.ui.comboBoxProjects,
+            title
+        )
+        self.project_handler.remove_project_by_hash(deleted_project_hash)
 
     def info_pushed_in_project_view(self, info_project_hash):
         project = self.project_handler.get_project_by_hash(info_project_hash)

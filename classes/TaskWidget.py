@@ -74,40 +74,54 @@ class TaskWidget(QDialog):
         )
 
         self.ui.pushButtonInfoTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButtonMoveRightTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButtonMoveLeftTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButtonEditTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButtonDeleteTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButton_Yes.setStyleSheet(
             "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px;}"
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButton_No.setStyleSheet(
             "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px;}"
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
     def on_info_clicked(self):

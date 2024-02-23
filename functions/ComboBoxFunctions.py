@@ -9,6 +9,15 @@ def update_combo_box(combo_box_obj, string):
     combo_box_obj.model().sort(0)
 
 
+def set_index_to_string(combo_box_obj, string):
+    index = combo_box_obj.findText(string)
+    if index == -1:
+        # a project with that name doesn't yet exist
+        return
+    index = combo_box_obj.findText(string)
+    combo_box_obj.setCurrentIndex(index)
+
+
 def add_string_to_combo_box(combo_box_obj, string):
     index = combo_box_obj.findText(string)
     if index != -1:

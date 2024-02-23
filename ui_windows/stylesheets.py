@@ -17,10 +17,12 @@ def get_stylesheet_dark():
     
     #TopBarQWidget QPushButton:hover {
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #TopBarQWidget QPushButton:pressed {
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #IconSidebarQWidget {
@@ -36,10 +38,12 @@ def get_stylesheet_dark():
     
     #IconSidebarQWidget QPushButton:hover{
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #IconSidebarQWidget QPushButton:pressed{
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #IconSidebarQWidget QFrame {
@@ -65,10 +69,12 @@ def get_stylesheet_dark():
     
     #FullSidebarQWidget QPushButton:hover{
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #FullSidebarQWidget QPushButton:pressed{
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #FullSidebarQWidget QFrame{
@@ -218,10 +224,12 @@ def get_stylesheet_dark():
     
     #ProjectPage QToolButton:hover {
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #ProjectPage QToolButton:pressed {
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #ProjectPage QPushButton{
@@ -232,10 +240,12 @@ def get_stylesheet_dark():
     
     #ProjectPage QPushButton:hover {
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #ProjectPage QPushButton:pressed {
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #scrollAreaWidgetContentsProjectsList {
@@ -268,10 +278,12 @@ def get_stylesheet_light():
     
     #TopBarQWidget QPushButton:hover {
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #TopBarQWidget QPushButton:pressed {
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #IconSidebarQWidget {
@@ -287,10 +299,12 @@ def get_stylesheet_light():
     
     #IconSidebarQWidget QPushButton:hover{
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #IconSidebarQWidget QPushButton:pressed{
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #IconSidebarQWidget QFrame {
@@ -315,10 +329,12 @@ def get_stylesheet_light():
     
     #FullSidebarQWidget QPushButton:hover{
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #FullSidebarQWidget QPushButton:pressed{
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #FullSidebarQWidget QFrame {
@@ -442,10 +458,12 @@ def get_stylesheet_light():
     
     #ProjectPage QToolButton:hover {
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #ProjectPage QToolButton:pressed {
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #ProjectPage QPushButton{
@@ -456,10 +474,12 @@ def get_stylesheet_light():
     
     #ProjectPage QPushButton:hover {
         background-color: rgba(86, 101, 115, 0.5);
+        border-radius: 4px;
     }
     
     #ProjectPage QPushButton:pressed {
         background-color: rgba(46, 61, 75, 0.5);
+        border-radius: 4px;
     }
     
     #scrollAreaWidgetContentsProjectsList {

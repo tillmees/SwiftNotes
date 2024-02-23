@@ -44,7 +44,7 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="Project">
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0">
        <property name="spacing">
         <number>10</number>
        </property>
@@ -60,19 +60,21 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item alignment="Qt::AlignLeft">
-        <widget class="QLabel" name="labelProjectTitle">
+       <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+        <widget class="QPushButton" name="pushButtonProjectTitle">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
            <bold>true</bold>
           </font>
          </property>
          <property name="text">
           <string>Title</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
          </property>
         </widget>
        </item>

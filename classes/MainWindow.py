@@ -168,7 +168,7 @@ class MainWindow(QMainWindow):
         self.ui.TaskWindowstackedWidget.setCurrentIndex(
             self.stacked_widget_state
         )
-        self.ui.comboBoxProjects.show()
+        self.ui.comboBoxProjects.hide()
         self.ui.pushButtonIconClose.hide()
         self.ui.pushButtonFullClose.hide()
         self.ui.pushButtonIconTask.hide()
@@ -482,10 +482,19 @@ class MainWindow(QMainWindow):
 
     def get_project_signal_functions(self):
         return [
+            self.selected_project_in_project_view,
             self.deleted_pushed_in_project_view,
             self.info_pushed_in_project_view,
             self.edit_pushed_in_project_view
         ]
+
+    def selected_project_in_project_view(self, selected_project_hash):
+        project = self.project_handler.get_project_by_hash(
+            selected_project_hash)
+        ComboBoxFunctions.set_index_to_string(
+            self.ui.comboBoxProjects,
+            project.get_title()
+        )
 
     def deleted_pushed_in_project_view(self, deleted_project_hash):
         return

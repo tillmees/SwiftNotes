@@ -43,8 +43,9 @@ def fill_project_scroll_area(scroll_area, projects, signal_functions):
         )
 
     project_to_put_signal_on = scroll_area.findChildren(QDialog)
-    del_func, info_func, edit_func = signal_functions
+    sel_func, del_func, info_func, edit_func = signal_functions
     for project in project_to_put_signal_on:
+        project.select_signal.connect(sel_func)
         project.delete_signal.connect(del_func)
         project.info_signal.connect(info_func)
         project.edit_signal.connect(edit_func)

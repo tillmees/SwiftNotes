@@ -1,10 +1,11 @@
 from PySide6.QtWidgets import QDialog
-from PySide6.QtCore import Signal
+from PySide6.QtCore import Qt, Signal
 
 from ui_windows.project_ui import Ui_ProjectWidget
 
 
 class ProjectWidget(QDialog):
+    select_signal = Signal(str)
     delete_signal = Signal(str)
     info_signal = Signal(str)
     edit_signal = Signal(str)
@@ -36,13 +37,15 @@ class ProjectWidget(QDialog):
         self.setup_connections()
 
     def setup_widget(self):
-        self.ui.labelProjectTitle.setText(self.title)
+        self.ui.pushButtonProjectTitle.setText(f" {self.title}")
         self.ui.labelProjectOpenTasks.setText(f"{self.open_tasks_count}")
         self.ui.labelProjectCreated.setText(self.created_string)
         self.ui.labelProjectChanged.setText(self.last_changed_string)
         self.ui.stackedWidget.setCurrentIndex(0)
 
     def setup_connections(self):
+        self.ui.pushButtonProjectTitle.clicked.connect(
+            self.on_project_selected_clicked)
         self.ui.pushButtonInfoProject.clicked.connect(
             self.on_info_clicked)
         self.ui.pushButtonEditProject.clicked.connect(
@@ -62,9 +65,6 @@ class ProjectWidget(QDialog):
         self.ui.labelDelProject.setStyleSheet(
             "color: #000000;\n "
         )
-        self.ui.labelProjectTitle.setStyleSheet(
-            "color: #000000;\n "
-        )
         self.ui.labelProjectOpenTasks.setStyleSheet(
             "color: #000000;\n "
         )
@@ -75,32 +75,61 @@ class ProjectWidget(QDialog):
             "color: #000000;\n "
         )
 
+        self.ui.pushButtonProjectTitle.setStyleSheet(
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
+            "QPushButton{text-align: left;\n }"
+        )
+
+        # self.ui.pushButtonProjectTitle.setStyleSheet(
+        #     "QPushButton::hover{color: #ffffffff;}\n "
+        #     "QPushButton::pressed{color: rgba(0, 0, 0, 0.5);\n }"
+        #     "QPushButton{text-align: left;\n }"
+        # )
+
+        self.ui.pushButtonProjectTitle.setMinimumWidth(len(self.title) * 10)
+
         self.ui.pushButtonInfoProject.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButtonEditProject.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButtonDeleteProject.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButton_YesDelProject.setStyleSheet(
-            "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px;}"
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px; border-radius: 4px;}"
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButton_NoDelProject.setStyleSheet(
-            "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px;}"
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25);}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5);}\n "
+            "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px; border-radius: 4px;}"
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
         )
+
+    def on_project_selected_clicked(self):
+        self.select_signal.emit(self.get_hash())
 
     def on_delete_clicked(self):
         self.ui.stackedWidget.setCurrentIndex(1)

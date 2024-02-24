@@ -9,6 +9,7 @@ def get_stylesheet_dark():
         sidebar_label="#acacac",
         task_area="#2b2d30",
         project_area="#2b2d30",
+        button="rgba(0, 0, 0, 0.0)",
         button_hover="rgba(86, 101, 115, 0.5)",
         button_pressed="rgba(46, 61, 75, 0.5)",
         label_view="#acacac",
@@ -29,8 +30,9 @@ def get_stylesheet_light():
         sidebar="rgb(200, 200, 200)",
         sidebar_divider="rgb(180, 180, 180)",
         sidebar_label="#000000",
-        task_area="rgb(245, 245, 245)",
-        project_area="rgb(245, 245, 245)",
+        task_area="#f5f5f5",
+        project_area="#f5f5f5",
+        button="rgba(0, 0, 0, 0.0)",
         button_hover="rgba(86, 101, 115, 0.5)",
         button_pressed="rgba(46, 61, 75, 0.5)",
         label_view="rgba(86, 101, 115, 0.5)",
@@ -52,6 +54,7 @@ def get_stylesheet(
         sidebar_label,
         task_area,
         project_area,
+        button,
         button_hover,
         button_pressed,
         label_view,
@@ -78,12 +81,10 @@ def get_stylesheet(
 
         #TopBarQWidget QPushButton:hover {{
             background-color: {button_hover};
-            border-radius: 4px;
         }}
 
         #TopBarQWidget QPushButton:pressed {{
             background-color: {button_pressed};
-            border-radius: 4px;
         }}
 
         #IconSidebarQWidget {{
@@ -95,6 +96,8 @@ def get_stylesheet(
             height: 30px;
             width: 30px;
             border: none;
+            background-color: {button};
+            border-radius: 4px;
         }}
 
         #IconSidebarQWidget QPushButton:hover{{
@@ -126,6 +129,8 @@ def get_stylesheet(
             width: 30px;
             border: none;
             color: {sidebar_label};
+            background-color: {button};
+            border-radius: 4px;
         }}
 
         #FullSidebarQWidget QPushButton:hover{{

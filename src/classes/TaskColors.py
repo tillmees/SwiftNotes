@@ -1,15 +1,15 @@
 class TaskColors:
     def __init__(self):
-        self.Color1 = f"#b4ded6"
-        self.Color2 = f"#8ac6d1"
-        self.Color3 = f"#73c6a3"
-        self.Color4 = f"#91d35a"
-        self.Color5 = f"#f6cf2f"
-        self.Color6 = f"#f6ad4b"
-        self.Color7 = f"#f88020"
-        self.Color8 = f"#d1404d"
-        self.Color9 = f"#ffb6b9"
-        self.Color10 = f"#fadae4"
+        self.Color1 = f"#799558"
+        self.Color2 = f"#b0bf84"
+        self.Color3 = f"#e17e44"
+        self.Color4 = f"#f69d59"
+        self.Color5 = f"#e8b449"
+        self.Color6 = f"#d2838f"
+        self.Color7 = f"#ae445a"
+        self.Color8 = f"#732e54"
+        self.Color9 = f"#216869"
+        self.Color10 = f"#75a09b"
 
         self.color_mapping = {
             1: self.Color1,

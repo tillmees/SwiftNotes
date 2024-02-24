@@ -263,14 +263,16 @@ class MainWindow(QMainWindow):
     def on_open_pushed(self):
         options = QFileDialog.Options()
         # options |= QFileDialog.DontUseNativeDialog
-        self.file_name, _ = QFileDialog.getOpenFileName(
+        open_file_name, _ = QFileDialog.getOpenFileName(
             self, "Open File", "",
             "Swift Note Files (" "*.todo);;All Files (*)",
             options=options
         )
 
-        if not self.file_name:
+        if not open_file_name:
             return
+
+        self.file_name = open_file_name
 
         with open(self.file_name, "rb") as file:
             self.project_handler = pickle.load(file)
@@ -294,14 +296,16 @@ class MainWindow(QMainWindow):
     def on_save_as_pushed(self):
         options = QFileDialog.Options()
         # options |= QFileDialog.DontUseNativeDialog
-        self.file_name, _ = QFileDialog.getSaveFileName(
+        save_as_file_name, _ = QFileDialog.getSaveFileName(
             self, "Save File", "",
             "Swift Note Files (" "*.todo);;All Files (*)",
             options=options
         )
 
-        if not self.file_name:
+        if not save_as_file_name:
             return
+
+        self.file_name = save_as_file_name
 
         with open(self.file_name, "wb") as file:
             pickle.dump(self.project_handler, file)

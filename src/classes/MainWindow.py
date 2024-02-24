@@ -41,6 +41,7 @@ class MainWindow(QMainWindow):
         self.file_name = None
 
         self.stacked_widget_state = None
+        self.project_sort_member = None
 
         self.setup_for_clean_start()
         self.setup_signals()
@@ -198,6 +199,7 @@ class MainWindow(QMainWindow):
         self.ui.scrollAreaWidgetContentsProjectsList.layout().setAlignment(Qt.AlignTop)
 
         self.stacked_widget_state = StackedWidgetState.WELCOME.value
+        self.project_sort_member = "title"
 
     def setup_signals(self):
         self.ui.pushButtonIconNew.clicked.connect(
@@ -253,6 +255,10 @@ class MainWindow(QMainWindow):
 
         self.ui.pushButtonFullLayout.clicked.connect(
             self.on_toggle_layout
+        )
+
+        self.ui.pushButtonSort.clicked.connect(
+            self.on_sort_projects_pushed
         )
 
     def on_new_pushed(self):
@@ -418,7 +424,6 @@ class MainWindow(QMainWindow):
             u"menu-light.svg",
             u"toggle-right-light.svg",
             u"sliders-light.svg",
-            u"list-light.svg",
         ]
 
         self.change_layout_mode(icon_paths)
@@ -445,7 +450,6 @@ class MainWindow(QMainWindow):
             u"menu.svg",
             u"toggle-left.svg",
             u"sliders.svg",
-            u"list.svg",
         ]
 
         self.change_layout_mode(icon_paths)
@@ -469,8 +473,7 @@ class MainWindow(QMainWindow):
             self.ui.pushButtonFullTask,
             self.ui.pushButtonToggleMenu,
             self.ui.pushButtonFullLayout,
-            self.ui.toolButtonSort,
-            self.ui.pushButtonView,
+            self.ui.pushButtonSort,
         ]
         for button, icon_path in zip(buttons, icon_paths):
             icon = QIcon()
@@ -523,8 +526,40 @@ class MainWindow(QMainWindow):
             self.ui.scrollAreaWidgetContentsProjectsList
         )
 
+        sort_text = "sorted by: "
+        if self.project_sort_member == "title":
+            sort_text = sort_text + "Title"
+        elif self.project_sort_member == "last_changed_string":
+            sort_text = sort_text + "Last changed"
+        elif self.project_sort_member == "created_string":
+            sort_text = sort_text + "Created"
+        elif self.project_sort_member == "open_task_count":
+            sort_text = sort_text + "Open tasks"
+        else:
+            sort_text = sort_text + self.project_sort_member
+
+        self.ui.labelSort.setText(sort_text)
+
+        projects = self.project_handler.get_list_of_projects(
+            sort_member=self.project_sort_member
+        )
+
         ScrollAreaFunctions.fill_project_scroll_area(
             self.ui.scrollAreaWidgetContentsProjectsList,
-            self.project_handler.projects,
+            projects,
             self.get_project_signal_functions()
         )
+
+    def on_sort_projects_pushed(self):
+        current_sort_member = self.project_sort_member
+        if current_sort_member == "title":
+            self.project_sort_member = "last_changed_string"
+        elif current_sort_member == "last_changed_string":
+            self.project_sort_member = "created_string"
+        elif current_sort_member == "created_string":
+            self.project_sort_member = "open_task_count"
+        elif current_sort_member == "open_task_count":
+            self.project_sort_member = "title"
+        else:
+            assert False
+        self.update_project_view()

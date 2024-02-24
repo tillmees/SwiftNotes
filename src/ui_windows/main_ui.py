@@ -18,8 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFrame,
     QGridLayout, QHBoxLayout, QLabel, QLayout,
     QMainWindow, QPushButton, QScrollArea, QSizePolicy,
-    QSpacerItem, QStackedWidget, QToolButton, QVBoxLayout,
-    QWidget)
+    QSpacerItem, QStackedWidget, QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_MainWindow(object):
@@ -465,7 +464,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setSpacing(5)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalLayout_4.setContentsMargins(0, -1, 0, -1)
+        self.horizontalLayout_4.setContentsMargins(0, -1, 0, 5)
         self.label = QLabel(self.ProjectPage)
         self.label.setObjectName(u"label")
         font = QFont()
@@ -479,22 +478,20 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
 
-        self.toolButtonSort = QToolButton(self.ProjectPage)
-        self.toolButtonSort.setObjectName(u"toolButtonSort")
+        self.labelSort = QLabel(self.ProjectPage)
+        self.labelSort.setObjectName(u"labelSort")
+
+        self.horizontalLayout_4.addWidget(self.labelSort, 0, Qt.AlignHCenter)
+
+        self.pushButtonSort = QPushButton(self.ProjectPage)
+        self.pushButtonSort.setObjectName(u"pushButtonSort")
+        self.pushButtonSort.setMaximumSize(QSize(16777215, 16777215))
         icon10 = QIcon()
         icon10.addFile(u":/icons/icons/sliders.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.toolButtonSort.setIcon(icon10)
+        self.pushButtonSort.setIcon(icon10)
+        self.pushButtonSort.setIconSize(QSize(14, 14))
 
-        self.horizontalLayout_4.addWidget(self.toolButtonSort, 0, Qt.AlignRight|Qt.AlignVCenter)
-
-        self.pushButtonView = QPushButton(self.ProjectPage)
-        self.pushButtonView.setObjectName(u"pushButtonView")
-        self.pushButtonView.setMaximumSize(QSize(16777215, 16777215))
-        icon11 = QIcon()
-        icon11.addFile(u":/icons/icons/list.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButtonView.setIcon(icon11)
-
-        self.horizontalLayout_4.addWidget(self.pushButtonView, 0, Qt.AlignRight|Qt.AlignVCenter)
+        self.horizontalLayout_4.addWidget(self.pushButtonSort, 0, Qt.AlignRight|Qt.AlignVCenter)
 
 
         self.verticalLayout_8.addLayout(self.horizontalLayout_4)
@@ -513,7 +510,7 @@ class Ui_MainWindow(object):
         self.scrollAreaProjectsList.setWidgetResizable(True)
         self.scrollAreaWidgetContentsProjectsList = QWidget()
         self.scrollAreaWidgetContentsProjectsList.setObjectName(u"scrollAreaWidgetContentsProjectsList")
-        self.scrollAreaWidgetContentsProjectsList.setGeometry(QRect(0, 0, 718, 420))
+        self.scrollAreaWidgetContentsProjectsList.setGeometry(QRect(0, 0, 718, 417))
         self.verticalLayout_11 = QVBoxLayout(self.scrollAreaWidgetContentsProjectsList)
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
         self.scrollAreaProjectsList.setWidget(self.scrollAreaWidgetContentsProjectsList)
@@ -593,7 +590,7 @@ class Ui_MainWindow(object):
         self.labelStuckTestOutOf.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.labelDoneOutOf.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Projects", None))
-        self.toolButtonSort.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.pushButtonView.setText("")
+        self.labelSort.setText(QCoreApplication.translate("MainWindow", u"sorted by: Title", None))
+        self.pushButtonSort.setText("")
     # retranslateUi
 

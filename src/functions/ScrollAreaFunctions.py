@@ -28,8 +28,8 @@ def fill_scroll_area(scroll_area, tasks, signal_functions):
         task.delete_signal.connect(del_func)
 
 
-def fill_project_scroll_area(scroll_area, projects, signal_functions):
-    for project in projects.values():
+def fill_project_scroll_area(scroll_area, projects_list, signal_functions):
+    for project in projects_list:
         scroll_area_widget = ProjectWidget(
             project.get_title(),
             project.get_task_count() - project.get_task_count_in("done"),

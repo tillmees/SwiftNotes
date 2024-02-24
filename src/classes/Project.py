@@ -28,10 +28,12 @@ class Project:
             tasks)
 
         self.color_string = color_string
+        self.open_task_count = self.update_open_task_count()
 
     def add_task(self, task):
         self.tasks.append(task)
         self.update_last_changed_string()
+        self.update_open_task_count()
 
     def _set_created_string(self, created_string=None):
         return get_current_time_string() if \
@@ -90,6 +92,7 @@ class Project:
         if task is not None:
             self.tasks.remove(task)
             self.update_last_changed_string()
+            self.update_open_task_count()
             return
 
     def move_task_by_hash_in_bin(self, hash_value, new_task_bin):
@@ -97,15 +100,21 @@ class Project:
         if task is not None:
             task.set_task_bin(new_task_bin)
             self.update_last_changed_string()
-
+            self.update_open_task_count()
 
     def get_task_count_in(self, bin_string=None):
+        # possible bins: "open", "in progress", "stuck/test", "done"
         return len(
             [task for task in self.tasks if task.task_bin == bin_string]
         )
 
     def get_task_count(self):
         return len(self.tasks)
+
+    def update_open_task_count(self):
+        return self.get_task_count_in("open") + \
+            self.get_task_count_in("in progress") + \
+            self.get_task_count_in("stuck/test")
 
     def set_color_string(self, color_string):
         self.color_string = color_string

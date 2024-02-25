@@ -133,8 +133,8 @@ class MainWindow(QMainWindow):
         if current_project is None:
             self.show_welcome_screen()
         elif current_project is not EMPTY_PROJECT:
-            self.show_task_screen()
             self.update_task_view()
+            self.show_task_screen()
 
     def show_welcome_screen(self):
         self.stacked_widget_state = StackedWidgetState.WELCOME.value

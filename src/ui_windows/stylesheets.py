@@ -233,11 +233,11 @@ def get_stylesheet(
         }}
 
         #TaskWidget {{
-            border-radius: 5px;
+            border-radius: 9px;
         }}
 
         #ProjectWidget {{
-            border-radius: 5px;
+            border-radius: 9px;
         }}
 
         #labelTask {{

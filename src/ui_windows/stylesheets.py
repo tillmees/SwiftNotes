@@ -255,7 +255,7 @@ def get_stylesheet(
             height: 30px;
             width: 30px;
             border: none;
-        }}
+        }}        
 
         #scrollAreaWidgetContentsOpen {{
             background-color: {task_area};

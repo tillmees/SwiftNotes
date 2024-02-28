@@ -1,3 +1,6 @@
+from PySide6.QtGui import QColor
+
+
 class TaskColors:
     def __init__(self):
         self.Color1 = f"#799558"
@@ -29,3 +32,25 @@ class TaskColors:
             if val == string:
                 return key
         return None
+
+
+def lighten_color(hex_color_string, factor=0.05):
+    # Convert hex color to QColor
+    base_color = QColor(hex_color_string)
+
+    # Get RGB values
+    red = base_color.red()
+    green = base_color.green()
+    blue = base_color.blue()
+
+    # Calculate lighter color by adding a factor to each RGB component
+    lighter_red = min(int(red + 255 * factor), 255)
+    lighter_green = min(int(green + 255 * factor), 255)
+    lighter_blue = min(int(blue + 255 * factor), 255)
+
+    # Create a new QColor with the lighter RGB values
+    lighter_color = QColor(lighter_red, lighter_green, lighter_blue)
+
+    # Return the hex representation of the lighter color
+    return lighter_color.name()
+

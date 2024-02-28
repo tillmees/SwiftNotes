@@ -5,6 +5,7 @@ from ui_windows.task_ui import Ui_TaskWidget
 from classes.EditWindow import AddEditWindow
 from classes.TaskCreator import TaskCreator
 from functions.UtilityFunctions import get_current_time_string
+from classes.TaskColors import lighten_color
 
 
 class TaskWidget(QDialog):
@@ -123,6 +124,17 @@ class TaskWidget(QDialog):
             "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
             "border-radius: 4px;}\n "
         )
+
+    def enterEvent(self, event):
+        # Change background color when mouse enters
+        lighter_color = lighten_color(self.color_string)
+        self.setStyleSheet(
+            f"background-color: {lighter_color};\n "
+        )
+
+    def leaveEvent(self, event):
+        # Change back to the initial background color when mouse leaves
+        self.setStyleSheet(f"background-color: {self.color_string};")
 
     def on_info_clicked(self):
         self.info_signal.emit(self.get_hash())

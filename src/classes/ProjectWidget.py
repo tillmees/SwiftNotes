@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Qt, Signal
 
 from ui_windows.project_ui import Ui_ProjectWidget
+from classes.TaskColors import lighten_color
 
 
 class ProjectWidget(QDialog):
@@ -127,6 +128,17 @@ class ProjectWidget(QDialog):
             "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
             "border-radius: 4px;}\n "
         )
+
+    def enterEvent(self, event):
+        # Change background color when mouse enters
+        lighter_color = lighten_color(self.color_string)
+        self.setStyleSheet(
+            f"background-color: {lighter_color};\n "
+        )
+
+    def leaveEvent(self, event):
+        # Change back to the initial background color when mouse leaves
+        self.setStyleSheet(f"background-color: {self.color_string};")
 
     def on_project_selected_clicked(self):
         self.select_signal.emit(self.get_hash())

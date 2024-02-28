@@ -3,7 +3,6 @@
 <img src="ui/icons/readme-logo.png" width="250" /><br />
 </p>
 
-___
 ## Introduction
 
 SwiftNotes is a lightweight desktop application to keep track of tasks

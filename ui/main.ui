@@ -678,6 +678,9 @@
               <height>0</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
            </widget>
           </item>
           <item>
@@ -699,7 +702,7 @@
        <item>
         <widget class="QStackedWidget" name="TaskWindowstackedWidget">
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="WelcomePage">
           <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -812,8 +815,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>174</width>
-                <height>422</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_6"/>
@@ -848,8 +851,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>173</width>
-                <height>422</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_10"/>
@@ -884,8 +887,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>174</width>
-                <height>422</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_12"/>
@@ -920,8 +923,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>173</width>
-                <height>422</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_13"/>

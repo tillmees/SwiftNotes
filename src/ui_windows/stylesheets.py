@@ -4,6 +4,9 @@ def get_stylesheet_dark():
         popup_background="#2b2d30",
         popup_fields="#43454a",
         popup_fields_font="#ffffff",
+        combobox="#2b2d30",
+        combobox_border="#1e1f22",
+        combobox_font="#acacac",
         sidebar="#2b2d30",
         sidebar_divider="#1e1f22",
         sidebar_label="#acacac",
@@ -27,6 +30,9 @@ def get_stylesheet_light():
         popup_background="rgb(245, 245, 245)",
         popup_fields="#ffffff",
         popup_fields_font="#000000",
+        combobox="#f5f5f5",
+        combobox_border="rgb(200, 200, 200)",
+        combobox_font="#111111",
         sidebar="rgb(200, 200, 200)",
         sidebar_divider="rgb(180, 180, 180)",
         sidebar_label="#000000",
@@ -37,7 +43,7 @@ def get_stylesheet_light():
         button_pressed="rgba(46, 61, 75, 0.5)",
         label_view="rgba(86, 101, 115, 0.5)",
         label_projects_header="#000000",
-        label_light="#000000",
+        label_light="#ffffff",
         label_dark="#8a8a8a",
         label_welcome="rgb(200, 200, 200)",
     )
@@ -49,6 +55,9 @@ def get_stylesheet(
         popup_background,
         popup_fields,
         popup_fields_font,
+        combobox,
+        combobox_border,
+        combobox_font,
         sidebar,
         sidebar_divider,
         sidebar_label,
@@ -256,6 +265,45 @@ def get_stylesheet(
             width: 30px;
             border: none;
         }}        
+        
+        #comboBoxProjects {{
+            background-color: {combobox}; 
+            border: 1px solid {combobox_border};
+            padding-left: 10px;
+            color: {combobox_font};
+        }}
+        
+        #comboBoxProjects::drop-down {{
+            border: 0px;
+        }}
+
+        #comboBoxProjects::down-arrow {{
+            image: url(:/icons/icons/chevron-down-light.svg);
+            width: 16px;
+        }}
+        
+        #comboBoxProjects QListView {{
+            border: 1px solid {combobox_border};
+            padding: 5px;
+            background-color: {combobox}; 
+            outline: 0px;
+            color: {combobox_font};
+        }}
+        
+        #comboBoxProjects QListView::item {{
+            padding-left: 10px;
+            background-color: {combobox};
+            color: {sidebar_label};
+        }}
+        
+        #comboBoxProjects QListView::item::hover {{
+            background-color: {button_hover}; 
+            color: {sidebar_label};
+        }}
+        
+        #comboBoxProjects QListView::item::pressed{{
+            background-color: {button_pressed};
+        }}
 
         #scrollAreaWidgetContentsOpen {{
             background-color: {task_area};

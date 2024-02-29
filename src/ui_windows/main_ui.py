@@ -297,6 +297,7 @@ class Ui_MainWindow(object):
         self.comboBoxProjects = QComboBox(self.TopBarQWidget)
         self.comboBoxProjects.setObjectName(u"comboBoxProjects")
         self.comboBoxProjects.setMinimumSize(QSize(250, 0))
+        self.comboBoxProjects.setStyleSheet(u"")
 
         self.horizontalLayout_2.addWidget(self.comboBoxProjects)
 
@@ -373,7 +374,7 @@ class Ui_MainWindow(object):
         self.scrollAreaOpen.setWidgetResizable(True)
         self.scrollAreaWidgetContentsOpen = QWidget()
         self.scrollAreaWidgetContentsOpen.setObjectName(u"scrollAreaWidgetContentsOpen")
-        self.scrollAreaWidgetContentsOpen.setGeometry(QRect(0, 0, 174, 422))
+        self.scrollAreaWidgetContentsOpen.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_6 = QVBoxLayout(self.scrollAreaWidgetContentsOpen)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.scrollAreaOpen.setWidget(self.scrollAreaWidgetContentsOpen)
@@ -391,7 +392,7 @@ class Ui_MainWindow(object):
         self.scrollAreaInProgress.setWidgetResizable(True)
         self.scrollAreaWidgetContentsInProgress = QWidget()
         self.scrollAreaWidgetContentsInProgress.setObjectName(u"scrollAreaWidgetContentsInProgress")
-        self.scrollAreaWidgetContentsInProgress.setGeometry(QRect(0, 0, 173, 422))
+        self.scrollAreaWidgetContentsInProgress.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_10 = QVBoxLayout(self.scrollAreaWidgetContentsInProgress)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
         self.scrollAreaInProgress.setWidget(self.scrollAreaWidgetContentsInProgress)
@@ -409,7 +410,7 @@ class Ui_MainWindow(object):
         self.scrollAreaStuckTest.setWidgetResizable(True)
         self.scrollAreaWidgetContentsStuckTest = QWidget()
         self.scrollAreaWidgetContentsStuckTest.setObjectName(u"scrollAreaWidgetContentsStuckTest")
-        self.scrollAreaWidgetContentsStuckTest.setGeometry(QRect(0, 0, 174, 422))
+        self.scrollAreaWidgetContentsStuckTest.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_12 = QVBoxLayout(self.scrollAreaWidgetContentsStuckTest)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.scrollAreaStuckTest.setWidget(self.scrollAreaWidgetContentsStuckTest)
@@ -427,7 +428,7 @@ class Ui_MainWindow(object):
         self.scrollAreaDone.setWidgetResizable(True)
         self.scrollAreaWidgetContentsDone = QWidget()
         self.scrollAreaWidgetContentsDone.setObjectName(u"scrollAreaWidgetContentsDone")
-        self.scrollAreaWidgetContentsDone.setGeometry(QRect(0, 0, 173, 422))
+        self.scrollAreaWidgetContentsDone.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_13 = QVBoxLayout(self.scrollAreaWidgetContentsDone)
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
         self.scrollAreaDone.setWidget(self.scrollAreaWidgetContentsDone)
@@ -552,7 +553,7 @@ class Ui_MainWindow(object):
         self.pushButtonToggleMenu.toggled.connect(self.IconSidebarQWidget.setHidden)
         self.pushButtonToggleMenu.toggled.connect(self.FullSidebarQWidget.setVisible)
 
-        self.TaskWindowstackedWidget.setCurrentIndex(2)
+        self.TaskWindowstackedWidget.setCurrentIndex(0)
         self.ProjectPagestackedWidget.setCurrentIndex(0)
 
 

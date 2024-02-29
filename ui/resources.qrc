@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/chevron-down-light.svg</file>
     <file>icons/arrow-left-circle.svg</file>
     <file>icons/arrow-left-circle-light.svg</file>
     <file>icons/arrow-right-circle.svg</file>

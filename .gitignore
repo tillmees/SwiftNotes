@@ -40,6 +40,4 @@ build
 dist
 *.spec
 
-*.todo
-
 designs

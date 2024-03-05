@@ -28,7 +28,7 @@ class Project:
             tasks)
 
         self.color_string = color_string
-        self.open_task_count = self.update_open_task_count()
+        self.open_task_count = 0
 
     def add_task(self, task):
         self.tasks.append(task)
@@ -112,9 +112,11 @@ class Project:
         return len(self.tasks)
 
     def update_open_task_count(self):
-        return self.get_task_count_in("open") + \
-            self.get_task_count_in("in progress") + \
-            self.get_task_count_in("stuck/test")
+        self.open_task_count = (
+                self.get_task_count_in("open") + \
+                self.get_task_count_in("in progress") + \
+                self.get_task_count_in("stuck/test")
+        )
 
     def set_color_string(self, color_string):
         self.color_string = color_string

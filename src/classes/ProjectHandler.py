@@ -63,7 +63,7 @@ class ProjectHandler:
             project_list,
             key=lambda project: getattr(project, sort_member)
         )
-        if sort_member in ["last_changed_string", "created_string"]:
+        if sort_member in ["last_changed_string", "open_task_count"]:
             sorted_project_list = sorted_project_list[::-1]
 
         return sorted_project_list

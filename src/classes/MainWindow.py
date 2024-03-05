@@ -1,4 +1,3 @@
-import os
 import pickle
 from enum import Enum
 
@@ -39,6 +38,7 @@ class MainWindow(QMainWindow):
         self.info_window = InfoWindow()
         self.project_handler = ProjectHandler()
         self.file_name = None
+        self.is_unsaved_changes = None
 
         self.stacked_widget_state = None
         self.project_sort_member = None
@@ -47,6 +47,25 @@ class MainWindow(QMainWindow):
         self.setup_signals()
         self.layout = None
         self.use_light_mode()
+        self.update_title()
+
+    def update_title(self):
+        title = "SwiftNotes"
+
+        if self.file_name is not None and self.is_unsaved_changes:
+            title += f" - *{self.file_name}"
+        elif self.file_name is not None and not self.is_unsaved_changes:
+            title += f" - {self.file_name}"
+        elif self.file_name is None and self.is_unsaved_changes:
+            title += f" - *New File"
+        elif self.file_name is None and not self.is_unsaved_changes:
+            title += f" - New File"
+
+        self.setWindowTitle(title)
+
+    def mark_unsaved_changes(self):
+        self.is_unsaved_changes = True
+        self.update_title()
 
     def on_add_project_pushed(self):
         self.add_edit_window.clear_edits()
@@ -60,6 +79,7 @@ class MainWindow(QMainWindow):
                 project.get_title()
             )
             self.update_task_view()
+            self.mark_unsaved_changes()
 
     def on_close_project_pushed(self):
         self.project_handler.set_current_project(None)
@@ -106,6 +126,7 @@ class MainWindow(QMainWindow):
                     old_title
                 )
             self.update_project_view()
+            self.mark_unsaved_changes()
 
     def on_add_task_pushed(self):
         self.add_edit_window.setWindowTitle("Add Task")
@@ -116,6 +137,7 @@ class MainWindow(QMainWindow):
                 self.add_edit_window.get_task_creator_from_user_input()
             current_project.add_task(task_creator)
             self.update_task_view()
+            self.mark_unsaved_changes()
 
     def on_project_changed_in_combo_box(self):
         project_title_in_combo_box = ComboBoxFunctions.get_current_project(
@@ -265,6 +287,8 @@ class MainWindow(QMainWindow):
         self.project_handler = ProjectHandler()
         self.ui.comboBoxProjects.clear()
         self.setup_for_clean_start()
+        self.is_unsaved_changes = False
+        self.update_title()
 
     def on_open_pushed(self):
         options = QFileDialog.Options()
@@ -279,6 +303,8 @@ class MainWindow(QMainWindow):
             return
 
         self.file_name = open_file_name
+        self.is_unsaved_changes = False
+        self.update_title()
 
         with open(self.file_name, "rb") as file:
             self.project_handler = pickle.load(file)
@@ -298,6 +324,8 @@ class MainWindow(QMainWindow):
         else:
             with open(self.file_name, "wb") as file:
                 pickle.dump(self.project_handler, file)
+            self.is_unsaved_changes = False
+            self.update_title()
 
     def on_save_as_pushed(self):
         options = QFileDialog.Options()
@@ -315,6 +343,9 @@ class MainWindow(QMainWindow):
 
         with open(self.file_name, "wb") as file:
             pickle.dump(self.project_handler, file)
+
+        self.is_unsaved_changes = False
+        self.update_title()
 
     def get_task_signal_functions(self):
         return [
@@ -334,6 +365,7 @@ class MainWindow(QMainWindow):
         current_project = self.project_handler.get_current_project()
         current_project.move_task_by_hash_in_bin(move_tasks_hash, new_task_bin)
         self.update_task_view()
+        self.mark_unsaved_changes()
 
     def task_edit_in_scroll_area(self, edit_tasks_hash, edit_fields):
         current_project = self.project_handler.get_current_project()
@@ -343,10 +375,12 @@ class MainWindow(QMainWindow):
         task.set_description(new_description)
         task.set_color_string(new_color_string)
         self.update_task_view()
+        self.mark_unsaved_changes()
 
     def task_deleted_in_scroll_area(self, deleted_tasks_hash):
         current_project = self.project_handler.get_current_project()
         current_project.remove_task_by_hash(deleted_tasks_hash)
+        self.mark_unsaved_changes()
 
     def update_task_counter(self):
         current_project = self.project_handler.get_current_project()
@@ -512,6 +546,7 @@ class MainWindow(QMainWindow):
             title
         )
         self.project_handler.remove_project_by_hash(deleted_project_hash)
+        self.mark_unsaved_changes()
 
     def info_pushed_in_project_view(self, info_project_hash):
         project = self.project_handler.get_project_by_hash(info_project_hash)

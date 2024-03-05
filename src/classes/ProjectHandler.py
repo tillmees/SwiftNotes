@@ -1,6 +1,3 @@
-from classes.Project import Project
-
-
 class ProjectHandler:
     def __init__(self):
         self.projects = {}

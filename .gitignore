@@ -41,3 +41,6 @@ dist
 *.spec
 
 designs
+
+# generated files
+swiftnotes_settings.json

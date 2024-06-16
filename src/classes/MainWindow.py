@@ -26,11 +26,12 @@ class StackedWidgetState(Enum):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, app, version):
+    def __init__(self, app, version, settings):
         super(MainWindow, self).__init__()
 
         self.app = app
         self.version = version
+        self.settings = settings
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -45,9 +46,27 @@ class MainWindow(QMainWindow):
 
         self.setup_for_clean_start()
         self.setup_signals()
-        self.layout = None
-        self.use_light_mode()
+        self.is_start_up_finished = True
+        self.apply_settings()
+
+        layout = settings.get_value_for("layout")
+        if layout == "dark":
+            self.use_dark_mode()
+        elif layout == "light":
+            self.use_light_mode()
+
         self.update_title()
+
+    def apply_settings(self):
+        layout = self.settings.get_value_for("layout")
+        if layout == "dark":
+            self.use_dark_mode()
+        elif layout == "light":
+            self.use_light_mode()
+
+        width = int(self.settings.get_value_for("width"))
+        height = int(self.settings.get_value_for("height"))
+        self.resize(width, height)
 
     def update_title(self):
         title = "SwiftNotes"
@@ -66,6 +85,15 @@ class MainWindow(QMainWindow):
     def mark_unsaved_changes(self):
         self.is_unsaved_changes = True
         self.update_title()
+
+    def resizeEvent(self, event):
+        self.on_resize()
+
+    def on_resize(self):
+        new_width = self.width()
+        new_height = self.height()
+        self.settings.set_value_to("width", new_width)
+        self.settings.set_value_to("height", new_height)
 
     def on_add_project_pushed(self):
         self.add_edit_window.clear_edits()
@@ -461,7 +489,7 @@ class MainWindow(QMainWindow):
         ]
 
         self.change_layout_mode(icon_paths)
-        self.layout = "dark"
+        self.settings.set_value_to("layout", "dark")
 
     def use_light_mode(self):
         style_sheet = get_stylesheet_light()
@@ -487,7 +515,7 @@ class MainWindow(QMainWindow):
         ]
 
         self.change_layout_mode(icon_paths)
-        self.layout = "light"
+        self.settings.set_value_to("layout", "light")
 
     def change_layout_mode(self, icon_paths):
         buttons = [
@@ -516,9 +544,10 @@ class MainWindow(QMainWindow):
             button.setIcon(icon)
 
     def on_toggle_layout(self):
-        if self.layout == "dark":
+        layout = self.settings.get_value_for("layout")
+        if layout == "dark":
             self.use_light_mode()
-        elif self.layout == "light":
+        elif layout == "light":
             self.use_dark_mode()
 
     def get_project_signal_functions(self):

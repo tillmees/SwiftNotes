@@ -31,10 +31,12 @@
 *.out
 *.app
 
-# Pycharm dirs
+# IDE dirs
 __pycache__
 .idea
+.vscode
 
+# other dirs
 exe
 build
 dist
@@ -44,3 +46,6 @@ designs
 
 # generated files
 swiftnotes_settings.json
+
+# other files
+*.todo

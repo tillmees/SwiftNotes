@@ -1,11 +1,12 @@
-from PySide6.QtWidgets import QDialog
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Signal
+from PySide6.QtGui import QMouseEvent
 
 from ui_windows.project_ui import Ui_ProjectWidget
-from classes.TaskColors import lighten_color
+
+from classes.BaseWidget import BaseWidget
 
 
-class ProjectWidget(QDialog):
+class ProjectWidget(BaseWidget):
     select_signal = Signal(str)
     delete_signal = Signal(str)
     info_signal = Signal(str)
@@ -20,7 +21,7 @@ class ProjectWidget(QDialog):
             hash_value,
             color_string
     ):
-        super(ProjectWidget, self).__init__()
+        super(ProjectWidget, self).__init__(color_string)
 
         self.ui = Ui_ProjectWidget()
         self.ui.setupUi(self)
@@ -30,23 +31,24 @@ class ProjectWidget(QDialog):
         self.created_string = created_string
         self.last_changed_string = last_changed_string
         self.hash_value = hash_value
-
         self.color_string = color_string
-
+        
         self.setup_widget()
         self.setup_stylesheets()
         self.setup_connections()
 
+    def mouseDoubleClickEvent(self, event: QMouseEvent):
+        self.on_project_selected_clicked()
+        super().mouseDoubleClickEvent(event)
+
     def setup_widget(self):
-        self.ui.pushButtonProjectTitle.setText(f" {self.title}")
+        self.ui.labelProjectTitle.setText(f" {self.title}")
         self.ui.labelProjectOpenTasks.setText(f"{self.open_tasks_count}")
         self.ui.labelProjectCreated.setText(self.created_string)
         self.ui.labelProjectChanged.setText(self.last_changed_string)
         self.ui.stackedWidget.setCurrentIndex(0)
 
     def setup_connections(self):
-        self.ui.pushButtonProjectTitle.clicked.connect(
-            self.on_project_selected_clicked)
         self.ui.pushButtonInfoProject.clicked.connect(
             self.on_info_clicked)
         self.ui.pushButtonEditProject.clicked.connect(
@@ -58,9 +60,35 @@ class ProjectWidget(QDialog):
         self.ui.pushButton_YesDelProject.clicked.connect(
             self.on_delete_accepted)
 
+    def on_project_selected_clicked(self):
+        self.select_signal.emit(self.get_hash())
+
+    def on_delete_clicked(self):
+        self.ui.stackedWidget.setCurrentIndex(1)
+
+    def on_delete_accepted(self):
+        self.delete_signal.emit(self.get_hash())
+        self.deleteLater()
+
+    def on_delete_canceled(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+
+    def on_info_clicked(self):
+        self.info_signal.emit(self.get_hash())
+
+    def on_edit_clicked(self):
+        self.edit_signal.emit(self.get_hash())
+
+    def get_hash(self):
+        return self.hash_value
+
     def setup_stylesheets(self):
         self.setStyleSheet(
             f"background-color: {self.color_string};\n "
+        )
+
+        self.ui.labelProjectTitle.setStyleSheet(
+            "color: #000000;\n "
         )
 
         self.ui.labelDelProject.setStyleSheet(
@@ -75,22 +103,6 @@ class ProjectWidget(QDialog):
         self.ui.labelProjectChanged.setStyleSheet(
             "color: #000000;\n "
         )
-
-        self.ui.pushButtonProjectTitle.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-            "QPushButton{text-align: left;\n }"
-        )
-
-        # self.ui.pushButtonProjectTitle.setStyleSheet(
-        #     "QPushButton::hover{color: #ffffffff;}\n "
-        #     "QPushButton::pressed{color: rgba(0, 0, 0, 0.5);\n }"
-        #     "QPushButton{text-align: left;\n }"
-        # )
-
-        self.ui.pushButtonProjectTitle.setMinimumWidth(len(self.title) * 10)
 
         self.ui.pushButtonInfoProject.setStyleSheet(
             "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
@@ -128,38 +140,3 @@ class ProjectWidget(QDialog):
             "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
             "border-radius: 4px;}\n "
         )
-
-    def enterEvent(self, event):
-        # Change background color when mouse enters
-        lighter_color = lighten_color(self.color_string)
-        self.setStyleSheet(
-            f"background-color: {lighter_color};\n "
-        )
-
-    def leaveEvent(self, event):
-        # Change back to the initial background color when mouse leaves
-        self.setStyleSheet(f"background-color: {self.color_string};")
-
-    def on_project_selected_clicked(self):
-        self.select_signal.emit(self.get_hash())
-
-    def on_delete_clicked(self):
-        self.ui.stackedWidget.setCurrentIndex(1)
-
-    def on_delete_accepted(self):
-        self.delete_signal.emit(self.get_hash())
-        self.deleteLater()
-
-    def on_delete_canceled(self):
-        self.ui.stackedWidget.setCurrentIndex(0)
-
-    def on_info_clicked(self):
-        self.info_signal.emit(self.get_hash())
-
-    def on_edit_clicked(self):
-        self.edit_signal.emit(self.get_hash())
-
-    def get_hash(self):
-        return self.hash_value
-
-

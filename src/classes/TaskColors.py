@@ -33,24 +33,38 @@ class TaskColors:
                 return key
         return None
 
+def adjust_color(hex_color, factor, operation):
+    """
+    Adjusts the brightness of a given hex color by adding or subtracting a factor from each RGB component.
+    """
+    color = QColor(hex_color)
+    r, g, b = color.red(), color.green(), color.blue()
+    
+    if operation == 'lighten':
+        adjusted_r = min(int(r + 255 * factor), 255)
+        adjusted_g = min(int(g + 255 * factor), 255)
+        adjusted_b = min(int(b + 255 * factor), 255)
+    elif operation == 'darken':
+        adjusted_r = max(r - int(255 * factor), 0)
+        adjusted_g = max(g - int(255 * factor), 0)
+        adjusted_b = max(b - int(255 * factor), 0)
+    else:
+        raise ValueError("Invalid operation. Expected 'lighten' or 'darken'.")
+   
+    adjusted_color = QColor(adjusted_r, adjusted_g, adjusted_b)
+    
+    return adjusted_color.name()
 
-def lighten_color(hex_color_string, factor=0.05):
-    # Convert hex color to QColor
-    base_color = QColor(hex_color_string)
 
-    # Get RGB values
-    red = base_color.red()
-    green = base_color.green()
-    blue = base_color.blue()
+def lighten_color(hex_color, factor=0.05):
+    """
+    Lightens a given hex color by adding a factor to each RGB component.
+    """
+    return adjust_color(hex_color, factor, 'lighten')
 
-    # Calculate lighter color by adding a factor to each RGB component
-    lighter_red = min(int(red + 255 * factor), 255)
-    lighter_green = min(int(green + 255 * factor), 255)
-    lighter_blue = min(int(blue + 255 * factor), 255)
 
-    # Create a new QColor with the lighter RGB values
-    lighter_color = QColor(lighter_red, lighter_green, lighter_blue)
-
-    # Return the hex representation of the lighter color
-    return lighter_color.name()
-
+def darken_color(hex_color, factor=0.05):
+    """
+    Darkens a given hex color by subtracting a factor from each RGB component.
+    """
+    return adjust_color(hex_color, factor, 'darken')

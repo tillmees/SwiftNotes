@@ -57,6 +57,12 @@ class MainWindow(QMainWindow):
 
         self.update_title()
 
+    def dragEnterEvent(self, event):
+        event.accept()
+
+    def dropEvent(self, event):
+        event.accept()
+
     def apply_settings(self):
         layout = self.settings.get_value_for("layout")
         if layout == "dark":

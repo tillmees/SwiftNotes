@@ -1,21 +1,25 @@
 from PySide6.QtWidgets import QDialog
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Qt, Signal, QMimeData
+from PySide6.QtGui import QMouseEvent, QDrag, QPixmap, QPainter, QColor
 
 from ui_windows.task_ui import Ui_TaskWidget
+
+from classes.BaseWidget import BaseWidget
 from classes.EditWindow import AddEditWindow
 from classes.TaskCreator import TaskCreator
-from functions.UtilityFunctions import get_current_time_string
 from classes.TaskColors import lighten_color
 
+from functions.UtilityFunctions import get_current_time_string
 
-class TaskWidget(QDialog):
+
+class TaskWidget(BaseWidget):
     delete_signal = Signal(str)
     info_signal = Signal(str)
     edit_signal = Signal(str, tuple)
     move_signal = Signal(str, str)
 
     def __init__(self, task_creator):
-        super(TaskWidget, self).__init__()
+        super(TaskWidget, self).__init__(task_creator.color)
 
         self.ui = Ui_TaskWidget()
         self.ui.setupUi(self)
@@ -34,6 +38,37 @@ class TaskWidget(QDialog):
         self.setup_widget()
         self.setup_stylesheets()
         self.setup_connections()
+
+    def mouseDoubleClickEvent(self, event: QMouseEvent):
+        self.on_edit_clicked()
+        super().mouseDoubleClickEvent(event)
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            
+            drag = QDrag(self)
+            drag.setMimeData(QMimeData())
+
+            pixmap = self.grab()
+            rounded_pixmap = QPixmap(pixmap.size())
+            rounded_pixmap.fill(Qt.transparent)
+
+            painter = QPainter(rounded_pixmap)
+            painter.setRenderHint(QPainter.Antialiasing)
+            rounded_rect = rounded_pixmap.rect()
+            painter.setBrush(QColor(255, 255, 255))
+            painter.setPen(Qt.NoPen)
+            painter.drawRoundedRect(rounded_rect, 9, 9)  # Adjust the radius for rounded corners
+            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+            painter.drawPixmap(0, 0, pixmap)
+            painter.end()
+
+            drag.setPixmap(rounded_pixmap)
+
+            hot_spot = event.pos()
+            drag.setHotSpot(hot_spot)
+
+            drag.exec_(Qt.MoveAction)
 
     @classmethod
     def get_deepcopy(cls, class_instance):
@@ -69,72 +104,6 @@ class TaskWidget(QDialog):
         self.ui.pushButton_Yes.clicked.connect(self.on_delete_accepted)
         self.ui.pushButton_No.clicked.connect(self.on_delete_canceled)
 
-    def setup_stylesheets(self):
-        self.setStyleSheet(
-            f"background-color: {self.color_string};\n "
-        )
-
-        self.ui.pushButtonInfoTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-        self.ui.pushButtonMoveRightTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-        self.ui.pushButtonMoveLeftTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-        self.ui.pushButtonEditTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-        self.ui.pushButtonDeleteTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-        self.ui.pushButton_Yes.setStyleSheet(
-            "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px;}"
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-        self.ui.pushButton_No.setStyleSheet(
-            "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px;}"
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-    def enterEvent(self, event):
-        # Change background color when mouse enters
-        lighter_color = lighten_color(self.color_string)
-        self.setStyleSheet(
-            f"background-color: {lighter_color};\n "
-        )
-
-    def leaveEvent(self, event):
-        # Change back to the initial background color when mouse leaves
-        self.setStyleSheet(f"background-color: {self.color_string};")
 
     def on_info_clicked(self):
         self.info_signal.emit(self.get_hash())
@@ -244,4 +213,60 @@ class TaskWidget(QDialog):
     def get_color_string(self):
         return self.color_string
 
+    def setup_stylesheets(self):
+        self.setStyleSheet(
+            f"background-color: {self.color_string};\n "
+        )
 
+        self.ui.pushButtonInfoTask.setStyleSheet(
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
+        )
+
+        self.ui.pushButtonMoveRightTask.setStyleSheet(
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
+        )
+
+        self.ui.pushButtonMoveLeftTask.setStyleSheet(
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
+        )
+
+        self.ui.pushButtonEditTask.setStyleSheet(
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
+        )
+
+        self.ui.pushButtonDeleteTask.setStyleSheet(
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
+        )
+
+        self.ui.pushButton_Yes.setStyleSheet(
+            "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px; "
+            "border-radius: 4px;}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
+        )
+
+        self.ui.pushButton_No.setStyleSheet(
+            "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px; "
+            "border-radius: 4px;}\n "
+            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
+            "border-radius: 4px;}\n "
+            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
+            "border-radius: 4px;}\n "
+        )

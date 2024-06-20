@@ -19,13 +19,14 @@ def fill_scroll_area(scroll_area, tasks, signal_functions):
         )
 
     tasks_to_put_signal_on = scroll_area.findChildren(TaskWidget)
-    info_func, move_func, edit_func, del_func = \
+    info_func, move_func, edit_func, del_func, drag_func = \
         signal_functions
     for task in tasks_to_put_signal_on:
         task.info_signal.connect(info_func)
         task.move_signal.connect(move_func)
         task.edit_signal.connect(edit_func)
         task.delete_signal.connect(del_func)
+        task.drag_signal.connect(drag_func)
 
 
 def fill_project_scroll_area(scroll_area, projects_list, signal_functions):

@@ -21,6 +21,8 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFr
     QSpacerItem, QStackedWidget, QVBoxLayout, QWidget)
 import resources_rc
 
+from classes.ScrollArea import CustomScrollArea
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -360,7 +362,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.labelDone, 0, 6, 1, 1, Qt.AlignLeft)
 
-        self.scrollAreaOpen = QScrollArea(self.TaskPage)
+        self.scrollAreaOpen = CustomScrollArea("open", self.TaskPage)
         self.scrollAreaOpen.setObjectName(u"scrollAreaOpen")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -381,7 +383,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.scrollAreaOpen, 1, 0, 1, 2)
 
-        self.scrollAreaInProgress = QScrollArea(self.TaskPage)
+        self.scrollAreaInProgress = CustomScrollArea("in progress", self.TaskPage)
         self.scrollAreaInProgress.setObjectName(u"scrollAreaInProgress")
         sizePolicy.setHeightForWidth(self.scrollAreaInProgress.sizePolicy().hasHeightForWidth())
         self.scrollAreaInProgress.setSizePolicy(sizePolicy)
@@ -399,7 +401,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.scrollAreaInProgress, 1, 2, 1, 2)
 
-        self.scrollAreaStuckTest = QScrollArea(self.TaskPage)
+        self.scrollAreaStuckTest = CustomScrollArea("stuck/test", self.TaskPage)
         self.scrollAreaStuckTest.setObjectName(u"scrollAreaStuckTest")
         sizePolicy.setHeightForWidth(self.scrollAreaStuckTest.sizePolicy().hasHeightForWidth())
         self.scrollAreaStuckTest.setSizePolicy(sizePolicy)
@@ -417,7 +419,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.scrollAreaStuckTest, 1, 4, 1, 2)
 
-        self.scrollAreaDone = QScrollArea(self.TaskPage)
+        self.scrollAreaDone = CustomScrollArea("done", self.TaskPage)
         self.scrollAreaDone.setObjectName(u"scrollAreaDone")
         sizePolicy.setHeightForWidth(self.scrollAreaDone.sizePolicy().hasHeightForWidth())
         self.scrollAreaDone.setSizePolicy(sizePolicy)

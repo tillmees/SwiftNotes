@@ -35,6 +35,12 @@ class MainWindow(QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.ui.scrollAreaOpen.drop_signal.connect(self.task_gets_dropped)
+        self.ui.scrollAreaInProgress.drop_signal.connect(self.task_gets_dropped)
+        self.ui.scrollAreaStuckTest.drop_signal.connect(self.task_gets_dropped)
+        self.ui.scrollAreaDone.drop_signal.connect(self.task_gets_dropped)
+
         self.add_edit_window = AddEditWindow()
         self.info_window = InfoWindow()
         self.project_handler = ProjectHandler()
@@ -61,6 +67,7 @@ class MainWindow(QMainWindow):
         event.accept()
 
     def dropEvent(self, event):
+        self.task_dropped_outside_of_a_scroll_area()
         event.accept()
 
     def apply_settings(self):
@@ -386,7 +393,8 @@ class MainWindow(QMainWindow):
             self.task_info_in_scroll_area,
             self.task_move_in_scroll_area,
             self.task_edit_in_scroll_area,
-            self.task_deleted_in_scroll_area
+            self.task_deleted_in_scroll_area,
+            self.task_gets_dragged
         ]
 
     def task_info_in_scroll_area(self, info_tasks_hash):
@@ -415,6 +423,32 @@ class MainWindow(QMainWindow):
         current_project = self.project_handler.get_current_project()
         current_project.remove_task_by_hash(deleted_tasks_hash)
         self.mark_unsaved_changes()
+
+    def task_gets_dragged(self, dragged_tasks_hash):
+        self.dragged_tasks_hash = dragged_tasks_hash
+        current_project = self.project_handler.get_current_project()
+        self.dragged_task = current_project.get_task_by_hash(dragged_tasks_hash)
+        current_project.remove_task_by_hash(dragged_tasks_hash)
+        self.update_task_view()
+
+    def task_gets_dropped(self, bin_name):
+        if self.dragged_tasks_hash is not None:
+            self.dragged_task.task_bin = bin_name
+            current_project = self.project_handler.get_current_project()
+            current_project.add_task(self.dragged_task)
+            self.dragged_tasks_hash = None
+            self.dragged_task = None
+            self.update_task_view()
+            self.mark_unsaved_changes()
+
+    def task_dropped_outside_of_a_scroll_area(self):
+        if self.dragged_tasks_hash is not None:
+            current_project = self.project_handler.get_current_project()
+            current_project.add_task(self.dragged_task)
+            self.dragged_tasks_hash = None
+            self.dragged_task = None
+            self.update_task_view()
+            self.mark_unsaved_changes()
 
     def update_task_counter(self):
         current_project = self.project_handler.get_current_project()

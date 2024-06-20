@@ -17,6 +17,7 @@ class TaskWidget(BaseWidget):
     info_signal = Signal(str)
     edit_signal = Signal(str, tuple)
     move_signal = Signal(str, str)
+    drag_signal = Signal(str)
 
     def __init__(self, task_creator):
         super(TaskWidget, self).__init__(task_creator.color)
@@ -46,6 +47,8 @@ class TaskWidget(BaseWidget):
     def mouseMoveEvent(self, event):
         if event.buttons() == Qt.LeftButton:
             
+            self.drag_signal.emit(self.get_hash())
+
             drag = QDrag(self)
             drag.setMimeData(QMimeData())
 
@@ -67,6 +70,7 @@ class TaskWidget(BaseWidget):
 
             hot_spot = event.pos()
             drag.setHotSpot(hot_spot)
+            drag.setObjectName(self.hash_value)
 
             drag.exec_(Qt.MoveAction)
 

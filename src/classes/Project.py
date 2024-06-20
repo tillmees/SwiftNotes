@@ -17,15 +17,12 @@ class Project:
         self.title = title
         self.description = description
 
-        self.created_string = self._set_created_string(
-            created_string)
-        self.last_changed_string = self._set_last_changed_string(
-            last_changed_string)
-        self.hash_value = self._set_hash_value(
-            hash_value)
+        self.created_string = self._set_created_string(created_string)
+        self.last_changed_string = self._set_last_changed_string(last_changed_string)
+        self.hash_value = self._set_hash_value(hash_value)
 
-        self.tasks = self._set_tasks(
-            tasks)
+        self.tasks = self._set_tasks(tasks)
+        self.temp_disabled_tasks = []
 
         self.color_string = color_string
         self.open_task_count = 0
@@ -86,6 +83,14 @@ class Project:
             if task.hash_value == hash_value:
                 return task
         return None
+    
+    def temporarily_remove_task_by_hash(self, hash_value):
+        task = self.get_task_by_hash(hash_value)
+        if task is not None:
+            self.tasks.remove(task)
+            self.update_last_changed_string()
+            self.update_open_task_count()
+            return
 
     def remove_task_by_hash(self, hash_value):
         task = self.get_task_by_hash(hash_value)

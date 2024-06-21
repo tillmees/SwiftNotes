@@ -40,9 +40,6 @@ class Ui_TaskWidget(object):
         verticalSpacer = QSpacerItem(20, 40000, QSizePolicy.Minimum, QSizePolicy.Maximum)
         self.verticalLayoutButtons.addItem(verticalSpacer)
 
-        self.pushButtonInfoTask = self.configure_info_button(TaskWidget)
-        self.verticalLayoutButtons.addWidget(self.pushButtonInfoTask, 0, Qt.AlignHCenter|Qt.AlignBottom)
-
         self.pushButtonDeleteTask = self.configure_delete_button(TaskWidget)
         self.verticalLayoutButtons.addWidget(self.pushButtonDeleteTask, 0, Qt.AlignHCenter|Qt.AlignBottom)
 
@@ -115,15 +112,6 @@ class Ui_TaskWidget(object):
 
         return taskDeleteWidget
 
-    def configure_info_button(self, TaskWidget):
-        pushButtonInfoTask = QPushButton(TaskWidget)
-        pushButtonInfoTask.setObjectName(u"pushButtonInfoTask")
-        icon = QIcon()
-        icon.addFile(u":/icons/icons/info.svg", QSize(), QIcon.Normal, QIcon.Off)
-        pushButtonInfoTask.setIcon(icon)
-        pushButtonInfoTask.setIconSize(QSize(14, 14))
-        return pushButtonInfoTask
-
     def configure_delete_button(self, TaskWidget):
         pushButtonDeleteTask = QPushButton(TaskWidget)
         pushButtonDeleteTask.setObjectName(u"pushButtonDeleteTask")
@@ -140,5 +128,4 @@ class Ui_TaskWidget(object):
         self.labelDelTask.setText(QCoreApplication.translate("TaskWidget", u"Delete this task?", None))
         self.pushButton_YesDelTask.setText(QCoreApplication.translate("TaskWidget", u"Yes", None))
         self.pushButton_NoDelTask.setText(QCoreApplication.translate("TaskWidget", u"No", None))
-        self.pushButtonInfoTask.setText("")
         self.pushButtonDeleteTask.setText("")

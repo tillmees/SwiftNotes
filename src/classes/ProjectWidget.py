@@ -9,7 +9,6 @@ from classes.BaseWidget import BaseWidget
 class ProjectWidget(BaseWidget):
     select_signal = Signal(str)
     delete_signal = Signal(str)
-    info_signal = Signal(str)
     edit_signal = Signal(str)
 
     def __init__(
@@ -49,8 +48,6 @@ class ProjectWidget(BaseWidget):
         self.ui.stackedWidget.setCurrentIndex(0)
 
     def setup_connections(self):
-        self.ui.pushButtonInfoProject.clicked.connect(
-            self.on_info_clicked)
         self.ui.pushButtonEditProject.clicked.connect(
             self.on_edit_clicked)
         self.ui.pushButtonDeleteProject.clicked.connect(
@@ -72,9 +69,6 @@ class ProjectWidget(BaseWidget):
 
     def on_delete_canceled(self):
         self.ui.stackedWidget.setCurrentIndex(0)
-
-    def on_info_clicked(self):
-        self.info_signal.emit(self.get_hash())
 
     def on_edit_clicked(self):
         self.edit_signal.emit(self.get_hash())
@@ -102,13 +96,6 @@ class ProjectWidget(BaseWidget):
         )
         self.ui.labelProjectChanged.setStyleSheet(
             "color: #000000;\n "
-        )
-
-        self.ui.pushButtonInfoProject.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButtonEditProject.setStyleSheet(

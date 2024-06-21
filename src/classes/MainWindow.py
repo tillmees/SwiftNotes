@@ -8,8 +8,7 @@ from PySide6.QtGui import QIcon
 from ui_windows.main_ui import Ui_MainWindow
 from ui_windows.stylesheets import get_stylesheet_dark, get_stylesheet_light
 
-from classes.EditWindow import AddEditWindow
-from classes.InfoWindow import InfoWindow
+from classes.AddEditWindow import AddEditWindow
 from classes.ProjectHandler import ProjectHandler
 
 from functions import ComboBoxFunctions
@@ -42,7 +41,6 @@ class MainWindow(QMainWindow):
         self.ui.scrollAreaDone.drop_signal.connect(self.task_gets_dropped)
 
         self.add_edit_window = AddEditWindow()
-        self.info_window = InfoWindow()
         self.project_handler = ProjectHandler()
         self.file_name = None
         self.is_unsaved_changes = None
@@ -127,12 +125,6 @@ class MainWindow(QMainWindow):
         self.update_project_view()
         self.show_project_screen()
 
-    def on_info_project_pushed(self, project):
-        self.info_window.setWindowTitle("Info Project")
-        self.info_window.execute(
-            project
-        )
-
     def on_edit_project_pushed(self, project):
         old_title = project.get_title()
         old_description = project.get_description()
@@ -144,7 +136,7 @@ class MainWindow(QMainWindow):
         self.add_edit_window.set_description(old_description)
         self.add_edit_window.set_color_checked_box(old_color_string)
 
-        result = self.add_edit_window.exec_edit()
+        result = self.add_edit_window.exec_edit(project)
         if result == QDialog.Accepted:
             new_title = self.add_edit_window.get_title()
             new_description = self.add_edit_window.get_description()
@@ -390,24 +382,10 @@ class MainWindow(QMainWindow):
 
     def get_task_signal_functions(self):
         return [
-            self.task_info_in_scroll_area,
-            self.task_move_in_scroll_area,
             self.task_edit_in_scroll_area,
             self.task_deleted_in_scroll_area,
             self.task_gets_dragged
         ]
-
-    def task_info_in_scroll_area(self, info_tasks_hash):
-        current_project = self.project_handler.get_current_project()
-        task = current_project.get_task_by_hash(info_tasks_hash)
-        self.info_window.setWindowTitle("Info Task")
-        self.info_window.execute(task)
-
-    def task_move_in_scroll_area(self, move_tasks_hash, new_task_bin):
-        current_project = self.project_handler.get_current_project()
-        current_project.move_task_by_hash_in_bin(move_tasks_hash, new_task_bin)
-        self.update_task_view()
-        self.mark_unsaved_changes()
 
     def task_edit_in_scroll_area(self, edit_tasks_hash, edit_fields):
         current_project = self.project_handler.get_current_project()
@@ -594,7 +572,6 @@ class MainWindow(QMainWindow):
         return [
             self.selected_project_in_project_view,
             self.deleted_pushed_in_project_view,
-            self.info_pushed_in_project_view,
             self.edit_pushed_in_project_view
         ]
 

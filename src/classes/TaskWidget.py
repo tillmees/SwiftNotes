@@ -5,7 +5,7 @@ from PySide6.QtGui import QMouseEvent, QDrag, QPixmap, QPainter, QColor
 from ui_windows.TaskUi import Ui_TaskWidget
 
 from classes.BaseWidget import BaseWidget
-from classes.EditWindow import AddEditWindow
+from classes.AddEditWindow import AddEditWindow
 from classes.TaskCreator import TaskCreator
 
 from functions.UtilityFunctions import get_current_time_string
@@ -13,9 +13,7 @@ from functions.UtilityFunctions import get_current_time_string
 
 class TaskWidget(BaseWidget):
     delete_signal = Signal(str)
-    info_signal = Signal(str)
     edit_signal = Signal(str, tuple)
-    move_signal = Signal(str, str)
     drag_signal = Signal(str)
 
     def __init__(self, task_creator):
@@ -97,38 +95,9 @@ class TaskWidget(BaseWidget):
         self.ui.stackedWidget.setCurrentIndex(0)
 
     def setup_connections(self):
-        self.ui.pushButtonInfoTask.clicked.connect(self.on_info_clicked)
         self.ui.pushButtonDeleteTask.clicked.connect(self.on_delete_clicked)
         self.ui.pushButton_YesDelTask.clicked.connect(self.on_delete_accepted)
         self.ui.pushButton_NoDelTask.clicked.connect(self.on_delete_canceled)
-
-
-    def on_info_clicked(self):
-        self.info_signal.emit(self.get_hash())
-
-    def on_move_right_clicked(self):
-        if self.task_bin == "open":
-            self.task_bin = "in progress"
-
-        elif self.task_bin == "in progress":
-            self.task_bin = "stuck/test"
-
-        elif self.task_bin == "stuck/test":
-            self.task_bin = "done"
-
-        self.move_signal.emit(self.get_hash(), self.task_bin)
-
-    def on_move_left_clicked(self):
-        if self.task_bin == "done":
-            self.task_bin = "stuck/test"
-
-        elif self.task_bin == "stuck/test":
-            self.task_bin = "in progress"
-
-        elif self.task_bin == "in progress":
-            self.task_bin = "open"
-
-        self.move_signal.emit(self.get_hash(), self.task_bin)
 
     def on_edit_clicked(self):
         old_title = self.title
@@ -141,7 +110,7 @@ class TaskWidget(BaseWidget):
         self.edit_task_window.set_description(old_description)
         self.edit_task_window.set_color_checked_box(old_color_string)
 
-        result = self.edit_task_window.exec_edit()
+        result = self.edit_task_window.exec_edit(self)
         if result == QDialog.Accepted:
             new_title = self.edit_task_window.get_title()
             new_description = self.edit_task_window.get_description()
@@ -165,7 +134,6 @@ class TaskWidget(BaseWidget):
         self.ui.stackedWidget.setCurrentIndex(0)
 
     def side_buttons_are_enabled(self, bool_val):
-        self.ui.pushButtonInfoTask.setEnabled(bool_val)
         self.ui.pushButtonDeleteTask.setEnabled(bool_val)
 
     def get_hash(self):
@@ -211,13 +179,6 @@ class TaskWidget(BaseWidget):
     def setup_stylesheets(self):
         self.setStyleSheet(
             f"background-color: {self.color_string};\n "
-        )
-
-        self.ui.pushButtonInfoTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
         )
 
         self.ui.pushButtonDeleteTask.setStyleSheet(

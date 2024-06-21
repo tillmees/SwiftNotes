@@ -32,9 +32,6 @@ class Ui_ProjectWidget(object):
         self.stackedWidget.setCurrentIndex(0)
         self.projectWidgetMainLayout.addWidget(self.stackedWidget, 0, Qt.AlignVCenter)
 
-        self.pushButtonInfoProject = self.configure_info_button(ProjectWidget)
-        self.projectWidgetMainLayout.addWidget(self.pushButtonInfoProject, 0, Qt.AlignRight|Qt.AlignVCenter)
-
         self.pushButtonEditProject = self.configure_edit_button(ProjectWidget)
         self.projectWidgetMainLayout.addWidget(self.pushButtonEditProject, 0, Qt.AlignRight|Qt.AlignVCenter)
 
@@ -139,15 +136,6 @@ class Ui_ProjectWidget(object):
 
         return projectDeleteWidget
 
-    def configure_info_button(self, ProjectWidget):
-        pushButtonInfoProject = QPushButton(ProjectWidget)
-        pushButtonInfoProject.setObjectName(u"pushButtonInfoProject")
-        icon2 = QIcon()
-        icon2.addFile(u":/icons/icons/info.svg", QSize(), QIcon.Normal, QIcon.Off)
-        pushButtonInfoProject.setIcon(icon2)
-        pushButtonInfoProject.setIconSize(QSize(14, 14))
-        return pushButtonInfoProject
-
     def configure_edit_button(self, ProjectWidget):
         pushButtonEditProject = QPushButton(ProjectWidget)
         pushButtonEditProject.setObjectName(u"pushButtonEditProject")
@@ -175,6 +163,5 @@ class Ui_ProjectWidget(object):
         self.labelDelProject.setText(QCoreApplication.translate("ProjectWidget", u"Delete this project?", None))
         self.pushButton_YesDelProject.setText(QCoreApplication.translate("ProjectWidget", u"Yes", None))
         self.pushButton_NoDelProject.setText(QCoreApplication.translate("ProjectWidget", u"No", None))
-        self.pushButtonInfoProject.setText("")
         self.pushButtonEditProject.setText("")
         self.pushButtonDeleteProject.setText("")

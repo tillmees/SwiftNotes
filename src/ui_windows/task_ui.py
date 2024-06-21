@@ -45,8 +45,6 @@ class Ui_TaskWidget(object):
         self.labelTask = QLabel(self.Task)
         self.labelTask.setObjectName(u"labelTask")
         font = QFont()
-        font.setPointSize(14)
-        font.setBold(True)
         self.labelTask.setFont(font)
         self.labelTask.setWordWrap(True)
 

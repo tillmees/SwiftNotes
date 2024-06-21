@@ -1,3 +1,6 @@
+from PySide6.QtGui import QFontDatabase
+
+
 def get_stylesheet_dark():
     style_content = get_stylesheet(
         main_background="#1e1f22",
@@ -72,13 +75,20 @@ def get_stylesheet(
         label_dark,
         label_welcome
 ):
+    
+    font_id_medium = QFontDatabase.addApplicationFont("ui/fonts/Poppins-Medium.ttf")
+    font_medium = QFontDatabase.applicationFontFamilies(font_id_medium)[0] if not font_id_medium == -1 else "Roboto"
+
+    font_id_bold = QFontDatabase.addApplicationFont("ui/fonts/Poppins-SemiBold.ttf")
+    font_bold = QFontDatabase.applicationFontFamilies(font_id_bold)[0] if not font_id_bold == -1 else "Roboto"
+
     style_content = f"""
         #MainWindow {{
         background-color: {main_background};
         }}
 
         * {{
-            font-family: Consolas;
+            font-family: {font_medium};
             letter-spacing: 0px;
         }}
 
@@ -249,10 +259,14 @@ def get_stylesheet(
             border-radius: 9px;
         }}
 
-        #labelTask {{
+        #labelProjectTitle {{
+            font-family: {font_bold};
             color: #000000;
-            font-size: 14px;
-            font-weight: bold;
+        }}
+
+        #labelTask {{
+            font-family: {font_bold};
+            color: #000000;
         }}
 
         #labelTaskCreated {{

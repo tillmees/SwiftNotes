@@ -54,7 +54,6 @@ class Ui_ProjectWidget(object):
         sizePolicy2.setHeightForWidth(self.labelProjectTitle.sizePolicy().hasHeightForWidth())
         self.labelProjectTitle.setSizePolicy(sizePolicy2)
         font = QFont()
-        font.setItalic(False)
         self.labelProjectTitle.setFont(font)
 
         self.horizontalLayout.addWidget(self.labelProjectTitle, 0, Qt.AlignLeft|Qt.AlignVCenter)

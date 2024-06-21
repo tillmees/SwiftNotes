@@ -1,7 +1,6 @@
 from PySide6.QtWidgets import QDialog
 from PySide6.QtGui import QMouseEvent
 
-from ui_windows.project_ui import Ui_ProjectWidget
 from classes.TaskColors import lighten_color, darken_color
 
 

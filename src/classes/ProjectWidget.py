@@ -1,7 +1,7 @@
 from PySide6.QtCore import Signal
 from PySide6.QtGui import QMouseEvent
 
-from ui_windows.project_ui import Ui_ProjectWidget
+from ui_windows.ProjectUi import Ui_ProjectWidget
 
 from classes.BaseWidget import BaseWidget
 

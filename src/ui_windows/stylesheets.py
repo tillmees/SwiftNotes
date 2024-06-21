@@ -76,11 +76,11 @@ def get_stylesheet(
         label_welcome
 ):
     
-    font_id_medium = QFontDatabase.addApplicationFont("ui/fonts/Poppins-Medium.ttf")
-    font_medium = QFontDatabase.applicationFontFamilies(font_id_medium)[0] if not font_id_medium == -1 else "Roboto"
+    font_id = QFontDatabase.addApplicationFont("ui/fonts/Poppins-Regular.ttf")
+    font = QFontDatabase.applicationFontFamilies(font_id)[0] if not font_id == -1 else "Consolas"
 
     font_id_bold = QFontDatabase.addApplicationFont("ui/fonts/Poppins-SemiBold.ttf")
-    font_bold = QFontDatabase.applicationFontFamilies(font_id_bold)[0] if not font_id_bold == -1 else "Roboto"
+    font_bold = QFontDatabase.applicationFontFamilies(font_id_bold)[0] if not font_id_bold == -1 else "Consolas"
 
     style_content = f"""
         #MainWindow {{
@@ -88,7 +88,7 @@ def get_stylesheet(
         }}
 
         * {{
-            font-family: {font_medium};
+            font-family: {font};
             letter-spacing: 0px;
         }}
 

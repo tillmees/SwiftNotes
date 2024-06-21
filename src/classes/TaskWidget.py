@@ -2,12 +2,11 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Qt, Signal, QMimeData
 from PySide6.QtGui import QMouseEvent, QDrag, QPixmap, QPainter, QColor
 
-from ui_windows.task_ui import Ui_TaskWidget
+from ui_windows.TaskUi import Ui_TaskWidget
 
 from classes.BaseWidget import BaseWidget
 from classes.EditWindow import AddEditWindow
 from classes.TaskCreator import TaskCreator
-from classes.TaskColors import lighten_color
 
 from functions.UtilityFunctions import get_current_time_string
 
@@ -92,21 +91,16 @@ class TaskWidget(BaseWidget):
         )
 
     def setup_widget(self):
-        self.ui.labelTask.setText(self.title)
+        self.ui.labelTaskTitle.setText(self.title)
         self.ui.labelTaskCreated.setText(self.created_string)
         self.ui.verticalLayoutButtons.setAlignment(Qt.AlignTop)
         self.ui.stackedWidget.setCurrentIndex(0)
 
     def setup_connections(self):
         self.ui.pushButtonInfoTask.clicked.connect(self.on_info_clicked)
-        self.ui.pushButtonMoveRightTask.clicked.connect(
-            self.on_move_right_clicked)
-        self.ui.pushButtonMoveLeftTask.clicked.connect(
-            self.on_move_left_clicked)
-        self.ui.pushButtonEditTask.clicked.connect(self.on_edit_clicked)
         self.ui.pushButtonDeleteTask.clicked.connect(self.on_delete_clicked)
-        self.ui.pushButton_Yes.clicked.connect(self.on_delete_accepted)
-        self.ui.pushButton_No.clicked.connect(self.on_delete_canceled)
+        self.ui.pushButton_YesDelTask.clicked.connect(self.on_delete_accepted)
+        self.ui.pushButton_NoDelTask.clicked.connect(self.on_delete_canceled)
 
 
     def on_info_clicked(self):
@@ -172,9 +166,6 @@ class TaskWidget(BaseWidget):
 
     def side_buttons_are_enabled(self, bool_val):
         self.ui.pushButtonInfoTask.setEnabled(bool_val)
-        self.ui.pushButtonMoveRightTask.setEnabled(bool_val)
-        self.ui.pushButtonMoveLeftTask.setEnabled(bool_val)
-        self.ui.pushButtonEditTask.setEnabled(bool_val)
         self.ui.pushButtonDeleteTask.setEnabled(bool_val)
 
     def get_hash(self):
@@ -229,27 +220,6 @@ class TaskWidget(BaseWidget):
             "border-radius: 4px;}\n "
         )
 
-        self.ui.pushButtonMoveRightTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-        self.ui.pushButtonMoveLeftTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
-        self.ui.pushButtonEditTask.setStyleSheet(
-            "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
-            "border-radius: 4px;}\n "
-            "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "
-            "border-radius: 4px;}\n "
-        )
-
         self.ui.pushButtonDeleteTask.setStyleSheet(
             "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
             "border-radius: 4px;}\n "
@@ -257,7 +227,7 @@ class TaskWidget(BaseWidget):
             "border-radius: 4px;}\n "
         )
 
-        self.ui.pushButton_Yes.setStyleSheet(
+        self.ui.pushButton_YesDelTask.setStyleSheet(
             "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px; "
             "border-radius: 4px;}\n "
             "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
@@ -266,7 +236,7 @@ class TaskWidget(BaseWidget):
             "border-radius: 4px;}\n "
         )
 
-        self.ui.pushButton_No.setStyleSheet(
+        self.ui.pushButton_NoDelTask.setStyleSheet(
             "QPushButton{background-color: rgba(0, 0, 0, 0.15); width: 60px; "
             "border-radius: 4px;}\n "
             "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "

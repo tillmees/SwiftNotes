@@ -26,6 +26,7 @@ class AddEditWindow(QDialog):
         self.setup_stylesheets()
 
     def exec_add(self):
+        self.hide_common_info_elements()
         self.hide_project_info_elements()
         self.clear_edits()
         self.ui.lineEditTaskname.setFocus()
@@ -65,6 +66,7 @@ class AddEditWindow(QDialog):
             f"{project.get_task_count_in('done')}"
         )
 
+        self.show_common_info_elements()
         self.show_project_info_elements()
 
     def setup_for_task(self, task):
@@ -81,7 +83,22 @@ class AddEditWindow(QDialog):
             task.last_changed_string
         )
 
+        self.show_common_info_elements()
         self.hide_project_info_elements()
+
+    def hide_common_info_elements(self):
+        self.ui.label_DateCreatedText.hide()
+        self.ui.label_DateCreated.hide()
+
+        self.ui.label_DateChangedText.hide()
+        self.ui.label_DateChanged.hide()
+
+    def show_common_info_elements(self):
+        self.ui.label_DateCreatedText.show()
+        self.ui.label_DateCreated.show()
+
+        self.ui.label_DateChangedText.show()
+        self.ui.label_DateChanged.show()
 
     def hide_project_info_elements(self):
         self.ui.label_NoTasksText.hide()

@@ -123,6 +123,7 @@ class MainWindow(QMainWindow):
         if result == QDialog.Accepted:
             project = self.add_edit_window.get_project_from_user_input()
             self.project_handler.add_project(project)
+            self.project_handler.set_current_project(project.get_title())
             ComboBoxFunctions.update_combo_box(
                 self.ui.comboBoxProjects,
                 project.get_title()

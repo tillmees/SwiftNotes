@@ -1,7 +1,7 @@
 import pickle
 from enum import Enum
 
-from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog
+from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog, QVBoxLayout, QWidget
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 
@@ -10,6 +10,7 @@ from ui_windows.stylesheets import get_stylesheet_dark, get_stylesheet_light
 
 from classes.AddEditWindow import AddEditWindow
 from classes.ProjectHandler import ProjectHandler
+from classes.CustomTitleBar import CustomTitleBar
 
 from functions import ComboBoxFunctions
 from functions import ScrollAreaFunctions
@@ -32,6 +33,8 @@ class MainWindow(QMainWindow):
         self.version = version
         self.settings = settings
 
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        # self.setWindowFlags(self.windowFlags() | Qt.WindowSystemMenuHint | Qt.WindowMinMaxButtonsHint| Qt.WindowTitleHint)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -60,6 +63,12 @@ class MainWindow(QMainWindow):
             self.use_light_mode()
 
         self.update_title()
+    
+    def toggleMaximizeRestore(self):
+        if self.isMaximized():
+            self.showNormal()
+        else:
+            self.showMaximized()
 
     def dragEnterEvent(self, event):
         event.accept()
@@ -92,6 +101,7 @@ class MainWindow(QMainWindow):
             title += f" - New File"
 
         self.setWindowTitle(title)
+        self.ui.title_bar.set_window_title(title)
 
     def mark_unsaved_changes(self):
         self.is_unsaved_changes = True
@@ -504,6 +514,11 @@ class MainWindow(QMainWindow):
             u"menu-light.svg",
             u"toggle-right-light.svg",
             u"sliders-light.svg",
+
+            u"minimize-window-light.svg",
+            u"maximize-window-light.svg",
+            u"restore-window-light.svg",
+            u"close-window-light.svg",
         ]
 
         self.change_layout_mode(icon_paths)
@@ -530,6 +545,11 @@ class MainWindow(QMainWindow):
             u"menu.svg",
             u"toggle-left.svg",
             u"sliders.svg",
+
+            u"minimize-window.svg",
+            u"maximize-window.svg",
+            u"restore-window.svg",
+            u"close-window.svg",
         ]
 
         self.change_layout_mode(icon_paths)
@@ -554,6 +574,11 @@ class MainWindow(QMainWindow):
             self.ui.pushButtonToggleMenu,
             self.ui.pushButtonFullLayout,
             self.ui.pushButtonSort,
+
+            self.ui.title_bar.btn_minimize,
+            self.ui.title_bar.btn_maximize,
+            self.ui.title_bar.btn_restore,
+            self.ui.title_bar.btn_close,
         ]
         for button, icon_path in zip(buttons, icon_paths):
             icon = QIcon()

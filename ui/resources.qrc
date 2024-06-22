@@ -40,5 +40,17 @@
     <file>icons/toggle-right-light.svg</file>
     <file>icons/trash-2.svg</file>
     <file>icons/trash-2-light.svg</file>
+    <file>icons/maximize-window-light.svg</file>
+    <file>icons/maximize-window.svg</file>
+    <file>icons/restore-window-light.svg</file>
+    <file>icons/restore-window.svg</file>
+	<file>icons/minimize-window-light.svg</file>
+    <file>icons/minimize-window.svg</file>
+	<file>icons/close-window-light.svg</file>
+    <file>icons/close-window.svg</file>
+  </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/Poppins-SemiBold.ttf</file>
+    <file>fonts/Poppins-Regular.ttf</file>
   </qresource>
 </RCC>

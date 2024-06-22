@@ -1,9 +1,12 @@
 from PySide6.QtGui import QFontDatabase
 
+import resources_rc
+
 
 def get_stylesheet_dark():
     style_content = get_stylesheet(
         main_background="#1e1f22",
+        title_bar_background="#1e1f22",
         popup_background="#2b2d30",
         popup_fields="#43454a",
         popup_fields_font="#ffffff",
@@ -23,6 +26,8 @@ def get_stylesheet_dark():
         label_light="#acacac",
         label_dark="#ffffff",
         label_welcome="rgb(200, 200, 200)",
+        button_titlebar_hover="rgba(255, 255, 255, 0.125)",
+        button_titlebar_pressed="rgba(255, 255, 255, 0.25)"
     )
     return style_content
 
@@ -30,6 +35,7 @@ def get_stylesheet_dark():
 def get_stylesheet_light():
     style_content = get_stylesheet(
         main_background="#eeeeee",
+        title_bar_background="#eeeeee",
         popup_background="rgb(245, 245, 245)",
         popup_fields="#ffffff",
         popup_fields_font="#000000",
@@ -49,12 +55,15 @@ def get_stylesheet_light():
         label_light="#ffffff",
         label_dark="#8a8a8a",
         label_welcome="rgb(200, 200, 200)",
+        button_titlebar_hover="rgba(0, 0, 0, 0.125)",
+        button_titlebar_pressed="rgba(0, 0, 0, 0.25)"
     )
     return style_content
 
 
 def get_stylesheet(
         main_background,
+        title_bar_background,
         popup_background,
         popup_fields,
         popup_fields_font,
@@ -73,13 +82,15 @@ def get_stylesheet(
         label_projects_header,
         label_light,
         label_dark,
-        label_welcome
+        label_welcome,
+        button_titlebar_hover,
+        button_titlebar_pressed
 ):
     
-    font_id = QFontDatabase.addApplicationFont("ui/fonts/Poppins-Regular.ttf")
+    font_id = QFontDatabase.addApplicationFont(u":fonts/fonts/Poppins-Regular.ttf")
     font = QFontDatabase.applicationFontFamilies(font_id)[0] if not font_id == -1 else "Consolas"
 
-    font_id_bold = QFontDatabase.addApplicationFont("ui/fonts/Poppins-SemiBold.ttf")
+    font_id_bold = QFontDatabase.addApplicationFont(u":fonts/fonts/Poppins-SemiBold.ttf")
     font_bold = QFontDatabase.applicationFontFamilies(font_id_bold)[0] if not font_id_bold == -1 else "Consolas"
 
     style_content = f"""
@@ -90,6 +101,38 @@ def get_stylesheet(
         * {{
             font-family: {font};
             letter-spacing: 0px;
+        }}
+
+        #backgroundTitleBar {{
+            background-color: {title_bar_background};
+        }}
+
+        #buttonWindowResize {{
+            background-color: transparent;
+            border: none;
+        }}
+        #buttonWindowResize:hover {{
+            background-color: {button_titlebar_hover};
+        }}
+        #buttonWindowResize:pressed {{
+            background-color: {button_titlebar_pressed};
+        }}
+
+        #buttonCloseWindow {{
+            background-color: transparent;
+            border: none;
+        }}
+        #buttonCloseWindow:hover {{
+            background-color: rgba(235, 30, 20, 1.0);
+        }}
+        #buttonCloseWindow:pressed {{
+            background-color: rgba(235, 30, 20, 0.5);
+        }}
+
+        #windowTitle {{
+            color: {sidebar_label};
+            font-size: 12px;
+            font-family: Segoe UI;
         }}
 
         #TopBarQWidget QPushButton{{

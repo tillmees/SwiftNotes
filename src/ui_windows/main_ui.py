@@ -21,7 +21,8 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFr
     QSpacerItem, QStackedWidget, QVBoxLayout, QWidget)
 import resources_rc
 
-from classes.ScrollArea import CustomScrollArea
+from classes.CustomScrollArea import CustomScrollArea
+from classes.CustomTitleBar import CustomTitleBar
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -32,14 +33,24 @@ class Ui_MainWindow(object):
         icon.addFile(u":/icons/icons/swift-notes.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setIconSize(QSize(55, 55))
-        self.centralwidget = QWidget(MainWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.centralwidget.setStyleSheet(u"")
+        self.mainCentralwidget = QWidget(MainWindow)
+        self.mainCentralwidget.setObjectName(u"centralwidget")
+
+        self.mainVerticalLayout = QVBoxLayout(self.mainCentralwidget)
+        self.mainVerticalLayout.setSpacing(0)
+        self.mainVerticalLayout.setObjectName(u"mainVerticalLayout")
+        self.mainVerticalLayout.setContentsMargins(0, 0, 0, 0)
+
+        self.title_bar = CustomTitleBar(MainWindow)
+        self.mainVerticalLayout.addWidget(self.title_bar)
+        # self.mainVerticalLayout.addStretch(1)
+
+        self.centralwidget = QWidget(self.mainCentralwidget)
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.IconSidebarQWidget = QWidget(self.centralwidget)
+        self.IconSidebarQWidget = QWidget(self.mainCentralwidget)
         self.IconSidebarQWidget.setObjectName(u"IconSidebarQWidget")
         self.IconSidebarQWidget.setMinimumSize(QSize(40, 0))
         self.IconSidebarQWidget.setMaximumSize(QSize(30, 16777215))
@@ -138,7 +149,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.IconSidebarQWidget)
 
-        self.FullSidebarQWidget = QWidget(self.centralwidget)
+        self.FullSidebarQWidget = QWidget(self.mainCentralwidget)
         self.FullSidebarQWidget.setObjectName(u"FullSidebarQWidget")
         self.FullSidebarQWidget.setMinimumSize(QSize(200, 0))
         self.FullSidebarQWidget.setMaximumSize(QSize(200, 16777215))
@@ -266,7 +277,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.FullSidebarQWidget)
 
-        self.MainViewQWidget = QWidget(self.centralwidget)
+        self.MainViewQWidget = QWidget(self.mainCentralwidget)
         self.MainViewQWidget.setObjectName(u"MainViewQWidget")
         self.MainViewQWidget.setLayoutDirection(Qt.LeftToRight)
         self.verticalLayout_5 = QVBoxLayout(self.MainViewQWidget)
@@ -549,7 +560,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.MainViewQWidget)
 
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.mainVerticalLayout.addWidget(self.centralwidget)
+
+        MainWindow.setCentralWidget(self.mainCentralwidget)
 
         self.retranslateUi(MainWindow)
         self.pushButtonToggleMenu.toggled.connect(self.IconSidebarQWidget.setHidden)
@@ -597,4 +610,3 @@ class Ui_MainWindow(object):
         self.labelSort.setText(QCoreApplication.translate("MainWindow", u"sorted by: Title", None))
         self.pushButtonSort.setText("")
     # retranslateUi
-

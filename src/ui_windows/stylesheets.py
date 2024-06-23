@@ -12,10 +12,10 @@ def get_stylesheet_dark():
         popup_fields_font="#ffffff",
         combobox="#2b2d30",
         combobox_border="#1e1f22",
-        combobox_font="#acacac",
+        combobox_font="#ffffff",
         sidebar="#2b2d30",
         sidebar_divider="#1e1f22",
-        sidebar_label="#acacac",
+        sidebar_label="#ffffff",
         task_area="#2b2d30",
         project_area="#2b2d30",
         button="rgba(0, 0, 0, 0.0)",
@@ -23,8 +23,10 @@ def get_stylesheet_dark():
         button_pressed="rgba(46, 61, 75, 0.5)",
         label_view="#acacac",
         label_projects_header="#acacac",
-        label_light="#acacac",
+        label_light="#ffffff",
+        label_light_weight="regular",
         label_dark="#ffffff",
+        label_dark_weight="bold",
         label_welcome="rgb(200, 200, 200)",
         button_titlebar_hover="rgba(255, 255, 255, 0.125)",
         button_titlebar_pressed="rgba(255, 255, 255, 0.25)"
@@ -52,8 +54,10 @@ def get_stylesheet_light():
         button_pressed="rgba(46, 61, 75, 0.5)",
         label_view="rgba(86, 101, 115, 0.5)",
         label_projects_header="#000000",
-        label_light="#ffffff",
-        label_dark="#8a8a8a",
+        label_light="#000000",
+        label_light_weight="bold",
+        label_dark="#000000",
+        label_dark_weight="regular",
         label_welcome="rgb(200, 200, 200)",
         button_titlebar_hover="rgba(0, 0, 0, 0.125)",
         button_titlebar_pressed="rgba(0, 0, 0, 0.25)"
@@ -81,7 +85,9 @@ def get_stylesheet(
         label_view,
         label_projects_header,
         label_light,
+        label_light_weight,
         label_dark,
+        label_dark_weight,
         label_welcome,
         button_titlebar_hover,
         button_titlebar_pressed
@@ -97,6 +103,8 @@ def get_stylesheet(
         #MainWindow {{
         background-color: {main_background};
         }}
+
+        #MainWindow::title {{background-color: #3498db;}}
 
         * {{
             font-family: {font};
@@ -211,10 +219,12 @@ def get_stylesheet(
 
         #FullSidebarQWidget #label_light{{
             color: {label_light};
+            font-weight: {label_light_weight};
         }}
 
         #FullSidebarQWidget #label_dark{{
             color: {label_dark};
+            font-weight: {label_dark_weight};
         }}
 
         #labelWelcome {{
@@ -233,35 +243,35 @@ def get_stylesheet(
         }}
 
         #labelOpenOutOf {{
-            color: {label_view};
+            color: {sidebar_label};
         }}
 
         #labelInProgressOutOf {{
-            color: {label_view};
+            color: {sidebar_label};
         }}
 
         #labelStuckTestOutOf {{
-            color: {label_view};
+            color: {sidebar_label};
         }}
 
         #labelDoneOutOf {{
-            color: {label_view};
+            color: {sidebar_label};
         }}
 
         #labelOpen {{
-            color: {label_view};
+            color: {sidebar_label};
         }}
 
         #labelInProgress {{
-            color: {label_view};
+            color: {sidebar_label};
         }}
 
         #labelStuckTest {{
-            color: {label_view};
+            color: {sidebar_label};
         }}
 
         #labelDone {{
-            color: {label_view};
+            color: {sidebar_label};
         }}
 
         #AddEditDialog {{

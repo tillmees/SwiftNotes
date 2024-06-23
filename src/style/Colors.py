@@ -1,7 +1,7 @@
 from PySide6.QtGui import QColor
 
 
-class TaskColors:
+class Colors:
     def __init__(self):
         self.Color1 = f"#799558"
         self.Color2 = f"#b0bf84"

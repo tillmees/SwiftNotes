@@ -1,11 +1,11 @@
 import copy
 
-from classes.TaskCreator import TaskCreator
-from functions.UtilityFunctions import get_current_time_string, \
+from task.TaskCreator import TaskCreator
+from base.UtilityFunctions import get_current_time_string, \
     get_hash_from_time
 
 
-class Project:
+class ProjectClass:
     def __init__(self,
                  title,
                  description,

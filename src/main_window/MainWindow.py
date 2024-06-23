@@ -5,15 +5,15 @@ from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog, QVBoxLayout, QW
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 
-from ui_windows.main_ui import Ui_MainWindow
-from ui_windows.stylesheets import get_stylesheet_dark, get_stylesheet_light
+from main_window.main_ui import Ui_MainWindow
+from style.stylesheets import get_stylesheet_dark, get_stylesheet_light
 
-from classes.AddEditWindow import AddEditWindow
-from classes.ProjectHandler import ProjectHandler
-from classes.CustomTitleBar import CustomTitleBar
+from form_window.AddEditWindow import AddEditWindow
+from project.ProjectHandler import ProjectHandler
+from base.CustomTitleBar import CustomTitleBar
 
-from functions import ComboBoxFunctions
-from functions import ScrollAreaFunctions
+from base import ComboBoxFunctions
+from base import ScrollAreaFunctions
 
 
 EMPTY_PROJECT = " "
@@ -29,6 +29,7 @@ class MainWindow(QMainWindow):
     def __init__(self, app, version, settings):
         super(MainWindow, self).__init__()
 
+        self.counter = 1
         self.app = app
         self.version = version
         self.settings = settings
@@ -106,14 +107,11 @@ class MainWindow(QMainWindow):
         self.is_unsaved_changes = True
         self.update_title()
 
-    def resizeEvent(self, event):
-        self.on_resize()
-
-    def on_resize(self):
-        new_width = self.width()
-        new_height = self.height()
-        self.settings.set_value_to("width", new_width)
-        self.settings.set_value_to("height", new_height)
+    def closeEvent(self, event):
+        if not self.window().isMaximized():
+            self.settings.set_value_to("width", self.width())
+            self.settings.set_value_to("height", self.height())
+        super().closeEvent(event)
 
     def on_add_project_pushed(self):
         self.add_edit_window.clear_edits()

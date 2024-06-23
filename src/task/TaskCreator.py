@@ -1,4 +1,4 @@
-from functions.UtilityFunctions import get_current_time_string, \
+from base.UtilityFunctions import get_current_time_string, \
     get_hash_from_time
 
 

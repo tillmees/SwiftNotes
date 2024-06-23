@@ -1,9 +1,9 @@
 from PySide6.QtWidgets import QDialogButtonBox, QDialog
 
-from classes.TaskCreator import TaskCreator
-from classes.TaskColors import TaskColors
-from classes.Project import Project
-from ui_windows.AddEditUi import Ui_AddEditDialog
+from task.TaskCreator import TaskCreator
+from style.Colors import Colors
+from project.ProjectClass import ProjectClass
+from form_window.AddEditUi import Ui_AddEditDialog
 
 
 class AddEditWindow(QDialog):
@@ -20,7 +20,7 @@ class AddEditWindow(QDialog):
 
         self.max_chars = 100
 
-        self.colors = TaskColors()
+        self.colors = Colors()
         self.checkBoxes = []
         self.setup_checkbox_ids()
         self.setup_stylesheets()
@@ -33,7 +33,7 @@ class AddEditWindow(QDialog):
         return super(AddEditWindow, self).exec()
 
     def exec_edit(self, obj):
-        if isinstance(obj, Project):
+        if isinstance(obj, ProjectClass):
             self.setup_for_project(obj)
         else:
             self.setup_for_task(obj)
@@ -139,7 +139,7 @@ class AddEditWindow(QDialog):
         return task_creator
 
     def get_project_from_user_input(self):
-        project = Project(
+        project = ProjectClass(
             self.get_title(),
             self.get_description(),
             color_string=self.get_color_string()

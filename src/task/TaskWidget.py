@@ -2,13 +2,13 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Qt, Signal, QMimeData
 from PySide6.QtGui import QMouseEvent, QDrag, QPixmap, QPainter, QColor
 
-from ui_windows.TaskUi import Ui_TaskWidget
+from task.TaskUi import Ui_TaskWidget
 
-from classes.BaseWidget import BaseWidget
-from classes.AddEditWindow import AddEditWindow
-from classes.TaskCreator import TaskCreator
+from base.BaseWidget import BaseWidget
+from form_window.AddEditWindow import AddEditWindow
+from task.TaskCreator import TaskCreator
 
-from functions.UtilityFunctions import get_current_time_string
+from base.UtilityFunctions import get_current_time_string
 
 
 class TaskWidget(BaseWidget):

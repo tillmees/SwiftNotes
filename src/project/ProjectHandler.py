@@ -54,7 +54,7 @@ class ProjectHandler:
     def sort_list_of_projects(project_list, sort_member):
         if not hasattr(project_list[0], sort_member):
             raise ValueError(
-                f"'{sort_member} not a member of the 'Project' class."
+                f"'{sort_member} not a member of the 'ProjectClass'."
             )
         sorted_project_list = sorted(
             project_list,

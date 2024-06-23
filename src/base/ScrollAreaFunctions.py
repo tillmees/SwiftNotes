@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QDialog
 
-from classes.TaskWidget import TaskWidget
-from classes.ProjectWidget import ProjectWidget
+from task.TaskWidget import TaskWidget
+from project.ProjectWidget import ProjectWidget
 
 
 def clear_scroll_area(scroll_area):

@@ -21,8 +21,8 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFr
     QSpacerItem, QStackedWidget, QVBoxLayout, QWidget)
 import resources_rc
 
-from classes.CustomScrollArea import CustomScrollArea
-from classes.CustomTitleBar import CustomTitleBar
+from base.CustomScrollArea import CustomScrollArea
+from base.CustomTitleBar import CustomTitleBar
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

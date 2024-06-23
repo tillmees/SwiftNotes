@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt, QSize, QPoint
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QSizePolicy, QSpacerItem, QLayout
 from PySide6.QtGui import QMouseEvent, QIcon, QPixmap,  QCursor
 
-from classes.TaskColors import darken_color 
+from style.Colors import darken_color 
 
 import resources_rc
 

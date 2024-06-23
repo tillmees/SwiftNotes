@@ -2,8 +2,8 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from classes.MainWindow import MainWindow
-from classes.SettingsHandler import SettingsHandler
+from main_window.MainWindow import MainWindow
+from settings.SettingsHandler import SettingsHandler
 
 
 VERSION_MAJOR = 0

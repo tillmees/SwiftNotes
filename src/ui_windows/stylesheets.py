@@ -290,6 +290,10 @@ def get_stylesheet(
             color: {popup_fields_font};
         }}
 
+        #AddEditDialog QLabel {{
+            color: {popup_fields_font};
+        }}
+
         #InfoDialog {{
             background-color: {popup_background};
         }}
@@ -318,6 +322,11 @@ def get_stylesheet(
         }}
 
         #labelTask {{
+            font-family: {font_bold};
+            color: #000000;
+        }}
+
+        #labelDelTask {{
             font-family: {font_bold};
             color: #000000;
         }}

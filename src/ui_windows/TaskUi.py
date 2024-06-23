@@ -73,6 +73,7 @@ class Ui_TaskWidget(object):
         taskOverviewWidget.setObjectName(u"taskOverviewWidget")
         verticalLayout = QVBoxLayout(taskOverviewWidget)
         verticalLayout.setObjectName(u"verticalLayout")
+        
         self.labelTaskTitle = QLabel(taskOverviewWidget)
         self.labelTaskTitle.setObjectName(u"labelTask")
         font = QFont()
@@ -94,21 +95,23 @@ class Ui_TaskWidget(object):
         taskDeleteWidget = QWidget(TaskWidget)
         taskDeleteWidget.setObjectName(u"taskDeleteWidget")
         verticalLayout = QVBoxLayout(taskDeleteWidget)
-        verticalLayout.setSpacing(10)
         verticalLayout.setObjectName(u"verticalLayout")
-        verticalLayout.setContentsMargins(10, 0, 10, 0)
 
         self.labelDelTask = QLabel(taskDeleteWidget)
         self.labelDelTask.setObjectName(u"labelDelTask")
-        verticalLayout.addWidget(self.labelDelTask, 0, Qt.AlignLeft|Qt.AlignTop)
+        font = QFont()
+        self.labelDelTask.setFont(font)
+        self.labelDelTask.setWordWrap(True)
+
+        verticalLayout.addWidget(self.labelDelTask, 0, Qt.AlignTop)
 
         self.pushButton_YesDelTask = QPushButton(taskDeleteWidget)
         self.pushButton_YesDelTask.setObjectName(u"pushButton_YesDelTask")
-        verticalLayout.addWidget(self.pushButton_YesDelTask, 0, Qt.AlignLeft)
+        verticalLayout.addWidget(self.pushButton_YesDelTask, 0, Qt.AlignLeft | Qt.AlignBottom)
 
         self.pushButton_NoDelTask = QPushButton(taskDeleteWidget)
         self.pushButton_NoDelTask.setObjectName(u"pushButton_NoDelTask")
-        verticalLayout.addWidget(self.pushButton_NoDelTask, 0, Qt.AlignLeft)
+        verticalLayout.addWidget(self.pushButton_NoDelTask, 0, Qt.AlignLeft | Qt.AlignBottom)
 
         return taskDeleteWidget
 

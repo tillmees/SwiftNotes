@@ -33,8 +33,7 @@ class MainWindow(QMainWindow):
         self.version = version
         self.settings = settings
 
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        # self.setWindowFlags(self.windowFlags() | Qt.WindowSystemMenuHint | Qt.WindowMinMaxButtonsHint| Qt.WindowTitleHint)
+        # self.setWindowFlags(Qt.FramelessWindowHint)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -101,7 +100,7 @@ class MainWindow(QMainWindow):
             title += f" - New File"
 
         self.setWindowTitle(title)
-        self.ui.title_bar.set_window_title(title)
+        # self.ui.title_bar.set_window_title(title)
 
     def mark_unsaved_changes(self):
         self.is_unsaved_changes = True
@@ -516,10 +515,10 @@ class MainWindow(QMainWindow):
             u"toggle-right-light.svg",
             u"sliders-light.svg",
 
-            u"minimize-window-light.svg",
-            u"maximize-window-light.svg",
-            u"restore-window-light.svg",
-            u"close-window-light.svg",
+            # u"minimize-window-light.svg",
+            # u"maximize-window-light.svg",
+            # u"restore-window-light.svg",
+            # u"close-window-light.svg",
         ]
 
         self.change_layout_mode(icon_paths)
@@ -547,10 +546,10 @@ class MainWindow(QMainWindow):
             u"toggle-left.svg",
             u"sliders.svg",
 
-            u"minimize-window.svg",
-            u"maximize-window.svg",
-            u"restore-window.svg",
-            u"close-window.svg",
+            # u"minimize-window.svg",
+            # u"maximize-window.svg",
+            # u"restore-window.svg",
+            # u"close-window.svg",
         ]
 
         self.change_layout_mode(icon_paths)
@@ -576,10 +575,10 @@ class MainWindow(QMainWindow):
             self.ui.pushButtonFullLayout,
             self.ui.pushButtonSort,
 
-            self.ui.title_bar.btn_minimize,
-            self.ui.title_bar.btn_maximize,
-            self.ui.title_bar.btn_restore,
-            self.ui.title_bar.btn_close,
+            # self.ui.title_bar.btn_minimize,
+            # self.ui.title_bar.btn_maximize,
+            # self.ui.title_bar.btn_restore,
+            # self.ui.title_bar.btn_close,
         ]
         for button, icon_path in zip(buttons, icon_paths):
             icon = QIcon()

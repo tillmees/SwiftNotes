@@ -1,97 +1,78 @@
+import os
+import json
+
 from PySide6.QtGui import QFontDatabase
 
 import resources_rc
 
+def get_default_style_dict():
+    default_style_dict = {
+        "main_background": "#eeeeee",
+        "title_bar_background": "#eeeeee",
+        "popup_background": "#eeeeee",
+        "popup_fields": "#eeeeee",
+        "popup_fields_font": "#000000",
+        "combobox": "#eeeeee",
+        "combobox_border": "#000000",
+        "combobox_font": "#000000",
+        "sidebar": "#aaaaaa",
+        "sidebar_divider": "#000000",
+        "sidebar_label": "#000000",
+        "task_area": "#eeeeee",
+        "project_area": "#eeeeee",
+        "button": "#aaaaaa",
+        "button_hover": "#aaaaaa",
+        "button_pressed": "#aaaaaa",
+        "label_view": "#000000",
+        "label_projects_header": "#000000",
+        "label_light": "#000000",
+        "label_light_weight": "regular",
+        "label_dark": "#000000",
+        "label_dark_weight": "regular",
+        "label_welcome": "#000000",
+        "button_titlebar_hover": "#aaaaaa",
+        "button_titlebar_pressed": "#aaaaaa",
+    }
+    return default_style_dict
+
+def parse_style_json(
+          style_file_name="swiftnotes_style.json",
+          layout_style="light",
+    ):
+
+        if not os.path.exists(style_file_name):
+            return get_default_style_dict()
+        
+        with open(style_file_name, "r") as file:
+            data = json.load(file)
+        
+        style_dict = get_default_style_dict()
+
+        if layout_style in data:
+            for key, value in data[layout_style].items():
+                style_dict[key] = value
+
+        return style_dict
 
 def get_stylesheet_dark():
-    style_content = get_stylesheet(
-        main_background="#1e1f22",
-        title_bar_background="#1e1f22",
-        popup_background="#2b2d30",
-        popup_fields="#43454a",
-        popup_fields_font="#ffffff",
-        combobox="#2b2d30",
-        combobox_border="#1e1f22",
-        combobox_font="#ffffff",
-        sidebar="#2b2d30",
-        sidebar_divider="#1e1f22",
-        sidebar_label="#ffffff",
-        task_area="#2b2d30",
-        project_area="#2b2d30",
-        button="rgba(0, 0, 0, 0.0)",
-        button_hover="rgba(86, 101, 115, 0.5)",
-        button_pressed="rgba(46, 61, 75, 0.5)",
-        label_view="#acacac",
-        label_projects_header="#acacac",
-        label_light="#ffffff",
-        label_light_weight="regular",
-        label_dark="#ffffff",
-        label_dark_weight="bold",
-        label_welcome="rgb(200, 200, 200)",
-        button_titlebar_hover="rgba(255, 255, 255, 0.125)",
-        button_titlebar_pressed="rgba(255, 255, 255, 0.25)"
-    )
+    style_dict = parse_style_json(
+            style_file_name="swiftnotes_style.json",
+            layout_style="dark"
+        )
+    style_content = get_stylesheet(style_dict)
     return style_content
 
 
 def get_stylesheet_light():
-    style_content = get_stylesheet(
-        main_background="#eeeeee",
-        title_bar_background="#eeeeee",
-        popup_background="rgb(245, 245, 245)",
-        popup_fields="#ffffff",
-        popup_fields_font="#000000",
-        combobox="#f5f5f5",
-        combobox_border="rgb(200, 200, 200)",
-        combobox_font="#111111",
-        sidebar="rgb(200, 200, 200)",
-        sidebar_divider="rgb(180, 180, 180)",
-        sidebar_label="#000000",
-        task_area="#f5f5f5",
-        project_area="#f5f5f5",
-        button="rgba(0, 0, 0, 0.0)",
-        button_hover="rgba(86, 101, 115, 0.5)",
-        button_pressed="rgba(46, 61, 75, 0.5)",
-        label_view="rgba(86, 101, 115, 0.5)",
-        label_projects_header="#000000",
-        label_light="#000000",
-        label_light_weight="bold",
-        label_dark="#000000",
-        label_dark_weight="regular",
-        label_welcome="rgb(200, 200, 200)",
-        button_titlebar_hover="rgba(0, 0, 0, 0.125)",
-        button_titlebar_pressed="rgba(0, 0, 0, 0.25)"
-    )
+    style_dict = parse_style_json(
+            style_file_name="swiftnotes_style.json",
+            layout_style="light"
+        )
+    style_content = get_stylesheet(style_dict)
     return style_content
 
 
-def get_stylesheet(
-        main_background,
-        title_bar_background,
-        popup_background,
-        popup_fields,
-        popup_fields_font,
-        combobox,
-        combobox_border,
-        combobox_font,
-        sidebar,
-        sidebar_divider,
-        sidebar_label,
-        task_area,
-        project_area,
-        button,
-        button_hover,
-        button_pressed,
-        label_view,
-        label_projects_header,
-        label_light,
-        label_light_weight,
-        label_dark,
-        label_dark_weight,
-        label_welcome,
-        button_titlebar_hover,
-        button_titlebar_pressed
-):
+def get_stylesheet(style_dict):
     
     font_id = QFontDatabase.addApplicationFont(u":fonts/fonts/Poppins-Regular.ttf")
     font = QFontDatabase.applicationFontFamilies(font_id)[0] if not font_id == -1 else "Consolas"
@@ -101,7 +82,7 @@ def get_stylesheet(
 
     style_content = f"""
         #MainWindow {{
-        background-color: {main_background};
+        background-color: {style_dict["main_background"]};
         }}
 
         #MainWindow::title {{background-color: #3498db;}}
@@ -112,7 +93,7 @@ def get_stylesheet(
         }}
 
         #backgroundTitleBar {{
-            background-color: {title_bar_background};
+            background-color: {style_dict["title_bar_background"]};
         }}
 
         #buttonWindowResize {{
@@ -120,10 +101,10 @@ def get_stylesheet(
             border: none;
         }}
         #buttonWindowResize:hover {{
-            background-color: {button_titlebar_hover};
+            background-color: {style_dict["button_titlebar_hover"]};
         }}
         #buttonWindowResize:pressed {{
-            background-color: {button_titlebar_pressed};
+            background-color: {style_dict["button_titlebar_pressed"]};
         }}
 
         #buttonCloseWindow {{
@@ -138,7 +119,7 @@ def get_stylesheet(
         }}
 
         #windowTitle {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
             font-size: 12px;
             font-family: Segoe UI;
         }}
@@ -150,15 +131,15 @@ def get_stylesheet(
         }}
 
         #TopBarQWidget QPushButton:hover {{
-            background-color: {button_hover};
+            background-color: {style_dict["button_hover"]};
         }}
 
         #TopBarQWidget QPushButton:pressed {{
-            background-color: {button_pressed};
+            background-color: {style_dict["button_pressed"]};
         }}
 
         #IconSidebarQWidget {{
-            background-color: {sidebar};
+            background-color: {style_dict["sidebar"]};
             width: 50px;
         }}
 
@@ -166,31 +147,31 @@ def get_stylesheet(
             height: 30px;
             width: 30px;
             border: none;
-            background-color: {button};
+            background-color: {style_dict["button"]};
             border-radius: 4px;
         }}
 
         #IconSidebarQWidget QPushButton:hover{{
-            background-color: {button_hover};
+            background-color: {style_dict["button_hover"]};
             border-radius: 4px;
         }}
 
         #IconSidebarQWidget QPushButton:pressed{{
-            background-color: {button_pressed};
+            background-color: {style_dict["button_pressed"]};
             border-radius: 4px;
         }}
 
         #IconSidebarQWidget QFrame {{
-            color: {sidebar_divider};
+            color: {style_dict["sidebar_divider"]};
         }}
 
         #FullSidebarQWidget #labelVersion {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
             font-size: 11px;
         }}
 
         #FullSidebarQWidget {{
-            background-color: {sidebar};
+            background-color: {style_dict["sidebar"]};
             width: 250px;
         }}
 
@@ -198,114 +179,114 @@ def get_stylesheet(
             height: 30px;
             width: 30px;
             border: none;
-            color: {sidebar_label};
-            background-color: {button};
+            color: {style_dict["sidebar_label"]};
+            background-color: {style_dict["button"]};
             border-radius: 4px;
         }}
 
         #FullSidebarQWidget QPushButton:hover{{
-            background-color: {button_hover};
+            background-color: {style_dict["button_hover"]};
             border-radius: 4px;
         }}
 
         #FullSidebarQWidget QPushButton:pressed{{
-            background-color: {button_pressed};
+            background-color: {style_dict["button_pressed"]};
             border-radius: 4px;
         }}
 
         #FullSidebarQWidget QFrame{{
-            color: {sidebar_divider};
+            color: {style_dict["sidebar_divider"]};
         }}
 
         #FullSidebarQWidget #label_light{{
-            color: {label_light};
-            font-weight: {label_light_weight};
+            color: {style_dict["label_light"]};
+            font-weight: {style_dict["label_light_weight"]};
         }}
 
         #FullSidebarQWidget #label_dark{{
-            color: {label_dark};
-            font-weight: {label_dark_weight};
+            color: {style_dict["label_dark"]};
+            font-weight: {style_dict["label_dark_weight"]};
         }}
 
         #labelWelcome {{
             font-size: 24px;
-            color: {label_welcome};
+            color: {style_dict["label_welcome"]};
         }}
 
         #labelWelcomeDrop {{
             font-size: 14px;
-            color: {label_view};
+            color: {style_dict["label_view"]};
         }}
 
         #TaskPage QScrollArea {{
-            background-color: {task_area};
+            background-color: {style_dict["task_area"]};
             border: none;
         }}
 
         #labelOpenOutOf {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
         }}
 
         #labelInProgressOutOf {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
         }}
 
         #labelStuckTestOutOf {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
         }}
 
         #labelDoneOutOf {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
         }}
 
         #labelOpen {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
         }}
 
         #labelInProgress {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
         }}
 
         #labelStuckTest {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
         }}
 
         #labelDone {{
-            color: {sidebar_label};
+            color: {style_dict["sidebar_label"]};
         }}
 
         #AddEditDialog {{
-            background-color: {popup_background};
+            background-color: {style_dict["popup_background"]};
         }}
 
         #AddEditDialog QLineEdit {{
             border: 1px;
-            background-color: {popup_fields};
-            color: {popup_fields_font};
+            background-color: {style_dict["popup_fields"]};
+            color: {style_dict["popup_fields_font"]};
         }}
 
         #AddEditDialog QPlainTextEdit {{
             border-radius: 5px;
-            background-color: {popup_fields};
-            color: {popup_fields_font};
+            background-color: {style_dict["popup_fields"]};
+            color: {style_dict["popup_fields_font"]};
         }}
 
         #AddEditDialog QLabel {{
-            color: {popup_fields_font};
+            color: {style_dict["popup_fields_font"]};
         }}
 
         #InfoDialog {{
-            background-color: {popup_background};
+            background-color: {style_dict["popup_background"]};
         }}
 
         #InfoDialog QLabel {{
-            color: {popup_fields_font};
+            color: {style_dict["popup_fields_font"]};
         }}
 
         #InfoDialog QPlainTextEdit {{
             border-radius: 5px;
-            background-color: {popup_fields};
-            color: {popup_fields_font};
+            background-color: {style_dict["popup_fields"]};
+            color: {style_dict["popup_fields_font"]};
         }}
 
         #TaskWidget {{
@@ -343,62 +324,62 @@ def get_stylesheet(
         }}        
         
         #comboBoxProjects {{
-            background-color: {combobox}; 
-            border: 1px solid {combobox_border};
+            background-color: {style_dict["combobox"]};
+            border: 1px solid {style_dict["combobox_border"]};
             padding-left: 10px;
-            color: {combobox_font};
+            color: {style_dict["combobox_font"]};
         }}
-        
+
         #comboBoxProjects::drop-down {{
             border: 0px;
         }}
-
+        
         #comboBoxProjects::down-arrow {{
             image: url(:/icons/icons/chevron-down-light.svg);
             width: 16px;
         }}
         
         #comboBoxProjects QListView {{
-            border: 1px solid {combobox_border};
+            border: 1px solid {style_dict["combobox_border"]};
             padding: 5px;
-            background-color: {combobox}; 
+            background-color: {style_dict["combobox"]}; 
             outline: 0px;
-            color: {combobox_font};
+            color: {style_dict["combobox_font"]};
         }}
         
         #comboBoxProjects QListView::item {{
             padding-left: 10px;
-            background-color: {combobox};
-            color: {sidebar_label};
+            background-color: {style_dict["combobox"]};
+            color: {style_dict["sidebar_label"]};
         }}
         
         #comboBoxProjects QListView::item::hover {{
-            background-color: {button_hover}; 
-            color: {sidebar_label};
+            background-color: {style_dict["button_hover"]}; 
+            color: {style_dict["sidebar_label"]};
         }}
         
         #comboBoxProjects QListView::item::pressed{{
-            background-color: {button_pressed};
+            background-color: {style_dict["button_pressed"]};
         }}
 
         #scrollAreaWidgetContentsOpen {{
-            background-color: {task_area};
+            background-color: {style_dict["task_area"]};
         }}
 
         #scrollAreaWidgetContentsInProgress {{
-            background-color: {task_area};
+            background-color: {style_dict["task_area"]};
         }}
 
         #scrollAreaWidgetContentsStuckTest {{
-            background-color: {task_area};
+            background-color: {style_dict["task_area"]};
         }}
 
         #scrollAreaWidgetContentsDone {{
-            background-color: {task_area};
+            background-color: {style_dict["task_area"]};
         }}
 
         #ProjectPage QLabel {{
-            color: {label_projects_header};
+            color: {style_dict["label_projects_header"]};
         }}
 
         #ProjectPage QToolButton{{
@@ -408,12 +389,12 @@ def get_stylesheet(
         }}
 
         #ProjectPage QToolButton:hover {{
-            background-color: {button_hover};
+            background-color: {style_dict["button_hover"]};
             border-radius: 4px;
         }}
 
         #ProjectPage QToolButton:pressed {{
-            background-color: {button_pressed};
+            background-color: {style_dict["button_pressed"]};
             border-radius: 4px;
         }}
 
@@ -424,21 +405,21 @@ def get_stylesheet(
         }}
 
         #ProjectPage QPushButton:hover {{
-            background-color: {button_hover};
+            background-color: {style_dict["button_hover"]};
             border-radius: 4px;
         }}
 
         #ProjectPage QPushButton:pressed {{
-            background-color: {button_pressed};
+            background-color: {style_dict["button_pressed"]};
             border-radius: 4px;
         }}
 
         #scrollAreaWidgetContentsProjectsList {{
-            background-color: {project_area}
+            background-color: {style_dict["project_area"]}
         }}
 
         #ProjectPage QScrollArea {{
             border: none;
         }}
-        """
+-       """
     return style_content

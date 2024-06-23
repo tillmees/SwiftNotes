@@ -45,7 +45,7 @@ dist
 designs
 
 # generated files
-swiftnotes_settings.json
+*.json
 
 # other files
 *.todo

@@ -7,6 +7,7 @@ from PySide6.QtGui import QIcon
 
 from main_window.main_ui import Ui_MainWindow
 from style.stylesheets import get_stylesheet_dark, get_stylesheet_light
+from style.StyleHandler import StyleSettingsHandler
 
 from form_window.AddEditWindow import AddEditWindow
 from project.ProjectHandler import ProjectHandler
@@ -26,13 +27,12 @@ class StackedWidgetState(Enum):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, app, version, settings):
+    def __init__(self, app, version, settings, style_settings):
         super(MainWindow, self).__init__()
 
         self.counter = 1
         self.app = app
         self.version = version
-        self.settings = settings
 
         # self.setWindowFlags(Qt.FramelessWindowHint)
         self.ui = Ui_MainWindow()
@@ -54,13 +54,13 @@ class MainWindow(QMainWindow):
         self.setup_for_clean_start()
         self.setup_signals()
         self.is_start_up_finished = True
+
+        self.settings = settings
         self.apply_settings()
 
-        layout = settings.get_value_for("layout")
-        if layout == "dark":
-            self.use_dark_mode()
-        elif layout == "light":
-            self.use_light_mode()
+        self.style_settings = style_settings
+        self.style_handler = StyleSettingsHandler(self.style_settings, settings.get_value_for("layout"), self.ui)
+        self.style_handler.set_layout(self.app)
 
         self.update_title()
     
@@ -78,12 +78,6 @@ class MainWindow(QMainWindow):
         event.accept()
 
     def apply_settings(self):
-        layout = self.settings.get_value_for("layout")
-        if layout == "dark":
-            self.use_dark_mode()
-        elif layout == "light":
-            self.use_light_mode()
-
         width = int(self.settings.get_value_for("width"))
         height = int(self.settings.get_value_for("height"))
         self.resize(width, height)
@@ -101,7 +95,6 @@ class MainWindow(QMainWindow):
             title += f" - New File"
 
         self.setWindowTitle(title)
-        # self.ui.title_bar.set_window_title(title)
 
     def mark_unsaved_changes(self):
         self.is_unsaved_changes = True
@@ -111,6 +104,7 @@ class MainWindow(QMainWindow):
         if not self.window().isMaximized():
             self.settings.set_value_to("width", self.width())
             self.settings.set_value_to("height", self.height())
+        self.settings.set_value_to("layout", self.style_handler.get_layout())
         super().closeEvent(event)
 
     def on_add_project_pushed(self):
@@ -413,28 +407,27 @@ class MainWindow(QMainWindow):
     def task_gets_dragged(self, dragged_tasks_hash):
         self.dragged_tasks_hash = dragged_tasks_hash
         current_project = self.project_handler.get_current_project()
-        self.dragged_task = current_project.get_task_by_hash(dragged_tasks_hash)
-        current_project.remove_task_by_hash(dragged_tasks_hash)
-        self.update_task_view()
+        self.dragged_task_creator = current_project.get_task_by_hash(dragged_tasks_hash)
 
     def task_gets_dropped(self, bin_name):
         if self.dragged_tasks_hash is not None:
-            self.dragged_task.task_bin = bin_name
-            current_project = self.project_handler.get_current_project()
-            current_project.add_task(self.dragged_task)
-            self.dragged_tasks_hash = None
-            self.dragged_task = None
-            self.update_task_view()
-            self.mark_unsaved_changes()
+            if self.dragged_task_creator.task_bin != bin_name:
+                current_project = self.project_handler.get_current_project()
+                current_project.remove_task_by_hash(self.dragged_tasks_hash)
+
+                self.dragged_task_creator.task_bin = bin_name
+                current_project.add_task(self.dragged_task_creator)
+
+                self.dragged_tasks_hash = None
+                self.dragged_task_creator = None
+
+                self.mark_unsaved_changes()
+        self.update_task_view()
 
     def task_dropped_outside_of_a_scroll_area(self):
         if self.dragged_tasks_hash is not None:
-            current_project = self.project_handler.get_current_project()
-            current_project.add_task(self.dragged_task)
             self.dragged_tasks_hash = None
             self.dragged_task = None
-            self.update_task_view()
-            self.mark_unsaved_changes()
 
     def update_task_counter(self):
         current_project = self.project_handler.get_current_project()
@@ -491,105 +484,8 @@ class MainWindow(QMainWindow):
         )
         self.update_task_counter()
 
-    def use_dark_mode(self):
-        style_sheet = get_stylesheet_dark()
-        self.app.setStyleSheet(style_sheet)
-        icon_paths = [
-            u"file-plus-light.svg",
-            u"file-plus-light.svg",
-            u"file-light.svg",
-            u"file-light.svg",
-            u"save-light.svg",
-            u"save-light.svg",
-            u"save-as-light.svg",
-            u"save-as-light.svg",
-            u"plus-circle-light.svg",
-            u"plus-circle-light.svg",
-            u"minimize-2-light.svg",
-            u"minimize-2-light.svg",
-            u"plus-square-light.svg",
-            u"plus-square-light.svg",
-            u"menu-light.svg",
-            u"toggle-right-light.svg",
-            u"sliders-light.svg",
-
-            # u"minimize-window-light.svg",
-            # u"maximize-window-light.svg",
-            # u"restore-window-light.svg",
-            # u"close-window-light.svg",
-        ]
-
-        self.change_layout_mode(icon_paths)
-        self.settings.set_value_to("layout", "dark")
-
-    def use_light_mode(self):
-        style_sheet = get_stylesheet_light()
-        self.app.setStyleSheet(style_sheet)
-        icon_paths = [
-            u"file-plus.svg",
-            u"file-plus.svg",
-            u"file.svg",
-            u"file.svg",
-            u"save.svg",
-            u"save.svg",
-            u"save-as.svg",
-            u"save-as.svg",
-            u"plus-circle.svg",
-            u"plus-circle.svg",
-            u"minimize-2.svg",
-            u"minimize-2.svg",
-            u"plus-square.svg",
-            u"plus-square.svg",
-            u"menu.svg",
-            u"toggle-left.svg",
-            u"sliders.svg",
-
-            # u"minimize-window.svg",
-            # u"maximize-window.svg",
-            # u"restore-window.svg",
-            # u"close-window.svg",
-        ]
-
-        self.change_layout_mode(icon_paths)
-        self.settings.set_value_to("layout", "light")
-
-    def change_layout_mode(self, icon_paths):
-        buttons = [
-            self.ui.pushButtonIconNew,
-            self.ui.pushButtonFullNew,
-            self.ui.pushButtonIconOpen,
-            self.ui.pushButtonFullOpen,
-            self.ui.pushButtonIconSave,
-            self.ui.pushButtonFullSave,
-            self.ui.pushButtonIconSaveAs,
-            self.ui.pushButtonFullSaveAs,
-            self.ui.pushButtonIconAdd,
-            self.ui.pushButtonFullAdd,
-            self.ui.pushButtonIconClose,
-            self.ui.pushButtonFullClose,
-            self.ui.pushButtonIconTask,
-            self.ui.pushButtonFullTask,
-            self.ui.pushButtonToggleMenu,
-            self.ui.pushButtonFullLayout,
-            self.ui.pushButtonSort,
-
-            # self.ui.title_bar.btn_minimize,
-            # self.ui.title_bar.btn_maximize,
-            # self.ui.title_bar.btn_restore,
-            # self.ui.title_bar.btn_close,
-        ]
-        for button, icon_path in zip(buttons, icon_paths):
-            icon = QIcon()
-            icon.addFile(u":/icons/icons/" + icon_path,
-                         QSize(), QIcon.Normal, QIcon.Off)
-            button.setIcon(icon)
-
     def on_toggle_layout(self):
-        layout = self.settings.get_value_for("layout")
-        if layout == "dark":
-            self.use_light_mode()
-        elif layout == "light":
-            self.use_dark_mode()
+        self.style_handler.toggle_layout(self.app)
 
     def get_project_signal_functions(self):
         return [

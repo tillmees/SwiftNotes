@@ -33,7 +33,7 @@ class Colors:
                 return key
         return None
 
-def adjust_color(hex_color, factor, operation):
+def adjust_color(hex_color, factor=0.0, operation=None, transparency=1.0):
     """
     Adjusts the brightness of a given hex color by adding or subtracting a factor from each RGB component.
     """
@@ -41,19 +41,19 @@ def adjust_color(hex_color, factor, operation):
     r, g, b = color.red(), color.green(), color.blue()
     
     if operation == 'lighten':
-        adjusted_r = min(int(r + 255 * factor), 255)
-        adjusted_g = min(int(g + 255 * factor), 255)
-        adjusted_b = min(int(b + 255 * factor), 255)
+        r = min(int(r + 255 * factor), 255)
+        g = min(int(g + 255 * factor), 255)
+        b = min(int(b + 255 * factor), 255)
     elif operation == 'darken':
-        adjusted_r = max(r - int(255 * factor), 0)
-        adjusted_g = max(g - int(255 * factor), 0)
-        adjusted_b = max(b - int(255 * factor), 0)
+        r = max(r - int(255 * factor), 0)
+        g = max(g - int(255 * factor), 0)
+        b = max(b - int(255 * factor), 0)
     else:
-        raise ValueError("Invalid operation. Expected 'lighten' or 'darken'.")
+        pass
    
-    adjusted_color = QColor(adjusted_r, adjusted_g, adjusted_b)
+    a = transparency
     
-    return adjusted_color.name()
+    return f"rgba({r}, {g}, {b}, {a})"
 
 
 def lighten_color(hex_color, factor=0.05):
@@ -68,3 +68,6 @@ def darken_color(hex_color, factor=0.05):
     Darkens a given hex color by subtracting a factor from each RGB component.
     """
     return adjust_color(hex_color, factor, 'darken')
+
+def transparent_color(hex_color):
+    return adjust_color(hex_color, transparency=0.5)

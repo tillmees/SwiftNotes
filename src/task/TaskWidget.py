@@ -7,6 +7,7 @@ from task.TaskUi import Ui_TaskWidget
 from base.BaseWidget import BaseWidget
 from form_window.AddEditWindow import AddEditWindow
 from task.TaskCreator import TaskCreator
+from style.Colors import transparent_color
 
 from base.UtilityFunctions import get_current_time_string
 
@@ -26,6 +27,7 @@ class TaskWidget(BaseWidget):
         self.title = task_creator.title
         self.description = task_creator.description
         self.color_string = task_creator.color
+        self.transparent_color_string = transparent_color(self.color_string)
 
         self.created_string = task_creator.created_string
         self.last_changed_string = task_creator.last_changed_string
@@ -64,6 +66,11 @@ class TaskWidget(BaseWidget):
             painter.end()
 
             drag.setPixmap(rounded_pixmap)
+
+            self.transparent = True
+            self.setStyleSheet(
+                f"background-color: {self.transparent_color_string};\n "
+            )
 
             hot_spot = event.pos()
             drag.setHotSpot(hot_spot)
@@ -175,13 +182,21 @@ class TaskWidget(BaseWidget):
 
     def get_color_string(self):
         return self.color_string
+    
+    def set_transparency(self, transparency):
+        self.setWindowOpacity(transparency)
 
     def setup_stylesheets(self):
         self.setStyleSheet(
             f"background-color: {self.color_string};\n "
         )
 
+        self.ui.stackedWidget.setStyleSheet(
+            "background-color: transparent;\n"
+        )
+
         self.ui.pushButtonDeleteTask.setStyleSheet(
+            "QPushButton{background-color: transparent;}\n"
             "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "
             "border-radius: 4px;}\n "
             "QPushButton::pressed{background-color: rgba(0, 0, 0, 0.5); "

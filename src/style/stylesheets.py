@@ -85,43 +85,9 @@ def get_stylesheet(style_dict):
         background-color: {style_dict["main_background"]};
         }}
 
-        #MainWindow::title {{background-color: #3498db;}}
-
         * {{
             font-family: {font};
             letter-spacing: 0px;
-        }}
-
-        #backgroundTitleBar {{
-            background-color: {style_dict["title_bar_background"]};
-        }}
-
-        #buttonWindowResize {{
-            background-color: transparent;
-            border: none;
-        }}
-        #buttonWindowResize:hover {{
-            background-color: {style_dict["button_titlebar_hover"]};
-        }}
-        #buttonWindowResize:pressed {{
-            background-color: {style_dict["button_titlebar_pressed"]};
-        }}
-
-        #buttonCloseWindow {{
-            background-color: transparent;
-            border: none;
-        }}
-        #buttonCloseWindow:hover {{
-            background-color: rgba(235, 30, 20, 1.0);
-        }}
-        #buttonCloseWindow:pressed {{
-            background-color: rgba(235, 30, 20, 0.5);
-        }}
-
-        #windowTitle {{
-            color: {style_dict["sidebar_label"]};
-            font-size: 12px;
-            font-family: Segoe UI;
         }}
 
         #TopBarQWidget QPushButton{{
@@ -275,23 +241,18 @@ def get_stylesheet(style_dict):
             color: {style_dict["popup_fields_font"]};
         }}
 
-        #InfoDialog {{
-            background-color: {style_dict["popup_background"]};
-        }}
-
-        #InfoDialog QLabel {{
-            color: {style_dict["popup_fields_font"]};
-        }}
-
-        #InfoDialog QPlainTextEdit {{
-            border-radius: 5px;
-            background-color: {style_dict["popup_fields"]};
-            color: {style_dict["popup_fields_font"]};
-        }}
-
         #TaskWidget {{
             border-radius: 9px;
         }}
+        #TaskWidget QPushButton{{
+            background-color: "transparent";
+        }} 
+        #TaskWidget QLabel{{
+            background-color: "transparent";
+        }} 
+        #TaskWidget QPlainTextEdit{{
+            background-color: "transparent";
+        }} 
 
         #ProjectWidget {{
             border-radius: 9px;

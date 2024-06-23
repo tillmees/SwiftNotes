@@ -7,9 +7,7 @@ class SettingsHandler:
         self._settings_file_name = file_name
 
         # set default values
-        self._settings_dict = None
-        self.set_settings_dict()    
-
+        self._settings_dict = {}
         self.__on_startup()
 
     def __on_startup(self):
@@ -43,5 +41,5 @@ class SettingsHandler:
             self._settings_dict[attribute] = value
         self.__update_settings_json()
 
-    def set_settings_dict(self):
-        self._settings_dict = {}
+    def get_settings_dict(self):
+        return self._settings_dict

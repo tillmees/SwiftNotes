@@ -15,6 +15,7 @@ class BaseWidget(QDialog):
         self.color_string = color_string
         self.lighter_color_string = lighten_color(self.color_string)
         self.darker_color_string = darken_color(self.color_string)
+        self.transparent = False
 
     def mousePressEvent(self, event: QMouseEvent):
         self.setStyleSheet(
@@ -30,12 +31,14 @@ class BaseWidget(QDialog):
 
     def enterEvent(self, event):
         # Change background color when mouse hovers over/enters widget
-        self.setStyleSheet(
-            f"background-color: {self.lighter_color_string};\n "
-        )
+        if self.transparent == False:
+            self.setStyleSheet(
+                f"background-color: {self.lighter_color_string};\n "
+            )
         super().enterEvent(event)
 
     def leaveEvent(self, event):
         # Change back to the initial background color when mouse leaves
-        self.setStyleSheet(f"background-color: {self.color_string};")
+        if self.transparent == False:
+            self.setStyleSheet(f"background-color: {self.color_string};")
         super().leaveEvent(event)

@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFr
 import resources_rc
 
 from base.CustomScrollArea import CustomScrollArea, CustomScrollAreaWidget
-from base.CustomTitleBar import CustomTitleBar
+from base.CustomComboBox import CustomComboBox
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -306,7 +306,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
 
-        self.comboBoxProjects = QComboBox(self.TopBarQWidget)
+        self.comboBoxProjects = CustomComboBox(self.TopBarQWidget)
         self.comboBoxProjects.setObjectName(u"comboBoxProjects")
         self.comboBoxProjects.setMinimumSize(QSize(250, 0))
         self.comboBoxProjects.setStyleSheet(u"")

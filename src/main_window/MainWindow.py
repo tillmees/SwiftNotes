@@ -13,8 +13,6 @@ from form_window.AddEditWindow import AddEditWindow
 from project.ProjectHandler import ProjectHandler
 from base.CustomTitleBar import CustomTitleBar
 
-from base import ComboBoxFunctions
-
 
 EMPTY_PROJECT = " "
 
@@ -114,8 +112,7 @@ class MainWindow(QMainWindow):
             project = self.add_edit_window.get_project_from_user_input()
             self.project_handler.add_project(project)
             self.project_handler.set_current_project(project.get_title())
-            ComboBoxFunctions.update_combo_box(
-                self.ui.comboBoxProjects,
+            self.ui.comboBoxProjects.update_combo_box(
                 project.get_title()
             )
             self.update_task_view()
@@ -151,12 +148,10 @@ class MainWindow(QMainWindow):
                 new_description
             )
             if new_title != old_title:
-                ComboBoxFunctions.add_string_to_combo_box(
-                    self.ui.comboBoxProjects,
+                self.ui.comboBoxProjects.add_string_to_combo_box(
                     new_title
                 )
-                ComboBoxFunctions.delete_string_from_combo_box(
-                    self.ui.comboBoxProjects,
+                self.ui.comboBoxProjects.delete_string_from_combo_box(
                     old_title
                 )
             self.update_project_view()
@@ -174,9 +169,7 @@ class MainWindow(QMainWindow):
             self.mark_unsaved_changes()
 
     def on_project_changed_in_combo_box(self):
-        project_title_in_combo_box = ComboBoxFunctions.get_current_project(
-            self.ui.comboBoxProjects
-        )
+        project_title_in_combo_box = self.ui.comboBoxProjects.get_current_project()
         if project_title_in_combo_box == "":
             return
         selected_project = project_title_in_combo_box if \
@@ -204,9 +197,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButtonFullTask.hide()
 
     def show_task_screen(self):
-        ComboBoxFunctions.delete_whitespace_string_from_combo_box(
-            self.ui.comboBoxProjects
-        )
+        self.ui.comboBoxProjects.delete_whitespace_string_from_combo_box()
         self.stacked_widget_state = StackedWidgetState.TASK_VIEW.value
         self.ui.TaskWindowstackedWidget.setCurrentIndex(
             self.stacked_widget_state
@@ -218,9 +209,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButtonFullTask.show()
 
     def show_project_screen(self):
-        ComboBoxFunctions.add_whitespace_string_to_combo_box(
-            self.ui.comboBoxProjects
-        )
+        self.ui.comboBoxProjects.add_whitespace_string_to_combo_box()
         self.stacked_widget_state = StackedWidgetState.PROJECT_VIEW.value
         self.ui.TaskWindowstackedWidget.setCurrentIndex(
             self.stacked_widget_state
@@ -485,8 +474,7 @@ class MainWindow(QMainWindow):
     def selected_project_in_project_view(self, selected_project_hash):
         project = self.project_handler.get_project_by_hash(
             selected_project_hash)
-        ComboBoxFunctions.set_index_to_string(
-            self.ui.comboBoxProjects,
+        self.ui.comboBoxProjects.set_index_to_string(
             project.get_title()
         )
 
@@ -494,8 +482,7 @@ class MainWindow(QMainWindow):
         project = self.project_handler.get_project_by_hash(
             deleted_project_hash)
         title = project.get_title()
-        ComboBoxFunctions.delete_string_from_combo_box(
-            self.ui.comboBoxProjects,
+        self.ui.comboBoxProjects.delete_string_from_combo_box(
             title
         )
         self.project_handler.remove_project_by_hash(deleted_project_hash)

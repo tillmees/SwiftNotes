@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QComboBox, QFr
     QSpacerItem, QStackedWidget, QVBoxLayout, QWidget)
 import resources_rc
 
-from base.CustomScrollArea import CustomScrollArea
+from base.CustomScrollArea import CustomScrollArea, CustomScrollAreaWidget
 from base.CustomTitleBar import CustomTitleBar
 
 class Ui_MainWindow(object):
@@ -384,7 +384,7 @@ class Ui_MainWindow(object):
         self.scrollAreaOpen.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scrollAreaOpen.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.scrollAreaOpen.setWidgetResizable(True)
-        self.scrollAreaWidgetContentsOpen = QWidget()
+        self.scrollAreaWidgetContentsOpen = CustomScrollAreaWidget()
         self.scrollAreaWidgetContentsOpen.setObjectName(u"scrollAreaWidgetContentsOpen")
         self.scrollAreaWidgetContentsOpen.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_6 = QVBoxLayout(self.scrollAreaWidgetContentsOpen)
@@ -402,7 +402,7 @@ class Ui_MainWindow(object):
         self.scrollAreaInProgress.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scrollAreaInProgress.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.scrollAreaInProgress.setWidgetResizable(True)
-        self.scrollAreaWidgetContentsInProgress = QWidget()
+        self.scrollAreaWidgetContentsInProgress = CustomScrollAreaWidget()
         self.scrollAreaWidgetContentsInProgress.setObjectName(u"scrollAreaWidgetContentsInProgress")
         self.scrollAreaWidgetContentsInProgress.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_10 = QVBoxLayout(self.scrollAreaWidgetContentsInProgress)
@@ -420,7 +420,7 @@ class Ui_MainWindow(object):
         self.scrollAreaStuckTest.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scrollAreaStuckTest.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.scrollAreaStuckTest.setWidgetResizable(True)
-        self.scrollAreaWidgetContentsStuckTest = QWidget()
+        self.scrollAreaWidgetContentsStuckTest = CustomScrollAreaWidget()
         self.scrollAreaWidgetContentsStuckTest.setObjectName(u"scrollAreaWidgetContentsStuckTest")
         self.scrollAreaWidgetContentsStuckTest.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_12 = QVBoxLayout(self.scrollAreaWidgetContentsStuckTest)
@@ -438,7 +438,7 @@ class Ui_MainWindow(object):
         self.scrollAreaDone.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scrollAreaDone.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.scrollAreaDone.setWidgetResizable(True)
-        self.scrollAreaWidgetContentsDone = QWidget()
+        self.scrollAreaWidgetContentsDone = CustomScrollAreaWidget()
         self.scrollAreaWidgetContentsDone.setObjectName(u"scrollAreaWidgetContentsDone")
         self.scrollAreaWidgetContentsDone.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_13 = QVBoxLayout(self.scrollAreaWidgetContentsDone)
@@ -517,12 +517,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.setSpacing(5)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.scrollAreaProjectsList = QScrollArea(self.pageList)
+        self.scrollAreaProjectsList = CustomScrollArea(self.pageList)
         self.scrollAreaProjectsList.setObjectName(u"scrollAreaProjectsList")
         self.scrollAreaProjectsList.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scrollAreaProjectsList.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scrollAreaProjectsList.setWidgetResizable(True)
-        self.scrollAreaWidgetContentsProjectsList = QWidget()
+        self.scrollAreaWidgetContentsProjectsList = CustomScrollAreaWidget()
         self.scrollAreaWidgetContentsProjectsList.setObjectName(u"scrollAreaWidgetContentsProjectsList")
         self.scrollAreaWidgetContentsProjectsList.setGeometry(QRect(0, 0, 718, 417))
         self.verticalLayout_11 = QVBoxLayout(self.scrollAreaWidgetContentsProjectsList)
@@ -536,10 +536,10 @@ class Ui_MainWindow(object):
         self.pageGrid.setObjectName(u"pageGrid")
         self.verticalLayout_14 = QVBoxLayout(self.pageGrid)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
-        self.scrollArea = QScrollArea(self.pageGrid)
+        self.scrollArea = CustomScrollArea(self.pageGrid)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setWidgetResizable(True)
-        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents = CustomScrollAreaWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
         self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 98, 28))
         self.verticalLayout_15 = QVBoxLayout(self.scrollAreaWidgetContents)

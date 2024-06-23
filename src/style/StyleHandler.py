@@ -338,6 +338,14 @@ class StyleSettingsHandler():
                 background-color: {style_dict["task_area"]};
             }}
 
+            #scrollAreaProjectsList {{
+                background-color: {style_dict["project_area"]}
+            }}
+
+            #scrollAreaWidgetContentsProjectsList {{
+                background-color: {style_dict["project_area"]}
+            }}
+
             #ProjectPage QLabel {{
                 color: {style_dict["label_projects_header"]};
             }}
@@ -372,10 +380,6 @@ class StyleSettingsHandler():
             #ProjectPage QPushButton:pressed {{
                 background-color: {style_dict["button_pressed"]};
                 border-radius: 4px;
-            }}
-
-            #scrollAreaWidgetContentsProjectsList {{
-                background-color: {style_dict["project_area"]}
             }}
 
             #ProjectPage QScrollArea {{

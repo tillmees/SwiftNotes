@@ -14,7 +14,6 @@ from project.ProjectHandler import ProjectHandler
 from base.CustomTitleBar import CustomTitleBar
 
 from base import ComboBoxFunctions
-from base import ScrollAreaFunctions
 
 
 EMPTY_PROJECT = " "
@@ -449,36 +448,25 @@ class MainWindow(QMainWindow):
     def update_task_view(self):
         current_project = self.project_handler.get_current_project()
 
-        ScrollAreaFunctions.clear_scroll_area(
-            self.ui.scrollAreaWidgetContentsOpen
-        )
-        ScrollAreaFunctions.clear_scroll_area(
-            self.ui.scrollAreaWidgetContentsInProgress
-        )
-        ScrollAreaFunctions.clear_scroll_area(
-            self.ui.scrollAreaWidgetContentsStuckTest
-        )
-        ScrollAreaFunctions.clear_scroll_area(
-            self.ui.scrollAreaWidgetContentsDone
-        )
+        self.ui.scrollAreaWidgetContentsOpen.clear_scroll_area()
+        self.ui.scrollAreaWidgetContentsInProgress.clear_scroll_area()
+        self.ui.scrollAreaWidgetContentsStuckTest.clear_scroll_area()
+        self.ui.scrollAreaWidgetContentsDone.clear_scroll_area()
+        
 
-        ScrollAreaFunctions.fill_scroll_area(
-            self.ui.scrollAreaWidgetContentsOpen,
+        self.ui.scrollAreaWidgetContentsOpen.fill_scroll_area(
             current_project.get_tasks_in("open"),
             self.get_task_signal_functions()
         )
-        ScrollAreaFunctions.fill_scroll_area(
-            self.ui.scrollAreaWidgetContentsInProgress,
+        self.ui.scrollAreaWidgetContentsInProgress.fill_scroll_area(
             current_project.get_tasks_in("in progress"),
             self.get_task_signal_functions()
         )
-        ScrollAreaFunctions.fill_scroll_area(
-            self.ui.scrollAreaWidgetContentsStuckTest,
+        self.ui.scrollAreaWidgetContentsStuckTest.fill_scroll_area(
             current_project.get_tasks_in("stuck/test"),
             self.get_task_signal_functions()
         )
-        ScrollAreaFunctions.fill_scroll_area(
-            self.ui.scrollAreaWidgetContentsDone,
+        self.ui.scrollAreaWidgetContentsDone.fill_scroll_area(
             current_project.get_tasks_in("done"),
             self.get_task_signal_functions()
         )
@@ -522,9 +510,7 @@ class MainWindow(QMainWindow):
         self.on_edit_project_pushed(project)
 
     def update_project_view(self):
-        ScrollAreaFunctions.clear_scroll_area(
-            self.ui.scrollAreaWidgetContentsProjectsList
-        )
+        self.ui.scrollAreaWidgetContentsProjectsList.clear_scroll_area()
 
         sort_text = "sorted by: "
         if self.project_sort_member == "title":
@@ -544,8 +530,7 @@ class MainWindow(QMainWindow):
             sort_member=self.project_sort_member
         )
 
-        ScrollAreaFunctions.fill_project_scroll_area(
-            self.ui.scrollAreaWidgetContentsProjectsList,
+        self.ui.scrollAreaWidgetContentsProjectsList.fill_project_scroll_area(
             projects,
             self.get_project_signal_functions()
         )

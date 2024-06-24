@@ -52,11 +52,13 @@ class TaskWidget(CustomBaseWidget):
             drag.setMimeData(QMimeData())
 
             pixmap = self.grab()
-            rounded_pixmap = QPixmap(pixmap.size())
+            # the divison by pixmap.devicePixelRatio() is to compensate for different window scaling modes in the operating system
+            rounded_pixmap = QPixmap(pixmap.size() / pixmap.devicePixelRatio())
             rounded_pixmap.fill(Qt.transparent)
 
             painter = QPainter(rounded_pixmap)
             painter.setRenderHint(QPainter.Antialiasing)
+            painter.setRenderHint(QPainter.SmoothPixmapTransform)
             rounded_rect = rounded_pixmap.rect()
             painter.setBrush(QColor(255, 255, 255))
             painter.setPen(Qt.NoPen)

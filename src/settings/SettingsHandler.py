@@ -16,9 +16,9 @@ class SettingsHandler:
 
     def _on_startup(self):
         if not os.path.exists(self._settings_file_name):
-            self.__create_settings_json()
+            self._create_settings_json()
         else:
-            self.__parse_settings_json()
+            self._parse_settings_json()
                                 
     def _parse_settings_json(self):
         with open(self._settings_file_name, "r") as file:
@@ -28,7 +28,7 @@ class SettingsHandler:
             self._settings_dict[key] = value
 
     def _create_settings_json(self):
-        self.__update_settings_json()
+        self._update_settings_json()
             
     def _update_settings_json(self):
         with open(self._settings_file_name, "w") as f:
@@ -43,7 +43,7 @@ class SettingsHandler:
     def set_value_to(self, attribute, value):
         if attribute in self._settings_dict:
             self._settings_dict[attribute] = value
-        self.__update_settings_json()
+        self._update_settings_json()
 
     def get_settings_dict(self):
         return self._settings_dict

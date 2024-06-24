@@ -29,6 +29,7 @@ class StyleSettingsHandler():
         for button, icon_name in zip(self.buttons, self.icons):
             icon = QIcon()
             icon_path = icon_name + ".svg" if self.current_layout == "light" else icon_name + "-light.svg"
+            icon_path = u"toggle-right-light.svg" if icon_path == u"toggle-left-light.svg" else icon_path
             icon.addFile(
                 u":/icons/icons/" + icon_path,
                 QSize(),

@@ -3,10 +3,10 @@ from PySide6.QtGui import QMouseEvent
 
 from project.ProjectUi import Ui_ProjectWidget
 
-from base.BaseWidget import BaseWidget
+from base.CustomBaseWidget import CustomBaseWidget
 
 
-class ProjectWidget(BaseWidget):
+class ProjectWidget(CustomBaseWidget):
     select_signal = Signal(str)
     delete_signal = Signal(str)
     edit_signal = Signal(str)

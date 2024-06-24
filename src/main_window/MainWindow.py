@@ -6,7 +6,6 @@ from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon
 
 from main_window.main_ui import Ui_MainWindow
-from style.stylesheets import get_stylesheet_dark, get_stylesheet_light
 from style.StyleHandler import StyleSettingsHandler
 
 from form_window.AddEditWindow import AddEditWindow

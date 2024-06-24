@@ -4,7 +4,7 @@ from PySide6.QtGui import QMouseEvent, QDrag, QPixmap, QPainter, QColor
 
 from task.TaskUi import Ui_TaskWidget
 
-from base.BaseWidget import BaseWidget
+from base.CustomBaseWidget import CustomBaseWidget
 from form_window.AddEditWindow import AddEditWindow
 from task.TaskCreator import TaskCreator
 from style.Colors import transparent_color
@@ -12,7 +12,7 @@ from style.Colors import transparent_color
 from base.UtilityFunctions import get_current_time_string
 
 
-class TaskWidget(BaseWidget):
+class TaskWidget(CustomBaseWidget):
     delete_signal = Signal(str)
     edit_signal = Signal(str, tuple)
     drag_signal = Signal(str)

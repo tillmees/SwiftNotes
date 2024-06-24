@@ -4,13 +4,13 @@ from PySide6.QtGui import QMouseEvent
 from style.Colors import lighten_color, darken_color
 
 
-class BaseWidget(QDialog):
+class CustomBaseWidget(QDialog):
 
     def __init__(
             self,
             color_string
     ):
-        super(BaseWidget, self).__init__()
+        super(CustomBaseWidget, self).__init__()
 
         self.color_string = color_string
         self.lighter_color_string = lighten_color(self.color_string)

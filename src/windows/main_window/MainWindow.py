@@ -1,16 +1,19 @@
 import pickle
 from enum import Enum
 
-from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog, QVBoxLayout, QWidget
-from PySide6.QtCore import Qt, QSize
-from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog
+from PySide6.QtCore import Qt
 
-from main_window.main_ui import Ui_MainWindow
-from style.StyleHandler import StyleSettingsHandler
+from settings.WindowSettingsHandler import WindowSettingsHandler
 
-from form_window.AddEditWindow import AddEditWindow
-from project.ProjectHandler import ProjectHandler
-from base.CustomTitleBar import CustomTitleBar
+from windows.main_window.MainUi import Ui_MainWindow
+from windows.edit_window.EditProjectWindow import EditProjectWindow
+from windows.add_window.AddProjectWindow import AddProjectWindow
+from windows.add_window.AddTaskWindow import AddTaskWindow
+
+from project_manager.ProjectManager import ProjectManager
+
+from style.LayoutHandler import LayoutHandler
 
 
 EMPTY_PROJECT = " "
@@ -23,14 +26,13 @@ class StackedWidgetState(Enum):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, app, version, settings, style_settings):
+    def __init__(self, app, version):
         super(MainWindow, self).__init__()
 
         self.counter = 1
         self.app = app
         self.version = version
 
-        # self.setWindowFlags(Qt.FramelessWindowHint)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -39,26 +41,27 @@ class MainWindow(QMainWindow):
         self.ui.scrollAreaStuckTest.drop_signal.connect(self.task_gets_dropped)
         self.ui.scrollAreaDone.drop_signal.connect(self.task_gets_dropped)
 
-        self.add_edit_window = AddEditWindow()
-        self.project_handler = ProjectHandler()
         self.file_name = None
         self.is_unsaved_changes = None
-
         self.stacked_widget_state = None
         self.project_sort_member = None
 
+        self.project_manager = ProjectManager()
+        self.style_handler = LayoutHandler(self.ui)
+
+        self.edit_project_window = EditProjectWindow()
+        self.add_project_window = AddProjectWindow()
+        self.add_task_window = AddTaskWindow()
+
+        self.startup()
+
+    def startup(self):
         self.setup_for_clean_start()
         self.setup_signals()
-        self.is_start_up_finished = True
-
-        self.settings = settings
-        self.apply_settings()
-
-        self.style_settings = style_settings
-        self.style_handler = StyleSettingsHandler(self.style_settings, settings.get_value_for("layout"), self.ui)
+        self.apply_window_settings()
         self.style_handler.set_layout(self.app)
-
         self.update_title()
+
     
     def toggleMaximizeRestore(self):
         if self.isMaximized():
@@ -73,9 +76,10 @@ class MainWindow(QMainWindow):
         self.task_dropped_outside_of_a_scroll_area()
         event.accept()
 
-    def apply_settings(self):
-        width = int(self.settings.get_value_for("width"))
-        height = int(self.settings.get_value_for("height"))
+    def apply_window_settings(self):
+        window_settings = WindowSettingsHandler()
+        width = int(window_settings.get_value_for("width"))
+        height = int(window_settings.get_value_for("height"))
         self.resize(width, height)
 
     def update_title(self):
@@ -97,20 +101,21 @@ class MainWindow(QMainWindow):
         self.update_title()
 
     def closeEvent(self, event):
+        window_settings = WindowSettingsHandler()
         if not self.window().isMaximized():
-            self.settings.set_value_to("width", self.width())
-            self.settings.set_value_to("height", self.height())
-        self.settings.set_value_to("layout", self.style_handler.get_layout())
+            window_settings.set_value_to("width", self.width())
+            window_settings.set_value_to("height", self.height())
+        window_settings.set_value_to("layout", self.style_handler.get_layout())
         super().closeEvent(event)
 
     def on_add_project_pushed(self):
-        self.add_edit_window.clear_edits()
-        self.add_edit_window.setWindowTitle("Add Project")
-        result = self.add_edit_window.exec_add()
+        self.add_project_window.clear_edits()
+        self.add_project_window.setWindowTitle("Add Project")
+        result = self.add_project_window.exec()
         if result == QDialog.Accepted:
-            project = self.add_edit_window.get_project_from_user_input()
-            self.project_handler.add_project(project)
-            self.project_handler.set_current_project(project.get_title())
+            project = self.add_project_window.get_project_from_user_input()
+            self.project_manager.add_project(project)
+            self.project_manager.set_current_project(project.get_title())
             self.ui.comboBoxProjects.update_combo_box(
                 project.get_title()
             )
@@ -118,52 +123,37 @@ class MainWindow(QMainWindow):
             self.mark_unsaved_changes()
 
     def on_close_project_pushed(self):
-        self.project_handler.set_current_project(None)
+        self.project_manager.set_current_project(None)
         self.update_project_view()
         self.show_project_screen()
 
     def on_edit_project_pushed(self, project):
-        old_title = project.get_title()
-        old_description = project.get_description()
-        old_color_string = project.get_color_string()
-
-        self.add_edit_window.clear_edits()
-        self.add_edit_window.setWindowTitle("Edit Project")
-        self.add_edit_window.set_title(old_title)
-        self.add_edit_window.set_description(old_description)
-        self.add_edit_window.set_color_checked_box(old_color_string)
-
-        result = self.add_edit_window.exec_edit(project)
+        self.edit_project_window.setup_window(project)
+        result = self.edit_project_window.exec()
         if result == QDialog.Accepted:
-            new_title = self.add_edit_window.get_title()
-            new_description = self.add_edit_window.get_description()
-            new_color_string = self.add_edit_window.get_color_string()
+            old_title = project.get_title()
+            new_title, new_description, new_color_id = self.edit_project_window.get_attributes_from_user_input()
             project.set_title(new_title)
             project.set_description(new_description)
-            project.set_color_string(new_color_string)
-            self.project_handler.project_edited(
+            project.set_color_id(new_color_id)
+            self.project_manager.project_edited(
                 old_title,
                 new_title,
                 new_description
             )
             if new_title != old_title:
-                self.ui.comboBoxProjects.add_string_to_combo_box(
-                    new_title
-                )
-                self.ui.comboBoxProjects.delete_string_from_combo_box(
-                    old_title
-                )
+                self.ui.comboBoxProjects.add_string_to_combo_box(new_title)
+                self.ui.comboBoxProjects.delete_string_from_combo_box(old_title)
             self.update_project_view()
             self.mark_unsaved_changes()
 
     def on_add_task_pushed(self):
-        self.add_edit_window.setWindowTitle("Add Task")
-        result = self.add_edit_window.exec_add()
+        self.add_task_window.setWindowTitle("Add Task")
+        result = self.add_task_window.exec()
         if result == QDialog.Accepted:
-            current_project = self.project_handler.get_current_project()
-            task_creator = \
-                self.add_edit_window.get_task_creator_from_user_input()
-            current_project.add_task(task_creator)
+            current_project = self.project_manager.get_current_project()
+            task = self.add_task_window.get_task_from_user_input()
+            current_project.add_task(task)
             self.update_task_view()
             self.mark_unsaved_changes()
 
@@ -173,11 +163,11 @@ class MainWindow(QMainWindow):
             return
         selected_project = project_title_in_combo_box if \
             project_title_in_combo_box != " " else None
-        self.project_handler.set_current_project(selected_project)
+        self.project_manager.set_current_project(selected_project)
         self.on_selected_project_changed()
 
     def on_selected_project_changed(self):
-        current_project = self.project_handler.get_current_project()
+        current_project = self.project_manager.get_current_project()
         if current_project is None:
             self.show_welcome_screen()
         elif current_project is not EMPTY_PROJECT:
@@ -306,7 +296,7 @@ class MainWindow(QMainWindow):
         )
 
     def on_new_pushed(self):
-        self.project_handler = ProjectHandler()
+        self.project_manager = ProjectManager()
         self.ui.comboBoxProjects.clear()
         self.setup_for_clean_start()
         self.is_unsaved_changes = False
@@ -329,13 +319,13 @@ class MainWindow(QMainWindow):
         self.update_title()
 
         with open(self.file_name, "rb") as file:
-            self.project_handler = pickle.load(file)
+            self.project_manager = pickle.load(file)
 
-        self.project_handler.set_current_project(None)
+        self.project_manager.set_current_project(None)
         self.ui.comboBoxProjects.clear()
-        if len(self.project_handler.projects):
+        if len(self.project_manager.projects):
             projects = [project for project in
-                        self.project_handler.projects.keys()]
+                        self.project_manager.projects.keys()]
             self.on_close_project_pushed()
             self.ui.comboBoxProjects.addItems(projects)
 
@@ -345,7 +335,7 @@ class MainWindow(QMainWindow):
 
         else:
             with open(self.file_name, "wb") as file:
-                pickle.dump(self.project_handler, file)
+                pickle.dump(self.project_manager, file)
             self.is_unsaved_changes = False
             self.update_title()
 
@@ -364,7 +354,7 @@ class MainWindow(QMainWindow):
         self.file_name = save_as_file_name
 
         with open(self.file_name, "wb") as file:
-            pickle.dump(self.project_handler, file)
+            pickle.dump(self.project_manager, file)
 
         self.is_unsaved_changes = False
         self.update_title()
@@ -377,29 +367,29 @@ class MainWindow(QMainWindow):
         ]
 
     def task_edit_in_scroll_area(self, edit_tasks_hash, edit_fields):
-        current_project = self.project_handler.get_current_project()
-        task = current_project.get_task_by_hash(edit_tasks_hash)
-        new_title, new_description, new_color_string = edit_fields
-        task.set_title(new_title)
-        task.set_description(new_description)
-        task.set_color_string(new_color_string)
+        current_project = self.project_manager.get_current_project()
+        task_creator = current_project.get_task_by_hash(edit_tasks_hash)
+        new_title, new_description, new_color_id = edit_fields
+        task_creator.set_title(new_title)
+        task_creator.set_description(new_description)
+        task_creator.set_color_id(new_color_id)
         self.update_task_view()
         self.mark_unsaved_changes()
 
     def task_deleted_in_scroll_area(self, deleted_tasks_hash):
-        current_project = self.project_handler.get_current_project()
+        current_project = self.project_manager.get_current_project()
         current_project.remove_task_by_hash(deleted_tasks_hash)
         self.mark_unsaved_changes()
 
     def task_gets_dragged(self, dragged_tasks_hash):
         self.dragged_tasks_hash = dragged_tasks_hash
-        current_project = self.project_handler.get_current_project()
+        current_project = self.project_manager.get_current_project()
         self.dragged_task_creator = current_project.get_task_by_hash(dragged_tasks_hash)
 
     def task_gets_dropped(self, bin_name):
         if self.dragged_tasks_hash is not None:
             if self.dragged_task_creator.task_bin != bin_name:
-                current_project = self.project_handler.get_current_project()
+                current_project = self.project_manager.get_current_project()
                 current_project.remove_task_by_hash(self.dragged_tasks_hash)
 
                 self.dragged_task_creator.task_bin = bin_name
@@ -417,7 +407,7 @@ class MainWindow(QMainWindow):
             self.dragged_task = None
 
     def update_task_counter(self):
-        current_project = self.project_handler.get_current_project()
+        current_project = self.project_manager.get_current_project()
         task_count = current_project.get_task_count()
         open_count = current_project.get_task_count_in("open")
         in_progress_count = current_project.get_task_count_in("in progress")
@@ -434,7 +424,7 @@ class MainWindow(QMainWindow):
             f"{done_count}/{task_count}")
 
     def update_task_view(self):
-        current_project = self.project_handler.get_current_project()
+        current_project = self.project_manager.get_current_project()
 
         self.ui.scrollAreaWidgetContentsOpen.clear_scroll_area()
         self.ui.scrollAreaWidgetContentsInProgress.clear_scroll_area()
@@ -471,28 +461,28 @@ class MainWindow(QMainWindow):
         ]
 
     def selected_project_in_project_view(self, selected_project_hash):
-        project = self.project_handler.get_project_by_hash(
+        project = self.project_manager.get_project_by_hash(
             selected_project_hash)
         self.ui.comboBoxProjects.set_index_to_string(
             project.get_title()
         )
 
     def deleted_pushed_in_project_view(self, deleted_project_hash):
-        project = self.project_handler.get_project_by_hash(
+        project = self.project_manager.get_project_by_hash(
             deleted_project_hash)
         title = project.get_title()
         self.ui.comboBoxProjects.delete_string_from_combo_box(
             title
         )
-        self.project_handler.remove_project_by_hash(deleted_project_hash)
+        self.project_manager.remove_project_by_hash(deleted_project_hash)
         self.mark_unsaved_changes()
 
     def info_pushed_in_project_view(self, info_project_hash):
-        project = self.project_handler.get_project_by_hash(info_project_hash)
+        project = self.project_manager.get_project_by_hash(info_project_hash)
         self.on_info_project_pushed(project)
 
     def edit_pushed_in_project_view(self, edit_project_hash):
-        project = self.project_handler.get_project_by_hash(edit_project_hash)
+        project = self.project_manager.get_project_by_hash(edit_project_hash)
         self.on_edit_project_pushed(project)
 
     def update_project_view(self):
@@ -512,7 +502,7 @@ class MainWindow(QMainWindow):
 
         self.ui.labelSort.setText(sort_text)
 
-        projects = self.project_handler.get_list_of_projects(
+        projects = self.project_manager.get_list_of_projects(
             sort_member=self.project_sort_member
         )
 

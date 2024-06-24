@@ -8,32 +8,32 @@ from PySide6.QtWidgets import (
 )
 
 
-class Ui_AddEditDialog(object):
-    def setupUi(self, AddEditDialog):
-        self.set_object_name(AddEditDialog)
-        self.set_size_policy(AddEditDialog)
-        self.set_window_icon(AddEditDialog)
+class Ui_EditDialog(object):
+    def setupUi(self, EditDialog):
+        self.set_object_name(EditDialog)
+        self.set_size_policy(EditDialog)
+        self.set_window_icon(EditDialog)
 
-        self.addEditWindowMainLayout = QVBoxLayout(AddEditDialog)
+        self.addEditWindowMainLayout = QVBoxLayout(EditDialog)
         self.addEditWindowMainLayout.setSpacing(10)
         self.addEditWindowMainLayout.setContentsMargins(10, 10, 10, 10)
 
         # Add edit section for title
-        self.lineEditTaskname = QLineEdit(AddEditDialog)
+        self.lineEditTaskname = QLineEdit(EditDialog)
         self.lineEditTaskname.setObjectName(u"lineEditTaskname")
         self.addEditWindowMainLayout.addWidget(self.lineEditTaskname)
 
         # Add edit section for description
-        self.plainTextEditDescription = QPlainTextEdit(AddEditDialog)
+        self.plainTextEditDescription = QPlainTextEdit(EditDialog)
         self.plainTextEditDescription.setObjectName(u"plainTextEditDescription")
         self.addEditWindowMainLayout.addWidget(self.plainTextEditDescription)
 
         # Add created timestamp
         horizontalLayout = QHBoxLayout()
-        self.label_DateCreatedText = QLabel(AddEditDialog)
+        self.label_DateCreatedText = QLabel(EditDialog)
         self.label_DateCreatedText.setObjectName(u"label_DateCreatedText")
         self.label_DateCreatedText.setStyleSheet(u"color: rgb(150, 150, 150);")
-        self.label_DateCreated = QLabel(AddEditDialog)
+        self.label_DateCreated = QLabel(EditDialog)
         self.label_DateCreated.setObjectName(u"label_DateCreated")
         horizontalLayout.addWidget(self.label_DateCreatedText)
         horizontalLayout.addWidget(self.label_DateCreated, 0, Qt.AlignRight)
@@ -43,10 +43,10 @@ class Ui_AddEditDialog(object):
 
         # Add changed timestamp
         horizontalLayout = QHBoxLayout()
-        self.label_DateChangedText = QLabel(AddEditDialog)
+        self.label_DateChangedText = QLabel(EditDialog)
         self.label_DateChangedText.setObjectName(u"label_DateChangedText")
         self.label_DateChangedText.setStyleSheet(u"color: rgb(150, 150, 150);")
-        self.label_DateChanged = QLabel(AddEditDialog)
+        self.label_DateChanged = QLabel(EditDialog)
         self.label_DateChanged.setObjectName(u"label_DateCreated")
         horizontalLayout.addWidget(self.label_DateChangedText)
         horizontalLayout.addWidget(self.label_DateChanged, 0, Qt.AlignRight)
@@ -56,10 +56,10 @@ class Ui_AddEditDialog(object):
 
         # Add task count
         horizontalLayout = QHBoxLayout()
-        self.label_NoTasksText = QLabel(AddEditDialog)
+        self.label_NoTasksText = QLabel(EditDialog)
         self.label_NoTasksText.setObjectName(u"label_NoTasksText")
         self.label_NoTasksText.setStyleSheet(u"color: rgb(150, 150, 150);")
-        self.label_NoTasks = QLabel(AddEditDialog)
+        self.label_NoTasks = QLabel(EditDialog)
         self.label_NoTasks.setObjectName(u"label_NoTasks")
         horizontalLayout.addWidget(self.label_NoTasksText)
         horizontalLayout.addWidget(self.label_NoTasks, 0, Qt.AlignRight)
@@ -69,10 +69,10 @@ class Ui_AddEditDialog(object):
 
         # Add open count
         horizontalLayout = QHBoxLayout()
-        self.label_NoOpenText = QLabel(AddEditDialog)
+        self.label_NoOpenText = QLabel(EditDialog)
         self.label_NoOpenText.setObjectName(u"label_NoOpenText")
         self.label_NoOpenText.setStyleSheet(u"color: rgb(150, 150, 150);")
-        self.label_NoOpen = QLabel(AddEditDialog)
+        self.label_NoOpen = QLabel(EditDialog)
         self.label_NoOpen.setObjectName(u"label_NoOpen")
         horizontalLayout.addWidget(self.label_NoOpenText)
         horizontalLayout.addWidget(self.label_NoOpen, 0, Qt.AlignRight)
@@ -82,10 +82,10 @@ class Ui_AddEditDialog(object):
 
         # Add in progress count
         horizontalLayout = QHBoxLayout()
-        self.label_NoInProgressText = QLabel(AddEditDialog)
+        self.label_NoInProgressText = QLabel(EditDialog)
         self.label_NoInProgressText.setObjectName(u"label_NoInProgressText")
         self.label_NoInProgressText.setStyleSheet(u"color: rgb(150, 150, 150);")
-        self.label_NoInProgress = QLabel(AddEditDialog)
+        self.label_NoInProgress = QLabel(EditDialog)
         self.label_NoInProgress.setObjectName(u"label_NoInProgress")
         horizontalLayout.addWidget(self.label_NoInProgressText)
         horizontalLayout.addWidget(self.label_NoInProgress, 0, Qt.AlignRight)
@@ -95,10 +95,10 @@ class Ui_AddEditDialog(object):
 
         # Add in stuck test count
         horizontalLayout = QHBoxLayout()
-        self.label_NoStuckTestText = QLabel(AddEditDialog)
+        self.label_NoStuckTestText = QLabel(EditDialog)
         self.label_NoStuckTestText.setObjectName(u"label_NoStuckTestText")
         self.label_NoStuckTestText.setStyleSheet(u"color: rgb(150, 150, 150);")
-        self.label_NoStuckTest = QLabel(AddEditDialog)
+        self.label_NoStuckTest = QLabel(EditDialog)
         self.label_NoStuckTest.setObjectName(u"label_NoStuckTest")
         horizontalLayout.addWidget(self.label_NoStuckTestText)
         horizontalLayout.addWidget(self.label_NoStuckTest, 0, Qt.AlignRight)
@@ -108,10 +108,10 @@ class Ui_AddEditDialog(object):
 
         # Add in done count
         horizontalLayout = QHBoxLayout()
-        self.label_NoDoneText = QLabel(AddEditDialog)
+        self.label_NoDoneText = QLabel(EditDialog)
         self.label_NoDoneText.setObjectName(u"label_NoDoneText")
         self.label_NoDoneText.setStyleSheet(u"color: rgb(150, 150, 150);")
-        self.label_NoDone = QLabel(AddEditDialog)
+        self.label_NoDone = QLabel(EditDialog)
         self.label_NoDone.setObjectName(u"label_NoDone")
         horizontalLayout.addWidget(self.label_NoDoneText)
         horizontalLayout.addWidget(self.label_NoDone, 0, Qt.AlignRight)
@@ -126,7 +126,7 @@ class Ui_AddEditDialog(object):
         horizontalLayout.setSpacing(0)
         horizontalLayout.setObjectName(u"horizontalLayout")
 
-        self.widget = QWidget(AddEditDialog)
+        self.widget = QWidget(EditDialog)
         self.widget.setObjectName(u"widget")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -169,7 +169,7 @@ class Ui_AddEditDialog(object):
         self.gridLayout.addWidget(self.color_10, 0, 9, 1, 1)
 
         # Add selection
-        self.buttonGroup = QButtonGroup(AddEditDialog)
+        self.buttonGroup = QButtonGroup(EditDialog)
         self.buttonGroup.setObjectName(u"buttonGroup")
 
         self.checkBox_1 = QCheckBox(self.widget)
@@ -231,36 +231,36 @@ class Ui_AddEditDialog(object):
     # <<< end of color selection
 
         # Add dialog buttons
-        self.buttonBoxAddCancelTask = QDialogButtonBox(AddEditDialog)
+        self.buttonBoxAddCancelTask = QDialogButtonBox(EditDialog)
         self.buttonBoxAddCancelTask.setObjectName(u"buttonBoxAddCancelTask")
         self.buttonBoxAddCancelTask.setOrientation(Qt.Horizontal)
         self.buttonBoxAddCancelTask.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
-        self.buttonBoxAddCancelTask.accepted.connect(AddEditDialog.accept)
-        self.buttonBoxAddCancelTask.rejected.connect(AddEditDialog.reject)
+        self.buttonBoxAddCancelTask.accepted.connect(EditDialog.accept)
+        self.buttonBoxAddCancelTask.rejected.connect(EditDialog.reject)
 
         self.addEditWindowMainLayout.addWidget(self.buttonBoxAddCancelTask) 
 
-        self.set_text_of_buttons_and_labels(AddEditDialog)
+        self.set_text_of_buttons_and_labels(EditDialog)
 
-        QMetaObject.connectSlotsByName(AddEditDialog)
+        QMetaObject.connectSlotsByName(EditDialog)
 
-    def set_object_name(self, AddEditDialog):
-        if not AddEditDialog.objectName():
-            AddEditDialog.setObjectName(u"AddEditDialog")
+    def set_object_name(self, EditDialog):
+        if not EditDialog.objectName():
+            EditDialog.setObjectName(u"EditDialog")
 
-    def set_size_policy(self, AddEditDialog):
-        AddEditDialog.resize(430, 525)
+    def set_size_policy(self, EditDialog):
+        EditDialog.resize(430, 525)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(AddEditDialog.sizePolicy().hasHeightForWidth())
-        AddEditDialog.setSizePolicy(sizePolicy)
-        AddEditDialog.setMinimumSize(QSize(430, 525))
+        sizePolicy.setHeightForWidth(EditDialog.sizePolicy().hasHeightForWidth())
+        EditDialog.setSizePolicy(sizePolicy)
+        EditDialog.setMinimumSize(QSize(430, 525))
 
-    def set_window_icon(self, AddEditDialog):
+    def set_window_icon(self, EditDialog):
         icon = QIcon()
         icon.addFile(u":/icons/icons/swift-notes.svg", QSize(), QIcon.Normal, QIcon.Off)
-        AddEditDialog.setWindowIcon(icon)
+        EditDialog.setWindowIcon(icon)
 
     def get_color(self, widget, object_name):
         color = QFrame(widget)
@@ -271,28 +271,28 @@ class Ui_AddEditDialog(object):
         color.setFrameShadow(QFrame.Plain)
         return color
 
-    def set_text_of_buttons_and_labels(self, AddEditDialog):
-        AddEditDialog.setWindowTitle(QCoreApplication.translate("AddEditDialog", u"Add Task", None))
+    def set_text_of_buttons_and_labels(self, EditDialog):
+        EditDialog.setWindowTitle(QCoreApplication.translate("EditDialog", u"Add Task", None))
         self.lineEditTaskname.setText("")
-        self.lineEditTaskname.setPlaceholderText(QCoreApplication.translate("AddEditDialog", u"Title", None))
+        self.lineEditTaskname.setPlaceholderText(QCoreApplication.translate("EditDialog", u"Title", None))
         self.plainTextEditDescription.setPlainText("")
-        self.plainTextEditDescription.setPlaceholderText(QCoreApplication.translate("AddEditDialog", u"Description (optional)", None))
+        self.plainTextEditDescription.setPlaceholderText(QCoreApplication.translate("EditDialog", u"Description (optional)", None))
        
-        self.label_DateCreatedText.setText(QCoreApplication.translate("AddEditDialog", u"Created:", None))
-        self.label_DateCreated.setText(QCoreApplication.translate("AddEditDialog", u"...Date...", None))
-        self.label_DateChangedText.setText(QCoreApplication.translate("AddEditDialog", u"Last changed:", None))
-        self.label_DateChanged.setText(QCoreApplication.translate("AddEditDialog", u"...Date...", None))
+        self.label_DateCreatedText.setText(QCoreApplication.translate("EditDialog", u"Created:", None))
+        self.label_DateCreated.setText(QCoreApplication.translate("EditDialog", u"...Date...", None))
+        self.label_DateChangedText.setText(QCoreApplication.translate("EditDialog", u"Last changed:", None))
+        self.label_DateChanged.setText(QCoreApplication.translate("EditDialog", u"...Date...", None))
         
-        self.label_NoTasksText.setText(QCoreApplication.translate("AddEditDialog", u"No. of tasks created:", None))
-        self.label_NoTasks.setText(QCoreApplication.translate("AddEditDialog", u"...Number...", None))
-        self.label_NoOpenText.setText(QCoreApplication.translate("AddEditDialog", u"No. of tasks in 'Open':", None))
-        self.label_NoOpen.setText(QCoreApplication.translate("AddEditDialog", u"...Number...Percentage...", None))
-        self.label_NoInProgressText.setText(QCoreApplication.translate("AddEditDialog", u"No. of tasks in 'In Progress':", None))
-        self.label_NoInProgress.setText(QCoreApplication.translate("AddEditDialog", u"...Number...Percentage...", None))
-        self.label_NoStuckTestText.setText(QCoreApplication.translate("AddEditDialog", u"No. of tasks in 'Stuck/Test':", None))
-        self.label_NoStuckTest.setText(QCoreApplication.translate("AddEditDialog", u"...Number...Percentage...", None))
-        self.label_NoDoneText.setText(QCoreApplication.translate("AddEditDialog", u"No. of tasks 'Done':", None))
-        self.label_NoDone.setText(QCoreApplication.translate("AddEditDialog", u"...Number...Percentage...", None))
+        self.label_NoTasksText.setText(QCoreApplication.translate("EditDialog", u"No. of tasks created:", None))
+        self.label_NoTasks.setText(QCoreApplication.translate("EditDialog", u"...Number...", None))
+        self.label_NoOpenText.setText(QCoreApplication.translate("EditDialog", u"No. of tasks in 'Open':", None))
+        self.label_NoOpen.setText(QCoreApplication.translate("EditDialog", u"...Number...Percentage...", None))
+        self.label_NoInProgressText.setText(QCoreApplication.translate("EditDialog", u"No. of tasks in 'In Progress':", None))
+        self.label_NoInProgress.setText(QCoreApplication.translate("EditDialog", u"...Number...Percentage...", None))
+        self.label_NoStuckTestText.setText(QCoreApplication.translate("EditDialog", u"No. of tasks in 'Stuck/Test':", None))
+        self.label_NoStuckTest.setText(QCoreApplication.translate("EditDialog", u"...Number...Percentage...", None))
+        self.label_NoDoneText.setText(QCoreApplication.translate("EditDialog", u"No. of tasks 'Done':", None))
+        self.label_NoDone.setText(QCoreApplication.translate("EditDialog", u"...Number...Percentage...", None))
 
         self.checkBox_1.setText("")
         self.checkBox_2.setText("")

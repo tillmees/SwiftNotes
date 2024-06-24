@@ -8,14 +8,14 @@ class SettingsHandler:
 
         # set default values
         self._settings_dict = {}
-        self._set_settings_dict()
         self._on_startup()
 
-    def _set_settings_dict(self):
+    def _set_default_settings_dict(self):
         self._settings_dict = {}
 
     def _on_startup(self):
         if not os.path.exists(self._settings_file_name):
+            self._set_default_settings_dict()
             self._create_settings_json()
         else:
             self._parse_settings_json()
@@ -27,10 +27,10 @@ class SettingsHandler:
         for key, value in data.items():
             self._settings_dict[key] = value
 
-    def _create_settings_json(self):
-        self._update_settings_json()
-            
     def _update_settings_json(self):
+        self._create_settings_json()
+            
+    def _create_settings_json(self):
         with open(self._settings_file_name, "w") as f:
             json.dump(self._settings_dict, f, indent=4)
             

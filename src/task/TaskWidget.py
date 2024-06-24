@@ -5,34 +5,30 @@ from PySide6.QtGui import QMouseEvent, QDrag, QPixmap, QPainter, QColor
 from task.TaskUi import Ui_TaskWidget
 
 from base.CustomBaseWidget import CustomBaseWidget
-from form_window.AddEditWindow import AddEditWindow
-from task.TaskCreator import TaskCreator
-from style.Colors import transparent_color
-
-from base.UtilityFunctions import get_current_time_string
+from windows.edit_window.EditTaskWindow import EditTaskWindow
+from task.Task import Task
 
 
 class TaskWidget(CustomBaseWidget):
+    drag_signal = Signal(str)
     delete_signal = Signal(str)
     edit_signal = Signal(str, tuple)
-    drag_signal = Signal(str)
 
     def __init__(self, task_creator):
-        super(TaskWidget, self).__init__(task_creator.color)
+        super(TaskWidget, self).__init__(
+            task_creator.title,
+            task_creator.created_string,
+            task_creator.last_changed_string,
+            task_creator.color_id,
+            task_creator.hash_value
+        )
 
         self.ui = Ui_TaskWidget()
         self.ui.setupUi(self)
-        self.edit_task_window = AddEditWindow()
 
-        self.title = task_creator.title
+        self.edit_task_window = EditTaskWindow()
+
         self.description = task_creator.description
-        self.color_string = task_creator.color
-        self.transparent_color_string = transparent_color(self.color_string)
-
-        self.created_string = task_creator.created_string
-        self.last_changed_string = task_creator.last_changed_string
-        self.hash_value = task_creator.hash_value
-
         self.task_bin = task_creator.task_bin
 
         self.setup_widget()
@@ -69,7 +65,7 @@ class TaskWidget(CustomBaseWidget):
 
             drag.setPixmap(rounded_pixmap)
 
-            self.transparent = True
+            self.is_transparent = True
             self.setStyleSheet(
                 f"background-color: {self.transparent_color_string};\n "
             )
@@ -80,17 +76,21 @@ class TaskWidget(CustomBaseWidget):
 
             drag.exec_(Qt.MoveAction)
 
+            self.setStyleSheet(
+                f"background-color: {self.color_string};\n "
+            )
+
     @classmethod
     def get_deepcopy(cls, class_instance):
         return cls(
-            class_instance.get_task_creator
+            class_instance.get_task
         )
 
-    def get_task_creator(self):
-        return TaskCreator(
+    def get_task(self):
+        return Task(
             title=self.title,
             description=self.description,
-            color=self.color_string,
+            color_id=self.color_id,
             created_string=self.created_string,
             last_changed_string=self.last_changed_string,
             hash_value=self.hash_value,
@@ -109,25 +109,14 @@ class TaskWidget(CustomBaseWidget):
         self.ui.pushButton_NoDelTask.clicked.connect(self.on_delete_canceled)
 
     def on_edit_clicked(self):
-        old_title = self.title
-        old_description = self.description
-        old_color_string = self.color_string
+        self.edit_task_window.setup_window(self.get_task())
 
-        self.edit_task_window.clear_edits()
-        self.edit_task_window.setWindowTitle("Edit Task")
-        self.edit_task_window.set_title(old_title)
-        self.edit_task_window.set_description(old_description)
-        self.edit_task_window.set_color_checked_box(old_color_string)
-
-        result = self.edit_task_window.exec_edit(self)
+        result = self.edit_task_window.exec()
         if result == QDialog.Accepted:
-            new_title = self.edit_task_window.get_title()
-            new_description = self.edit_task_window.get_description()
-            new_color_string = self.edit_task_window.get_color_string()
-
+            new_title, new_description, new_color_id = self.edit_task_window.get_attributes_from_user_input()
             self.edit_signal.emit(
                 self.get_hash(),
-                (new_title, new_description, new_color_string)
+                (new_title, new_description, new_color_id)
             )
 
     def on_delete_clicked(self):
@@ -145,25 +134,6 @@ class TaskWidget(CustomBaseWidget):
     def side_buttons_are_enabled(self, bool_val):
         self.ui.pushButtonDeleteTask.setEnabled(bool_val)
 
-    def get_hash(self):
-        return self.hash_value
-
-    def get_title(self):
-        return self.title
-
-    def set_title(self, new_title):
-        self.title = new_title
-        self.update_last_changed_string()
-
-    def get_created_string(self):
-        return self.created_string
-
-    def get_last_changed_string(self):
-        return self.last_changed_string
-
-    def update_last_changed_string(self):
-        self.last_changed_string = get_current_time_string()
-
     def get_description(self):
         return self.description
 
@@ -177,16 +147,6 @@ class TaskWidget(CustomBaseWidget):
     def set_task_bin(self, new_task_bin):
         self.task_bin = new_task_bin
         self.update_last_changed_string()
-
-    def set_color_string(self, color_string):
-        self.color_string = color_string
-        self.update_last_changed_string()
-
-    def get_color_string(self):
-        return self.color_string
-    
-    def set_transparency(self, transparency):
-        self.setWindowOpacity(transparency)
 
     def setup_stylesheets(self):
         self.setStyleSheet(

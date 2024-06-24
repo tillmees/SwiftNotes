@@ -2,63 +2,95 @@ from settings.SettingsHandler import SettingsHandler
 
 
 class StyleSettingsHandler(SettingsHandler):
-    def __init__(self, file_name):
-        super().__init__(file_name)
+    _instance = None
 
-    def _set_settings_dict(self):
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(StyleSettingsHandler, cls).__new__(cls)
+        return cls._instance
+    
+    def __init__(self, file_name=None):
+        if not hasattr(self, 'initialized'):
+            super().__init__(file_name)
+            self.initialized = True
+        else:
+            assert file_name == None, f"{type(self).__name__} singleton should have been initialized already"
+
+    def get_light_layout_dict(self):
+        return self._settings_dict["light"]
+
+    def get_dark_layout_dict(self):
+        return self._settings_dict["dark"]
+    
+    def get_colors_dict(self):
+        return self._settings_dict["colors"]
+
+    def _set_default_settings_dict(self):
         self._settings_dict = {
             "light": {
-                "main_background": "#eeeeee",
-                "title_bar_background": "#eeeeee",
-                "popup_background": "rgb(245, 245, 245)",
-                "popup_fields": "#ffffff",
-                "popup_fields_font": "#000000",
-                "combobox": "#f5f5f5",
-                "combobox_border": "rgb(200, 200, 200)",
-                "combobox_font": "#111111",
-                "sidebar": "rgb(200, 200, 200)",
-                "sidebar_divider": "rgb(180, 180, 180)",
-                "sidebar_label": "#000000",
-                "task_area": "#f5f5f5",
-                "project_area": "#f5f5f5",
+                "main_background": "rgba(238, 238, 238, 1.0)",
+                "title_bar_background": "rgba(238, 238, 238, 1.0)",
+                "popup_background": "rgba(245, 245, 245, 1.0)",
+                "popup_fields": "rgba(255, 255, 255, 1.0)",
+                "popup_fields_font": "rgba(0, 0, 0, 1.0)",
+                "combobox": "rgba(245, 245, 245, 1.0)",
+                "combobox_border": "rgba(200, 200, 200, 1.0)",
+                "combobox_font": "rgba(17, 17, 17, 1.0)",
+                "sidebar": "rgba(200, 200, 200, 1.0)",
+                "sidebar_divider": "rgba(180, 180, 180, 1.0)",
+                "sidebar_label": "rgba(0, 0, 0, 1.0)",
+                "task_area": "rgba(245, 245, 245, 1.0)",
+                "project_area": "rgba(245, 245, 245, 1.0)",
                 "button": "rgba(0, 0, 0, 0.0)",
                 "button_hover": "rgba(86, 101, 115, 0.5)",
                 "button_pressed": "rgba(46, 61, 75, 0.5)",
                 "label_view": "rgba(86, 101, 115, 0.5)",
-                "label_projects_header": "#000000",
-                "label_light": "#000000",
+                "label_projects_header": "rgba(0, 0, 0, 1.0)",
+                "label_light": "rgba(0, 0, 0, 1.0)",
                 "label_light_weight": "bold",
-                "label_dark": "#000000",
+                "label_dark": "rgba(0, 0, 0, 1.0)",
                 "label_dark_weight": "regular",
-                "label_welcome": "rgb(200, 200, 200)",
+                "label_welcome": "rgba(200, 200, 200, 1.0)",
                 "button_titlebar_hover": "rgba(0, 0, 0, 0.125)",
                 "button_titlebar_pressed": "rgba(0, 0, 0, 0.25)"
             },
             "dark": {
-                "main_background": "#1e1f22",
-                "title_bar_background": "#1e1f22",
-                "popup_background": "#2b2d30",
-                "popup_fields": "#43454a",
-                "popup_fields_font": "#ffffff",
-                "combobox": "#2b2d30",
-                "combobox_border": "#1e1f22",
-                "combobox_font": "#ffffff",
-                "sidebar": "#2b2d30",
-                "sidebar_divider": "#1e1f22",
-                "sidebar_label": "#ffffff",
-                "task_area": "#2b2d30",
-                "project_area": "#2b2d30",
+                "main_background": "rgba(30, 31, 34, 1.0)",
+                "title_bar_background": "rgba(30, 31, 34, 1.0)",
+                "popup_background": "rgba(43, 45, 50, 1.0)",
+                "popup_fields": "rgba(67, 69, 74, 1.0)",
+                "popup_fields_font": "rgba(255, 255, 255, 1.0)",
+                "combobox": "rgba(43, 45, 50, 1.0)",
+                "combobox_border": "rgba(30, 31, 34, 1.0)",
+                "combobox_font": "rgba(255, 255, 255, 1.0)",
+                "sidebar": "rgba(43, 45, 50, 1.0)",
+                "sidebar_divider": "rgba(30, 31, 34, 1.0)",
+                "sidebar_label": "rgba(255, 255, 255, 1.0)",
+                "task_area": "rgba(43, 45, 50, 1.0)",
+                "project_area": "rgba(43, 45, 50, 1.0)",
                 "button": "rgba(0, 0, 0, 0.0)",
                 "button_hover": "rgba(86, 101, 115, 0.5)",
                 "button_pressed": "rgba(46, 61, 75, 0.5)",
-                "label_view": "#acacac",
-                "label_projects_header": "#acacac",
-                "label_light": "#ffffff",
+                "label_view": "rgba(172, 172, 172, 1.0)",
+                "label_projects_header": "rgba(172, 172, 172, 1.0)",
+                "label_light": "rgba(255, 255, 255, 1.0)",
                 "label_light_weight": "regular",
-                "label_dark": "#ffffff",
+                "label_dark": "rgba(255, 255, 255, 1.0)",
                 "label_dark_weight": "bold",
-                "label_welcome": "rgb(200, 200, 200)",
+                "label_welcome": "rgba(200, 200, 200, 1.0)",
                 "button_titlebar_hover": "rgba(255, 255, 255, 0.125)",
                 "button_titlebar_pressed": "rgba(255, 255, 255, 0.25)"
-            }
+            },
+            "colors": {
+                "color_0": "#799558",
+                "color_1": "#b0ab84",
+                "color_2": "#e17444",
+                "color_3": "#f69d59",
+                "color_4": "#e6b449",
+                "color_5": "#d2838f",
+                "color_6": "#af445a",
+                "color_7": "#732e54",
+                "color_8": "#216869",
+                "color_9": "#75a09b",
+            },
         }

@@ -1,4 +1,5 @@
-class ProjectHandler:
+class ProjectManager:    
+    
     def __init__(self):
         self.projects = {}
         self.current_project = None

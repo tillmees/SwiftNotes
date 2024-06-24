@@ -18,19 +18,21 @@ class ProjectWidget(CustomBaseWidget):
             last_changed_string,
             created_string,
             hash_value,
-            color_string
+            color_id
     ):
-        super(ProjectWidget, self).__init__(color_string)
+        super(ProjectWidget, self).__init__(
+            title,
+            created_string,
+            last_changed_string,
+            color_id,
+            hash_value
+        )
 
         self.ui = Ui_ProjectWidget()
         self.ui.setupUi(self)
-
+        
         self.title = title
         self.open_tasks_count = open_tasks_count
-        self.created_string = created_string
-        self.last_changed_string = last_changed_string
-        self.hash_value = hash_value
-        self.color_string = color_string
         
         self.setup_widget()
         self.setup_stylesheets()
@@ -72,9 +74,6 @@ class ProjectWidget(CustomBaseWidget):
 
     def on_edit_clicked(self):
         self.edit_signal.emit(self.get_hash())
-
-    def get_hash(self):
-        return self.hash_value
 
     def setup_stylesheets(self):
         self.setStyleSheet(

@@ -1,13 +1,34 @@
 from PySide6.QtGui import QFontDatabase, QIcon
 from PySide6.QtCore import QSize
 
+from settings.StyleSettingsHandler import StyleSettingsHandler
+from settings.WindowSettingsHandler import WindowSettingsHandler
 
-class StyleSettingsHandler():
-    def __init__(self, style_settings, layout, ui):
-        self.style_settings_dict = style_settings.get_settings_dict()
-        self.current_layout = layout
-        self.icons = self.get_icons()
-        self.buttons = self.get_buttons(ui)
+
+class LayoutHandler():
+
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(LayoutHandler, cls).__new__(cls)
+        return cls._instance
+    
+    def __init__(self, ui=None):
+        if not hasattr(self, 'initialized'):
+            self.initialized = True
+
+            style_settings_handler = StyleSettingsHandler()
+            self.layout_dict = {
+                "light": style_settings_handler.get_value_for("light"),
+                "dark": style_settings_handler.get_value_for("dark")
+            }
+           
+            window_settings_handler = WindowSettingsHandler()
+            self.current_layout = window_settings_handler.get_value_for("layout")
+            
+            self.icons = self.get_icons()
+            self.buttons = self.get_buttons(ui)
 
     def toggle_layout(self, app):
         if self.current_layout == "light":
@@ -17,7 +38,7 @@ class StyleSettingsHandler():
         self.set_layout(app)
 
     def set_layout(self, app):
-        style_dict = self.style_settings_dict[self.current_layout]
+        style_dict = self.layout_dict[self.current_layout]
         stylesheet_content = self.get_stylesheet_content(style_dict)
         app.setStyleSheet(stylesheet_content)
         self.set_icons()
@@ -96,7 +117,6 @@ class StyleSettingsHandler():
 
             * {{
                 font-family: {font};
-                letter-spacing: 0px;
             }}
 
             #TopBarQWidget QPushButton{{
@@ -230,23 +250,43 @@ class StyleSettingsHandler():
                 color: {style_dict["sidebar_label"]};
             }}
 
-            #AddEditDialog {{
+            #EditDialog {{
                 background-color: {style_dict["popup_background"]};
             }}
 
-            #AddEditDialog QLineEdit {{
+            #EditDialog QLineEdit {{
                 border: 1px;
                 background-color: {style_dict["popup_fields"]};
                 color: {style_dict["popup_fields_font"]};
             }}
 
-            #AddEditDialog QPlainTextEdit {{
+            #EditDialog QPlainTextEdit {{
                 border-radius: 5px;
                 background-color: {style_dict["popup_fields"]};
                 color: {style_dict["popup_fields_font"]};
             }}
 
-            #AddEditDialog QLabel {{
+            #EditDialog QLabel {{
+                color: {style_dict["popup_fields_font"]};
+            }}
+
+            #AddDialog {{
+                background-color: {style_dict["popup_background"]};
+            }}
+
+            #AddDialog QLineEdit {{
+                border: 1px;
+                background-color: {style_dict["popup_fields"]};
+                color: {style_dict["popup_fields_font"]};
+            }}
+
+            #AddDialog QPlainTextEdit {{
+                border-radius: 5px;
+                background-color: {style_dict["popup_fields"]};
+                color: {style_dict["popup_fields_font"]};
+            }}
+
+            #AddDialog QLabel {{
                 color: {style_dict["popup_fields_font"]};
             }}
 

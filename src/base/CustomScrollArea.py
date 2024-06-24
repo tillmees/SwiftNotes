@@ -61,7 +61,7 @@ class CustomScrollAreaWidget(QWidget):
                 project.get_last_changed_string(),
                 project.get_created_string(),
                 project.get_hash(),
-                project.get_color_string()
+                project.get_color_id()
             )
             self.layout().addWidget(
                 scroll_area_widget

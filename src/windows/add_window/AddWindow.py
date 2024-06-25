@@ -23,6 +23,7 @@ class AddWindow(QDialog):
     def exec(self):
         self.clear_edits()
         self.ui.lineEditTaskname.setFocus()
+        self.ui.label_okDisabledExplanation.setText("")
         return super(AddWindow, self).exec()
 
     def clear_edits(self):
@@ -30,8 +31,8 @@ class AddWindow(QDialog):
         self.ui.plainTextEditDescription.clear()
 
     def on_title_changed(self):
-        self.check_text_length()
         self.enable_ok_button()
+        self.truncate_title_if_needed()
 
     def enable_ok_button(self):
         if self.ui.lineEditTaskname.text() == "":
@@ -39,12 +40,14 @@ class AddWindow(QDialog):
         else:
             self.ui.buttonBoxAddCancelTask.button(QDialogButtonBox.Ok).setEnabled(True)
 
-    def check_text_length(self):
+    def truncate_title_if_needed(self):
         current_text = self.ui.lineEditTaskname.text()
 
         # Truncate the text if it exceeds the maximum character count
         if len(current_text) > self.max_chars:
             self.ui.lineEditTaskname.setText(current_text[:self.max_chars])
+            if self.ui.label_okDisabledExplanation.text() == "":
+                self.ui.label_okDisabledExplanation.setText(f"Title reached its max. of {self.max_chars} characters.")
 
     def get_title(self):
         return self.ui.lineEditTaskname.text()

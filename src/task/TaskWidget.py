@@ -5,6 +5,7 @@ from PySide6.QtGui import QMouseEvent, QDrag, QPixmap, QPainter, QColor
 from task.TaskUi import Ui_TaskWidget
 
 from base.CustomBaseWidget import CustomBaseWidget
+from base.UtilityFunctions import transparent_color
 from windows.edit_window.EditTaskWindow import EditTaskWindow
 from task.Task import Task
 
@@ -67,7 +68,7 @@ class TaskWidget(CustomBaseWidget):
 
             self.is_transparent = True
             self.setStyleSheet(
-                f"background-color: {self.transparent_color_string};\n "
+                f"background-color: {transparent_color(self.color_handler.color_mapping[self.color_id])};\n "
             )
 
             hot_spot = event.pos()
@@ -77,7 +78,7 @@ class TaskWidget(CustomBaseWidget):
             drag.exec_(Qt.MoveAction)
 
             self.setStyleSheet(
-                f"background-color: {self.color_string};\n "
+                f"background-color: {self.color_handler.color_mapping[self.color_id]};\n "
             )
 
     @classmethod
@@ -150,7 +151,7 @@ class TaskWidget(CustomBaseWidget):
 
     def setup_stylesheets(self):
         self.setStyleSheet(
-            f"background-color: {self.color_string};\n "
+            f"background-color: {self.color_handler.color_mapping[self.color_id]};\n "
         )
 
         self.ui.stackedWidget.setStyleSheet(

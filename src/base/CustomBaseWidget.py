@@ -25,21 +25,18 @@ class CustomBaseWidget(QDialog):
         self.hash_value = hash_value
 
         self.color_string = None
-        self.set_color_string()
-        self.lighter_color_string = lighten_color(self.color_string)
-        self.darker_color_string = darken_color(self.color_string)
         self.transparent_color_string = transparent_color(self.color_string)
         self.is_transparent = False
 
     def mousePressEvent(self, event: QMouseEvent):
         self.setStyleSheet(
-            f"background-color: {self.darker_color_string};\n "
+            f"background-color: {darken_color(self.color_handler.color_mapping[self.color_id])};\n "
         )
         super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         self.setStyleSheet(
-            f"background-color: {self.lighter_color_string};\n "
+            f"background-color: {lighten_color(self.color_handler.color_mapping[self.color_id])};\n "
         )
         super().mouseReleaseEvent(event)
 
@@ -47,14 +44,14 @@ class CustomBaseWidget(QDialog):
         # Change background color when mouse hovers over/enters widget
         if self.is_transparent == False:
             self.setStyleSheet(
-                f"background-color: {self.lighter_color_string};\n "
+                f"background-color: {lighten_color(self.color_handler.color_mapping[self.color_id])};\n "
             )
         super().enterEvent(event)
 
     def leaveEvent(self, event):
         # Change back to the initial background color when mouse leaves
         if self.is_transparent == False:
-            self.setStyleSheet(f"background-color: {self.color_string};")
+            self.setStyleSheet(f"background-color: {self.color_handler.color_mapping[self.color_id]};")
         super().leaveEvent(event)
 
     def get_hash(self):
@@ -81,10 +78,3 @@ class CustomBaseWidget(QDialog):
     
     def set_color_id(self, color_id):
         self.color_id = color_id
-        self.set_color_string()
-
-    def set_color_string(self):
-        self.color_string = self.color_handler.color_mapping[self.color_id]
-
-    def get_color_string(self):
-        return self.color_string

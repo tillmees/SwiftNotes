@@ -576,26 +576,62 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"SwiftNotes", None))
+
         self.pushButtonIconNew.setText("")
+        self.pushButtonIconNew.setToolTip("Create a new file (Ctrl+N)")
+
         self.pushButtonIconOpen.setText("")
+        self.pushButtonIconOpen.setToolTip("Open an existing file (Ctrl+O)")
+
         self.pushButtonIconSave.setText("")
+        self.pushButtonIconSave.setToolTip("Save the file (Ctrl+S)")
+
         self.pushButtonIconSaveAs.setText("")
+        self.pushButtonIconSaveAs.setToolTip("Save in a new file (Ctrl+Shift+S)")
+
         self.pushButtonIconAdd.setText("")
+        self.pushButtonIconAdd.setToolTip("Add project")
+
         self.pushButtonIconClose.setText("")
+        self.pushButtonIconClose.setToolTip("Close project")
+
         self.pushButtonIconTask.setText("")
+        self.pushButtonIconTask.setToolTip("Add task")
+
         self.labelVersion.setText(QCoreApplication.translate("MainWindow", u"version", None))
+
         self.pushButtonFullNew.setText(QCoreApplication.translate("MainWindow", u" New...", None))
+        self.pushButtonFullNew.setToolTip("Create a new file (Ctrl+N)")
+
         self.pushButtonFullOpen.setText(QCoreApplication.translate("MainWindow", u" Open...", None))
+        self.pushButtonFullOpen.setToolTip("Open an existing file (Ctrl+O)")
+
         self.pushButtonFullSave.setText(QCoreApplication.translate("MainWindow", u" Save", None))
+        self.pushButtonFullSave.setToolTip("Save the file (Ctrl+S)")
+
         self.pushButtonFullSaveAs.setText(QCoreApplication.translate("MainWindow", u" Save As...", None))
+        self.pushButtonFullSaveAs.setToolTip("Save in a new file (Ctrl+Shift+S)")
+
         self.pushButtonFullAdd.setText(QCoreApplication.translate("MainWindow", u" Add Project", None))
+        self.pushButtonFullAdd.setToolTip("Add project")
+
         self.pushButtonFullClose.setText(QCoreApplication.translate("MainWindow", u" Close Project", None))
-        self.label_light.setText(QCoreApplication.translate("MainWindow", u"Light", None))
-        self.pushButtonFullLayout.setText("")
-        self.label_dark.setText(QCoreApplication.translate("MainWindow", u"Dark", None))
+        self.pushButtonFullClose.setToolTip("Close project")
+
         self.pushButtonFullTask.setText(QCoreApplication.translate("MainWindow", u" Add Task", None))
+        self.pushButtonFullTask.setToolTip("Add task")
+
+        self.label_light.setText(QCoreApplication.translate("MainWindow", u"Light", None))
+
+        self.pushButtonFullLayout.setText("")
+        self.pushButtonFullLayout.setToolTip("Toggle layout")
+
+        self.label_dark.setText(QCoreApplication.translate("MainWindow", u"Dark", None))
+
         self.pushButtonToggleMenu.setText("")
+
         self.labelWelcome.setText(QCoreApplication.translate("MainWindow", u"Add a new project", None))
+
         self.labelWelcomeDrop.setText(QCoreApplication.translate("MainWindow", u"or open an existing .todo file", None))
         self.labelOpen.setText(QCoreApplication.translate("MainWindow", u"Open", None))
         self.labelInProgress.setText(QCoreApplication.translate("MainWindow", u"In Progess", None))

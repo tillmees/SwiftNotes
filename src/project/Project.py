@@ -14,21 +14,16 @@ class Project:
                  color_id=0):
         self.title = title
         self.description = description
-
         self.created_string = self._set_created_string(created_string)
         self.last_changed_string = self._set_last_changed_string(last_changed_string)
         self.hash_value = self._set_hash_value(hash_value)
-
-        self.task_creators = self._init_task_creatorss(tasks)
-        self.temp_disabled_tasks = []
-
+        self.tasks = self._init_task_list(tasks)
         self.color_id = color_id
-        self.color_handler = ColorHandler()
-        self.color_string = self.color_handler.color_mapping[self.color_id]
+
         self.open_task_count = 0
 
-    def add_task(self, task_creator):
-        self.task_creators.append(task_creator)
+    def add_task(self, task):
+        self.tasks.append(task)
         self.update_last_changed_string()
         self.update_open_task_count()
 
@@ -44,8 +39,8 @@ class Project:
         return get_hash_from_time(self.created_string) if \
             hash_value is None else hash_value
 
-    def _init_task_creatorss(self, task_creators):
-        return [] if task_creators is None else task_creators
+    def _init_task_list(self, tasks):
+        return [] if tasks is None else tasks
 
     def get_hash(self):
         return self.hash_value
@@ -75,38 +70,38 @@ class Project:
 
     def get_tasks_in(self, bin_string=None):
         return [
-            task_creator for task_creator in self.task_creators if task_creator.task_bin == bin_string
+            task for task in self.tasks if task.task_bin == bin_string
         ]
 
     def get_task_by_hash(self, hash_value):
-        for task_creator in self.task_creators:
-            if task_creator.hash_value == hash_value:
-                return task_creator
+        for task in self.tasks:
+            if task.hash_value == hash_value:
+                return task
         return None
 
     def remove_task_by_hash(self, hash_value):
-        task_creator = self.get_task_by_hash(hash_value)
-        if task_creator is not None:
-            self.task_creators.remove(task_creator)
+        task = self.get_task_by_hash(hash_value)
+        if task is not None:
+            self.tasks.remove(task)
             self.update_last_changed_string()
             self.update_open_task_count()
             return
 
     def move_task_by_hash_in_bin(self, hash_value, new_task_bin):
-        task_creator = self.get_task_by_hash(hash_value)
-        if task_creator is not None:
-            task_creator.set_task_bin(new_task_bin)
+        task = self.get_task_by_hash(hash_value)
+        if task is not None:
+            task.set_task_bin(new_task_bin)
             self.update_last_changed_string()
             self.update_open_task_count()
 
     def get_task_count_in(self, bin_string=None):
         # possible bins: "open", "in progress", "stuck/test", "done"
         return len(
-            [task_creator for task_creator in self.task_creators if task_creator.task_bin == bin_string]
+            [task for task in self.tasks if task.task_bin == bin_string]
         )
 
     def get_task_count(self):
-        return len(self.task_creators)
+        return len(self.tasks)
 
     def update_open_task_count(self):
         self.open_task_count = (
@@ -115,13 +110,9 @@ class Project:
                 self.get_task_count_in("stuck/test")
         )
 
-    def set_color_string(self):
-        self.color_string = self.color_handler.color_mapping[self.color_id]
-
     def get_color_id(self):
         return self.color_id
     
     def set_color_id(self, color_id):
         self.color_id = color_id
-        self.set_color_string()
         self.update_last_changed_string()

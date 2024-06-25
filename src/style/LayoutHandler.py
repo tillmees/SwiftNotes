@@ -119,6 +119,15 @@ class LayoutHandler():
                 font-family: {font};
             }}
 
+            QToolTip {{
+                background-color: white;
+                font-size: 8pt;
+                color: black;
+                border: 1px solid black;
+                padding: 2px;
+                opacity: 200;
+            }}
+
             #TopBarQWidget QPushButton{{
                 height: 30px;
                 width: 30px;
@@ -287,6 +296,10 @@ class LayoutHandler():
             }}
 
             #AddDialog QLabel {{
+                color: {style_dict["popup_fields_font"]};
+            }}
+
+            #label_okDisabledExplanation {{
                 color: {style_dict["popup_fields_font"]};
             }}
 

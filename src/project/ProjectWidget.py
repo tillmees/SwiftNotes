@@ -77,7 +77,7 @@ class ProjectWidget(CustomBaseWidget):
 
     def setup_stylesheets(self):
         self.setStyleSheet(
-            f"background-color: {self.color_string};\n "
+            f"background-color: {self.color_handler.color_mapping[self.color_id]};\n "
         )
 
         self.ui.labelProjectTitle.setStyleSheet(

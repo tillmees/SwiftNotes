@@ -230,6 +230,14 @@ class Ui_EditDialog(object):
 
     # <<< end of color selection
 
+        # Add dialog button section
+        self.dialogWidget = QWidget(EditDialog)
+        self.dialogWidgetLayout = QHBoxLayout(self.dialogWidget)
+
+        self.label_okDisabledExplanation = QLabel(self.dialogWidget)
+        self.label_okDisabledExplanation.setObjectName(u"label_okDisabledExplanation")
+        self.dialogWidgetLayout.addWidget(self.label_okDisabledExplanation, 0, Qt.AlignVCenter | Qt.AlignLeft)
+
         # Add dialog buttons
         self.buttonBoxAddCancelTask = QDialogButtonBox(EditDialog)
         self.buttonBoxAddCancelTask.setObjectName(u"buttonBoxAddCancelTask")
@@ -238,8 +246,9 @@ class Ui_EditDialog(object):
         self.buttonBoxAddCancelTask.accepted.connect(EditDialog.accept)
         self.buttonBoxAddCancelTask.rejected.connect(EditDialog.reject)
 
-        self.addEditWindowMainLayout.addWidget(self.buttonBoxAddCancelTask) 
+        self.dialogWidgetLayout.addWidget(self.buttonBoxAddCancelTask, 0, Qt.AlignVCenter | Qt.AlignRight)
 
+        self.addEditWindowMainLayout.addWidget(self.dialogWidget) 
         self.set_text_of_buttons_and_labels(EditDialog)
 
         QMetaObject.connectSlotsByName(EditDialog)
@@ -304,3 +313,5 @@ class Ui_EditDialog(object):
         self.checkBox_8.setText("")
         self.checkBox_9.setText("")
         self.checkBox_10.setText("")
+
+        self.label_okDisabledExplanation.setText(QCoreApplication.translate("AddDialog", u"", None))

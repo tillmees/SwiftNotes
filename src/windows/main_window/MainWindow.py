@@ -3,6 +3,7 @@ from enum import Enum
 
 from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QKeySequence, QAction
 
 from settings.WindowSettingsHandler import WindowSettingsHandler
 
@@ -57,12 +58,33 @@ class MainWindow(QMainWindow):
 
     def startup(self):
         self.setup_for_clean_start()
+        self.create_actions()
         self.setup_signals()
         self.apply_window_settings()
         self.style_handler.set_layout(self.app)
         self.update_title()
 
-    
+    def create_actions(self):
+        self.open_action = QAction("&Open", self)
+        self.open_action.setShortcut(QKeySequence("Ctrl+O"))
+        self.open_action.triggered.connect(self.on_open_pushed)
+        self.addAction(self.open_action)
+
+        self.new_action = QAction("&New", self)
+        self.new_action.setShortcut(QKeySequence("Ctrl+N"))
+        self.new_action.triggered.connect(self.on_new_pushed)
+        self.addAction(self.new_action)
+
+        self.save_action = QAction("&Save", self)
+        self.save_action.setShortcut(QKeySequence("Ctrl+S"))
+        self.save_action.triggered.connect(self.on_save_pushed)
+        self.addAction(self.save_action)
+
+        self.save_as_action = QAction("&New", self)
+        self.save_as_action.setShortcut(QKeySequence("Ctrl+Shift+S"))
+        self.save_as_action.triggered.connect(self.on_save_as_pushed)
+        self.addAction(self.save_as_action)
+
     def toggleMaximizeRestore(self):
         if self.isMaximized():
             self.showNormal()
@@ -109,18 +131,15 @@ class MainWindow(QMainWindow):
         super().closeEvent(event)
 
     def on_add_project_pushed(self):
-        self.add_project_window.clear_edits()
-        self.add_project_window.setWindowTitle("Add Project")
-        result = self.add_project_window.exec()
+        already_existing_project_titles = self.project_manager.get_list_of_all_titles()
+        result = self.add_project_window.exec(already_existing_project_titles)
         if result == QDialog.Accepted:
             project = self.add_project_window.get_project_from_user_input()
-            self.project_manager.add_project(project)
-            self.project_manager.set_current_project(project.get_title())
-            self.ui.comboBoxProjects.update_combo_box(
-                project.get_title()
-            )
-            self.update_task_view()
-            self.mark_unsaved_changes()
+            success = self.project_manager.add_project(project)
+            if success:
+                self.ui.comboBoxProjects.update_combo_box(project.get_title())
+                self.update_task_view()
+                self.mark_unsaved_changes()
 
     def on_close_project_pushed(self):
         self.project_manager.set_current_project(None)
@@ -128,18 +147,19 @@ class MainWindow(QMainWindow):
         self.show_project_screen()
 
     def on_edit_project_pushed(self, project):
+        already_existing_project_titles = self.project_manager.get_list_of_all_titles()
+        already_existing_project_titles.remove(project.get_title())
         self.edit_project_window.setup_window(project)
-        result = self.edit_project_window.exec()
+        result = self.edit_project_window.exec(already_existing_project_titles)
         if result == QDialog.Accepted:
             old_title = project.get_title()
+            hash_value = project.get_hash()
             new_title, new_description, new_color_id = self.edit_project_window.get_attributes_from_user_input()
-            project.set_title(new_title)
-            project.set_description(new_description)
-            project.set_color_id(new_color_id)
             self.project_manager.project_edited(
-                old_title,
+                hash_value,
                 new_title,
-                new_description
+                new_description,
+                new_color_id
             )
             if new_title != old_title:
                 self.ui.comboBoxProjects.add_string_to_combo_box(new_title)
@@ -161,9 +181,10 @@ class MainWindow(QMainWindow):
         project_title_in_combo_box = self.ui.comboBoxProjects.get_current_project()
         if project_title_in_combo_box == "":
             return
-        selected_project = project_title_in_combo_box if \
+        selected_project_title = project_title_in_combo_box if \
             project_title_in_combo_box != " " else None
-        self.project_manager.set_current_project(selected_project)
+        selected_project_hash = self.project_manager.get_project_hash_by_title(selected_project_title)
+        self.project_manager.set_current_project(selected_project_hash)
         self.on_selected_project_changed()
 
     def on_selected_project_changed(self):
@@ -237,28 +258,28 @@ class MainWindow(QMainWindow):
 
     def setup_signals(self):
         self.ui.pushButtonIconNew.clicked.connect(
-            self.on_new_pushed
+            self.new_action.trigger
         )
         self.ui.pushButtonFullNew.clicked.connect(
-            self.on_new_pushed
+            self.new_action.trigger
         )
         self.ui.pushButtonIconOpen.clicked.connect(
-            self.on_open_pushed
+            self.open_action.trigger
         )
         self.ui.pushButtonFullOpen.clicked.connect(
-            self.on_open_pushed
+            self.open_action.trigger
         )
         self.ui.pushButtonIconSave.clicked.connect(
-            self.on_save_pushed
+            self.save_action.trigger
         )
         self.ui.pushButtonFullSave.clicked.connect(
-            self.on_save_pushed
+            self.save_action.trigger
         )
         self.ui.pushButtonIconSaveAs.clicked.connect(
-            self.on_save_as_pushed
+            self.save_as_action.trigger
         )
         self.ui.pushButtonFullSaveAs.clicked.connect(
-            self.on_save_as_pushed
+            self.save_as_action.trigger
         )
 
         ###
@@ -321,13 +342,11 @@ class MainWindow(QMainWindow):
         with open(self.file_name, "rb") as file:
             self.project_manager = pickle.load(file)
 
-        self.project_manager.set_current_project(None)
         self.ui.comboBoxProjects.clear()
         if len(self.project_manager.projects):
-            projects = [project for project in
-                        self.project_manager.projects.keys()]
+            project_titles = self.project_manager.get_list_of_all_titles()
             self.on_close_project_pushed()
-            self.ui.comboBoxProjects.addItems(projects)
+            self.ui.comboBoxProjects.addItems(project_titles)
 
     def on_save_pushed(self):
         if self.file_name is None:

@@ -1,4 +1,4 @@
-import pickle
+import xml.etree.ElementTree as ET
 from enum import Enum
 
 from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog
@@ -50,7 +50,6 @@ class MainWindow(QMainWindow):
         self.project_manager = ProjectManager()
         self.style_handler = LayoutHandler(self.ui)
 
-        self.edit_project_window = EditProjectWindow()
         self.add_project_window = AddProjectWindow()
         self.add_task_window = AddTaskWindow()
 
@@ -149,12 +148,13 @@ class MainWindow(QMainWindow):
     def on_edit_project_pushed(self, project):
         already_existing_project_titles = self.project_manager.get_list_of_all_titles()
         already_existing_project_titles.remove(project.get_title())
-        self.edit_project_window.setup_window(project)
-        result = self.edit_project_window.exec(already_existing_project_titles)
+        edit_project_window = EditProjectWindow(project.get_color_id())
+        edit_project_window.setup_window(project)
+        result = edit_project_window.exec(already_existing_project_titles)
         if result == QDialog.Accepted:
             old_title = project.get_title()
             hash_value = project.get_hash()
-            new_title, new_description, new_color_id = self.edit_project_window.get_attributes_from_user_input()
+            new_title, new_description, new_color_id = edit_project_window.get_attributes_from_user_input()
             self.project_manager.project_edited(
                 hash_value,
                 new_title,
@@ -325,7 +325,6 @@ class MainWindow(QMainWindow):
 
     def on_open_pushed(self):
         options = QFileDialog.Options()
-        # options |= QFileDialog.DontUseNativeDialog
         open_file_name, _ = QFileDialog.getOpenFileName(
             self, "Open File", "",
             "Swift Note Files (" "*.todo);;All Files (*)",
@@ -339,8 +338,9 @@ class MainWindow(QMainWindow):
         self.is_unsaved_changes = False
         self.update_title()
 
-        with open(self.file_name, "rb") as file:
-            self.project_manager = pickle.load(file)
+        tree = ET.parse(open_file_name)
+        root = tree.getroot()
+        self.project_manager = ProjectManager.from_xml(root)
 
         self.ui.comboBoxProjects.clear()
         if len(self.project_manager.projects):
@@ -353,14 +353,15 @@ class MainWindow(QMainWindow):
             self.on_save_as_pushed()
 
         else:
-            with open(self.file_name, "wb") as file:
-                pickle.dump(self.project_manager, file)
+            root = self.project_manager.to_xml()
+            tree = ET.ElementTree(root)
+            tree.write(self.file_name)
+
             self.is_unsaved_changes = False
             self.update_title()
 
     def on_save_as_pushed(self):
         options = QFileDialog.Options()
-        # options |= QFileDialog.DontUseNativeDialog
         save_as_file_name, _ = QFileDialog.getSaveFileName(
             self, "Save File", "",
             "Swift Note Files (" "*.todo);;All Files (*)",
@@ -372,11 +373,7 @@ class MainWindow(QMainWindow):
 
         self.file_name = save_as_file_name
 
-        with open(self.file_name, "wb") as file:
-            pickle.dump(self.project_manager, file)
-
-        self.is_unsaved_changes = False
-        self.update_title()
+        self.on_save_pushed()
 
     def get_task_signal_functions(self):
         return [

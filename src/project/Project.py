@@ -1,6 +1,7 @@
-from base.UtilityFunctions import get_current_time_string, get_hash_from_time
+import xml.etree.ElementTree as ET
 
-from style.ColorHandler import ColorHandler
+from base.UtilityFunctions import get_current_time_string, get_hash_from_time
+from task.Task import Task
 
 
 class Project:
@@ -18,9 +19,39 @@ class Project:
         self.last_changed_string = self._set_last_changed_string(last_changed_string)
         self.hash_value = self._set_hash_value(hash_value)
         self.tasks = self._init_task_list(tasks)
-        self.color_id = color_id
+        self.color_id = int(color_id)
 
         self.open_task_count = 0
+
+    def to_xml(self):
+        element = ET.Element('Project')
+        idx = 0
+        for key, value in self.__dict__.items():
+            var_element = ET.SubElement(element, key)
+            if key == 'tasks':
+                for task in value:
+                    var_element.append(task.to_xml())
+            else:
+                var_element.text = str(value)
+            idx += 1
+        return element
+
+    @classmethod
+    def from_xml(cls, element):
+        attributes = ["title", "description", "color_id", "created_string", "last_changed_string", "hash_value", "tasks"]
+        kwargs = {}
+        for attr in attributes:
+            if element.find(attr) is None:
+                kwargs[attr] = ""
+            else:
+                if attr == "tasks":
+                    tasks = []
+                    for task_element in element.find(attr):
+                        tasks.append(Task.from_xml(task_element))
+                    kwargs[attr] = tasks
+                else:
+                    kwargs[attr] = element.find(attr).text
+        return cls(**kwargs)
 
     def add_task(self, task):
         self.tasks.append(task)

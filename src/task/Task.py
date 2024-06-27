@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+
 from base.UtilityFunctions import get_current_time_string, get_hash_from_time
 
 
@@ -12,11 +14,31 @@ class Task:
                  task_bin=None):
         self.title = title
         self.description = description
-        self.color_id = color_id
+        self.color_id = int(color_id)
         self.created_string = self._init_created_string(created_string)
         self.last_changed_string = self._init_last_changed_string(last_changed_string)
         self.hash_value = self._init_hash_value(hash_value)
         self.task_bin = "open" if task_bin is None else task_bin
+
+    def to_xml(self):
+        element = ET.Element('Task')
+        idx = 0
+        for key, value in self.__dict__.items():
+            var_element = ET.SubElement(element, key)
+            var_element.text = str(value)
+            idx += 1
+        return element 
+    
+    @classmethod
+    def from_xml(cls, element):
+        attributes = ["title", "description", "color_id", "created_string", "last_changed_string", "hash_value", "task_bin"]
+        kwargs = {}
+        for attr in attributes:
+            if element.find(attr) is None:
+                kwargs[attr] = None
+            else:
+                kwargs[attr] = element.find(attr).text
+        return cls(**kwargs)
 
     def _init_created_string(self, created_string):
         return get_current_time_string() if created_string is None else created_string

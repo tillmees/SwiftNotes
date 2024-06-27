@@ -4,8 +4,8 @@ from windows.edit_window.EditWindow import EditWindow
 
 
 class EditProjectWindow(EditWindow):
-    def __init__(self):
-        super(EditProjectWindow, self).__init__()
+    def __init__(self, color_id=0):
+        super(EditProjectWindow, self).__init__(color_id)
         self.setWindowTitle("Edit Project")
         self.already_existing_project_titles = []
 

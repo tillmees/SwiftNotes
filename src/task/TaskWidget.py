@@ -27,8 +27,6 @@ class TaskWidget(CustomBaseWidget):
         self.ui = Ui_TaskWidget()
         self.ui.setupUi(self)
 
-        self.edit_task_window = EditTaskWindow()
-
         self.description = task_creator.description
         self.task_bin = task_creator.task_bin
 
@@ -110,11 +108,12 @@ class TaskWidget(CustomBaseWidget):
         self.ui.pushButton_NoDelTask.clicked.connect(self.on_delete_canceled)
 
     def on_edit_clicked(self):
-        self.edit_task_window.setup_window(self.get_task())
+        edit_task_window = EditTaskWindow(self.color_id)
+        edit_task_window.setup_window(self.get_task())
 
-        result = self.edit_task_window.exec()
+        result = edit_task_window.exec()
         if result == QDialog.Accepted:
-            new_title, new_description, new_color_id = self.edit_task_window.get_attributes_from_user_input()
+            new_title, new_description, new_color_id = edit_task_window.get_attributes_from_user_input()
             self.edit_signal.emit(
                 self.get_hash(),
                 (new_title, new_description, new_color_id)

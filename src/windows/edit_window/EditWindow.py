@@ -5,7 +5,7 @@ from style.ColorHandler import ColorHandler
 
 
 class EditWindow(QDialog):
-    def __init__(self):
+    def __init__(self, color_id=0):
         super(EditWindow, self).__init__()
 
         self.color_handler = ColorHandler()
@@ -14,6 +14,7 @@ class EditWindow(QDialog):
         self.ui.setupUi(self)
 
         self.setup_checkbox_ids()
+        self.set_checkbox(color_id)
         self.setup_stylesheets()
 
         self.max_chars = 100
@@ -86,6 +87,9 @@ class EditWindow(QDialog):
     def setup_stylesheets(self):
         for id in range(10):
             eval(f"self.ui.color_{id+1}").setStyleSheet(f"background-color: {self.color_handler.color_mapping[id]}; border-radius: 10px;")
+
+    def set_checkbox(self, checked_id):
+        self.ui.buttonGroup.button(checked_id).setChecked(True)
 
     def setup_checkbox_ids(self):
         for id in range(10):

@@ -4,7 +4,15 @@ from base.UtilityFunctions import get_current_time_string, get_hash_from_time
 from task.Task import Task
 
 
+project_attributes = [
+        "title", "description", "color_id",
+        "created_string", "last_changed_string",
+        "hash_value", "tasks"
+    ]
+
+
 class Project:
+
     def __init__(self,
                  title,
                  description,
@@ -25,22 +33,19 @@ class Project:
 
     def to_xml(self):
         element = ET.Element('Project')
-        idx = 0
-        for key, value in self.__dict__.items():
-            var_element = ET.SubElement(element, key)
-            if key == 'tasks':
-                for task in value:
+        for attr in project_attributes:
+            var_element = ET.SubElement(element, attr)
+            if attr == 'tasks':
+                for task in self.tasks:
                     var_element.append(task.to_xml())
             else:
-                var_element.text = str(value)
-            idx += 1
+                var_element.text = str(eval(f"self.{attr}"))
         return element
 
     @classmethod
     def from_xml(cls, element):
-        attributes = ["title", "description", "color_id", "created_string", "last_changed_string", "hash_value", "tasks"]
         kwargs = {}
-        for attr in attributes:
+        for attr in project_attributes:
             if element.find(attr) is None:
                 kwargs[attr] = ""
             else:

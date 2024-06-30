@@ -4,6 +4,11 @@ import xml.etree.ElementTree as ET
 from project.Project import Project
 
 
+project_manager_attributes = [
+        "projects", "current_project_hash_value"
+    ]
+
+
 class ProjectManager:    
     
     def __init__(self,
@@ -14,22 +19,19 @@ class ProjectManager:
     
     def to_xml(self):
         element = ET.Element('ProjectManager')
-        idx = 0
-        for key, value in self.__dict__.items():
-            var_element = ET.SubElement(element, key)
-            if key == 'projects':
+        for attr in project_manager_attributes:
+            var_element = ET.SubElement(element, attr)
+            if attr == 'projects':
                 for project in self.projects:
                     var_element.append(project.to_xml())
             else:
-                var_element.text = str(value)
-            idx += 1
+                var_element.text = str(eval(f"self.{attr}"))
         return element
     
     @classmethod
     def from_xml(cls, element):
-        attributes = ["projects", "current_project_hash_value"]
         kwargs = {}
-        for attr in attributes:
+        for attr in project_manager_attributes:
             if element.find(attr) is None:
                 kwargs[attr] = ""
             else:

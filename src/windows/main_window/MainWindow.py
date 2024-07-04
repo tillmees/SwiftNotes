@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from enum import Enum
 
-from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog
+from PySide6.QtWidgets import QMainWindow, QDialog, QFileDialog, QMessageBox
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeySequence, QAction
 
@@ -98,9 +98,8 @@ class MainWindow(QMainWindow):
         event.accept()
 
     def apply_window_settings(self):
-        window_settings = WindowSettingsHandler()
-        width = int(window_settings.get_value_for("width"))
-        height = int(window_settings.get_value_for("height"))
+        width = int(WindowSettingsHandler().get_value_for("width"))
+        height = int(WindowSettingsHandler().get_value_for("height"))
         self.resize(width, height)
 
     def update_title(self):
@@ -122,11 +121,25 @@ class MainWindow(QMainWindow):
         self.update_title()
 
     def closeEvent(self, event):
-        window_settings = WindowSettingsHandler()
+        if self.is_unsaved_changes:
+            reply = QMessageBox.question(
+                self,
+                "Unsaved Changes",
+                "You have unsaved changes. Do you want to save them?",
+                QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
+                QMessageBox.Save
+            )
+            if reply == QMessageBox.Save:
+                self.on_save_pushed()
+            elif reply == QMessageBox.Discard:
+                pass
+            else:
+                event.ignore()
+
         if not self.window().isMaximized():
-            window_settings.set_value_to("width", self.width())
-            window_settings.set_value_to("height", self.height())
-        window_settings.set_value_to("layout", self.style_handler.get_layout())
+            WindowSettingsHandler().set_value_to("width", self.width())
+            WindowSettingsHandler().set_value_to("height", self.height())
+        WindowSettingsHandler().set_value_to("layout", self.style_handler.get_layout())
         super().closeEvent(event)
 
     def on_add_project_pushed(self):

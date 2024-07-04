@@ -129,7 +129,6 @@ class MainWindow(QMainWindow):
             self.window_handler.set_value_to("width", self.width())
             self.window_handler.set_value_to("height", self.height())
         self.window_handler.set_value_to("layout", self.style_handler.get_layout())
-        super().closeEvent(event)
 
     def on_add_project_pushed(self):
         already_existing_project_titles = self.project_manager.get_list_of_all_titles()

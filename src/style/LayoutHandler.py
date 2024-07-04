@@ -104,19 +104,10 @@ class LayoutHandler():
         return buttons
 
     def get_stylesheet_content(self, style_dict):
-        font_id = QFontDatabase.addApplicationFont(u":fonts/fonts/Poppins-Regular.ttf")
-        font = QFontDatabase.applicationFontFamilies(font_id)[0] if not font_id == -1 else "Consolas"
-
-        font_id_bold = QFontDatabase.addApplicationFont(u":fonts/fonts/Poppins-SemiBold.ttf")
-        font_bold = QFontDatabase.applicationFontFamilies(font_id_bold)[0] if not font_id_bold == -1 else "Consolas"
 
         stylesheet_content = f"""
             #MainWindow {{
             background-color: {style_dict["main_background"]};
-            }}
-
-            * {{
-                font-family: {font};
             }}
 
             QToolTip {{
@@ -312,17 +303,20 @@ class LayoutHandler():
             }}
 
             #labelProjectTitle {{
-                font-family: {font_bold};
+                font-weight: bold;
+                font-size: 14px;
                 color: #000000;
             }}
 
             #labelTask {{
-                font-family: {font_bold};
+                font-weight: bold;
+                font-size: 14px;
                 color: #000000;
             }}
 
             #labelDelTask {{
-                font-family: {font_bold};
+                font-weight: bold;
+                font-size: 14px;
                 color: #000000;
             }}
 

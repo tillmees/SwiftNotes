@@ -6,18 +6,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeySequence, QAction
 
 from settings.WindowSettingsHandler import WindowSettingsHandler
-
 from windows.main_window.MainUi import Ui_MainWindow
 from windows.edit_window.EditProjectWindow import EditProjectWindow
 from windows.add_window.AddProjectWindow import AddProjectWindow
 from windows.add_window.AddTaskWindow import AddTaskWindow
-
 from project_manager.ProjectManager import ProjectManager
-
 from style.LayoutHandler import LayoutHandler
-
-
-EMPTY_PROJECT = " "
 
 
 class StackedWidgetState(Enum):
@@ -30,25 +24,20 @@ class MainWindow(QMainWindow):
     def __init__(self, app, version):
         super(MainWindow, self).__init__()
 
-        self.counter = 1
         self.app = app
         self.version = version
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.scrollAreaOpen.drop_signal.connect(self.task_gets_dropped)
-        self.ui.scrollAreaInProgress.drop_signal.connect(self.task_gets_dropped)
-        self.ui.scrollAreaStuckTest.drop_signal.connect(self.task_gets_dropped)
-        self.ui.scrollAreaDone.drop_signal.connect(self.task_gets_dropped)
-
         self.file_name = None
         self.is_unsaved_changes = None
         self.stacked_widget_state = None
         self.project_sort_member = None
-
         self.project_manager = ProjectManager()
+
         self.style_handler = LayoutHandler(self.ui)
+        self.window_handler = WindowSettingsHandler()
 
         self.add_project_window = AddProjectWindow()
         self.add_task_window = AddTaskWindow()
@@ -98,8 +87,8 @@ class MainWindow(QMainWindow):
         event.accept()
 
     def apply_window_settings(self):
-        width = int(WindowSettingsHandler().get_value_for("width"))
-        height = int(WindowSettingsHandler().get_value_for("height"))
+        width = int(self.window_handler.get_value_for("width"))
+        height = int(self.window_handler.get_value_for("height"))
         self.resize(width, height)
 
     def update_title(self):
@@ -137,9 +126,9 @@ class MainWindow(QMainWindow):
                 event.ignore()
 
         if not self.window().isMaximized():
-            WindowSettingsHandler().set_value_to("width", self.width())
-            WindowSettingsHandler().set_value_to("height", self.height())
-        WindowSettingsHandler().set_value_to("layout", self.style_handler.get_layout())
+            self.window_handler.set_value_to("width", self.width())
+            self.window_handler.set_value_to("height", self.height())
+        self.window_handler.set_value_to("layout", self.style_handler.get_layout())
         super().closeEvent(event)
 
     def on_add_project_pushed(self):
@@ -201,10 +190,11 @@ class MainWindow(QMainWindow):
         self.on_selected_project_changed()
 
     def on_selected_project_changed(self):
+        empty_project = " "
         current_project = self.project_manager.get_current_project()
         if current_project is None:
             self.show_welcome_screen()
-        elif current_project is not EMPTY_PROJECT:
+        elif current_project is not empty_project:
             self.update_task_view()
             self.show_task_screen()
 
@@ -270,64 +260,39 @@ class MainWindow(QMainWindow):
         self.project_sort_member = "title"
 
     def setup_signals(self):
-        self.ui.pushButtonIconNew.clicked.connect(
-            self.new_action.trigger
-        )
-        self.ui.pushButtonFullNew.clicked.connect(
-            self.new_action.trigger
-        )
-        self.ui.pushButtonIconOpen.clicked.connect(
-            self.open_action.trigger
-        )
-        self.ui.pushButtonFullOpen.clicked.connect(
-            self.open_action.trigger
-        )
-        self.ui.pushButtonIconSave.clicked.connect(
-            self.save_action.trigger
-        )
-        self.ui.pushButtonFullSave.clicked.connect(
-            self.save_action.trigger
-        )
-        self.ui.pushButtonIconSaveAs.clicked.connect(
-            self.save_as_action.trigger
-        )
-        self.ui.pushButtonFullSaveAs.clicked.connect(
-            self.save_as_action.trigger
-        )
+        self.ui.pushButtonIconNew.clicked.connect(self.new_action.trigger)
+        self.ui.pushButtonFullNew.clicked.connect(self.new_action.trigger)
+
+        self.ui.pushButtonIconOpen.clicked.connect(self.open_action.trigger)
+        self.ui.pushButtonFullOpen.clicked.connect(self.open_action.trigger)
+
+        self.ui.pushButtonIconSave.clicked.connect(self.save_action.trigger)
+        self.ui.pushButtonFullSave.clicked.connect(self.save_action.trigger)
+
+        self.ui.pushButtonIconSaveAs.clicked.connect(self.save_as_action.trigger)
+        self.ui.pushButtonFullSaveAs.clicked.connect(self.save_as_action.trigger)
 
         ###
-        self.ui.pushButtonIconAdd.clicked.connect(
-            self.on_add_project_pushed
-        )
-        self.ui.pushButtonFullAdd.clicked.connect(
-            self.on_add_project_pushed
-        )
+        self.ui.pushButtonIconAdd.clicked.connect(self.on_add_project_pushed)
+        self.ui.pushButtonFullAdd.clicked.connect(self.on_add_project_pushed)
 
-        self.ui.pushButtonIconClose.clicked.connect(
-            self.on_close_project_pushed
-        )
-        self.ui.pushButtonFullClose.clicked.connect(
-            self.on_close_project_pushed
-        )
+        self.ui.pushButtonIconClose.clicked.connect(self.on_close_project_pushed)
+        self.ui.pushButtonFullClose.clicked.connect(self.on_close_project_pushed)
 
-        self.ui.pushButtonIconTask.clicked.connect(
-            self.on_add_task_pushed
-        )
-        self.ui.pushButtonFullTask.clicked.connect(
-            self.on_add_task_pushed
-        )
+        self.ui.pushButtonIconTask.clicked.connect(self.on_add_task_pushed)
+        self.ui.pushButtonFullTask.clicked.connect(self.on_add_task_pushed)
 
-        self.ui.comboBoxProjects.currentIndexChanged.connect(
-            self.on_project_changed_in_combo_box
-        )
+        self.ui.comboBoxProjects.currentIndexChanged.connect(self.on_project_changed_in_combo_box)
 
-        self.ui.pushButtonFullLayout.clicked.connect(
-            self.on_toggle_layout
-        )
+        self.ui.pushButtonFullLayout.clicked.connect(self.on_toggle_layout)
 
-        self.ui.pushButtonSort.clicked.connect(
-            self.on_sort_projects_pushed
-        )
+        self.ui.pushButtonSort.clicked.connect(self.on_sort_projects_pushed)
+
+        ###
+        self.ui.scrollAreaOpen.drop_signal.connect(self.task_gets_dropped)
+        self.ui.scrollAreaInProgress.drop_signal.connect(self.task_gets_dropped)
+        self.ui.scrollAreaStuckTest.drop_signal.connect(self.task_gets_dropped)
+        self.ui.scrollAreaDone.drop_signal.connect(self.task_gets_dropped)
 
     def on_new_pushed(self):
         self.project_manager = ProjectManager()

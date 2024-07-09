@@ -77,7 +77,8 @@ class LayoutHandler():
             u"plus-square",
             u"menu",
             u"toggle-left",
-            u"sliders"
+            u"sliders",
+            u"info"
         ]
         return icons
     
@@ -99,7 +100,8 @@ class LayoutHandler():
             ui.pushButtonFullTask,
             ui.pushButtonToggleMenu,
             ui.pushButtonFullLayout,
-            ui.pushButtonSort
+            ui.pushButtonSort,
+            ui.pushButtonAbout
         ]
         return buttons
 

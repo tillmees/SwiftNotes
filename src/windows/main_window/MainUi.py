@@ -225,12 +225,23 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.pushButtonFullClose, 0, Qt.AlignHCenter)
 
+        self.pushButtonAbout = QPushButton(self.FullSidebarQWidget)
+        self.pushButtonAbout.setObjectName(u"pushButtonAbout")
+        self.pushButtonAbout.setMinimumSize(QSize(190, 0))
+        icon8 = QIcon()
+        icon8.addFile(u":/icons/icons/info.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButtonAbout.setIcon(icon8)
+        self.pushButtonAbout.setIconSize(QSize(14, 14))
+
+        self.verticalLayout_2.addWidget(self.pushButtonAbout, 0, Qt.AlignHCenter)
 
         self.verticalLayout_4.addLayout(self.verticalLayout_2)
 
         self.verticalSpacer_2 = QSpacerItem(20, 282, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_4.addItem(self.verticalSpacer_2)
+
+
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setSpacing(0)
@@ -261,13 +272,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addItem(self.verticalSpacer_9)
 
+
+        self.horizontalLayout_x = QHBoxLayout()
+        self.horizontalLayout_x.setSpacing(0)
+        self.horizontalLayout_x.setObjectName(u"horizontalLayout_x")
+
         self.pushButtonFullTask = QPushButton(self.FullSidebarQWidget)
         self.pushButtonFullTask.setObjectName(u"pushButtonFullTask")
         self.pushButtonFullTask.setMinimumSize(QSize(190, 0))
         self.pushButtonFullTask.setIcon(icon7)
         self.pushButtonFullTask.setIconSize(QSize(14, 14))
 
-        self.verticalLayout_4.addWidget(self.pushButtonFullTask)
+        self.horizontalLayout_x.addWidget(self.pushButtonFullTask, 0, Qt.AlignHCenter)
+
+        self.verticalLayout_4.addLayout(self.horizontalLayout_x)
 
         self.verticalSpacer_8 = QSpacerItem(20, 5, QSizePolicy.Minimum, QSizePolicy.Fixed)
 
@@ -617,6 +635,9 @@ class Ui_MainWindow(object):
 
         self.pushButtonFullClose.setText(QCoreApplication.translate("MainWindow", u" Close Project", None))
         self.pushButtonFullClose.setToolTip("Close project")
+
+        self.pushButtonAbout.setText(QCoreApplication.translate("MainWindow", u" About", None))
+        self.pushButtonAbout.setToolTip("About Swift Notes")
 
         self.pushButtonFullTask.setText(QCoreApplication.translate("MainWindow", u" Add Task", None))
         self.pushButtonFullTask.setToolTip("Add task")

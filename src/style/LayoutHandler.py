@@ -107,9 +107,18 @@ class LayoutHandler():
 
         stylesheet_content = f"""
             #MainWindow {{
-            background-color: {style_dict["main_background"]};
+                background-color: {style_dict["main_background"]};
             }}
 
+            
+            QMessageBox {{
+                background-color: {style_dict["task_area"]};
+            }}
+            QMessageBox QLabel {{
+                color: {style_dict["sidebar_label"]};
+            }}
+
+            
             QToolTip {{
                 background-color: white;
                 font-size: 8pt;
@@ -118,6 +127,7 @@ class LayoutHandler():
                 padding: 2px;
                 opacity: 200;
             }}
+            
 
             #TopBarQWidget QPushButton{{
                 height: 30px;

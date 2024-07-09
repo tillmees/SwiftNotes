@@ -111,16 +111,21 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         if self.is_unsaved_changes:
-            reply = QMessageBox.question(
+            result = QMessageBox.question(
                 self,
                 "Unsaved Changes",
                 "You have unsaved changes. Do you want to save them?",
-                QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
+                QMessageBox.Save | QMessageBox.Close | QMessageBox.Cancel,
                 QMessageBox.Save
             )
-            if reply == QMessageBox.Save:
+            if result == QMessageBox.Save:
                 self.on_save_pushed()
-            elif reply == QMessageBox.Discard:
+                if self.is_unsaved_changes:
+                    # this second check is needed for the case when
+                    # the user cancels the save dialog otherwise the
+                    # application would close immediately without saving
+                    event.ignore()
+            elif result == QMessageBox.Close:
                 pass
             else:
                 event.ignore()

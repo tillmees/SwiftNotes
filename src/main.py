@@ -19,9 +19,11 @@ def main():
     WindowSettingsHandler()
     StyleSettingsHandler()
 
+    filename = sys.argv[1] if len(sys.argv) > 1 else None
+
     app = QApplication(sys.argv)
     version = f"{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}"
-    main_window = MainWindow(app, version=version)
+    main_window = MainWindow(app, version=version, filename=filename)
     main_window.show()
 
     sys.exit(

@@ -22,7 +22,7 @@ class StackedWidgetState(Enum):
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, app, version):
+    def __init__(self, app, version, filename=None):
         super(MainWindow, self).__init__()
 
         self.app = app
@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.file_name = None
+        self.file_name = filename
         self.is_unsaved_changes = None
         self.stacked_widget_state = None
         self.project_sort_member = None
@@ -45,6 +45,8 @@ class MainWindow(QMainWindow):
         self.about_window = AboutWindow(version=version)
 
         self.startup()
+        if filename is not None:
+            self.open_existing_file(filename)
 
     def startup(self):
         self.setup_for_clean_start()
@@ -316,10 +318,11 @@ class MainWindow(QMainWindow):
             "Swift Note Files (" "*.todo);;All Files (*)",
             options=options
         )
-
         if not open_file_name:
             return
+        self.open_existing_file(open_file_name)
 
+    def open_existing_file(self, open_file_name):
         self.file_name = open_file_name
         self.is_unsaved_changes = False
         self.update_title()

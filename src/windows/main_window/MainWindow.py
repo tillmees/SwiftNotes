@@ -10,6 +10,7 @@ from windows.main_window.MainUi import Ui_MainWindow
 from windows.edit_window.EditProjectWindow import EditProjectWindow
 from windows.add_window.AddProjectWindow import AddProjectWindow
 from windows.add_window.AddTaskWindow import AddTaskWindow
+from windows.about_window.AboutWindow import AboutWindow
 from project_manager.ProjectManager import ProjectManager
 from style.LayoutHandler import LayoutHandler
 
@@ -41,6 +42,7 @@ class MainWindow(QMainWindow):
 
         self.add_project_window = AddProjectWindow()
         self.add_task_window = AddTaskWindow()
+        self.about_window = AboutWindow(version=version)
 
         self.startup()
 
@@ -288,6 +290,8 @@ class MainWindow(QMainWindow):
 
         self.ui.comboBoxProjects.currentIndexChanged.connect(self.on_project_changed_in_combo_box)
 
+        self.ui.pushButtonAbout.clicked.connect(self.on_about_pushed)
+
         self.ui.pushButtonFullLayout.clicked.connect(self.on_toggle_layout)
 
         self.ui.pushButtonSort.clicked.connect(self.on_sort_projects_pushed)
@@ -522,3 +526,6 @@ class MainWindow(QMainWindow):
         else:
             assert False
         self.update_project_view()
+
+    def on_about_pushed(self):
+        self.about_window.exec()

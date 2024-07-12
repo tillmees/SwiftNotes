@@ -51,4 +51,7 @@
   </qresource>
   <qresource prefix="fonts">
   </qresource>
+  <qresource prefix="graphics">
+	<file>graphics/about.png</file>
+  </qresource>
 </RCC>

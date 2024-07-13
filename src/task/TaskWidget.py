@@ -113,10 +113,10 @@ class TaskWidget(CustomBaseWidget):
 
         result = edit_task_window.exec()
         if result == QDialog.Accepted:
-            new_title, new_description, new_color_id = edit_task_window.get_attributes_from_user_input()
+            new_title, new_description, new_color_id, new_project = edit_task_window.get_attributes_from_user_input()
             self.edit_signal.emit(
                 self.get_hash(),
-                (new_title, new_description, new_color_id)
+                (new_title, new_description, new_color_id, new_project)
             )
 
     def on_delete_clicked(self):

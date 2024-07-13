@@ -4,7 +4,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout, QVBoxLayout, QLayout, QLabel, QPushButton,
     QSizePolicy, QStackedWidget, QWidget, QSpacerItem,
     QLineEdit, QPlainTextEdit, QDialogButtonBox, QGridLayout,
-    QFrame, QCheckBox, QButtonGroup
+    QFrame, QCheckBox, QButtonGroup, QComboBox, QStyledItemDelegate
 )
 
 
@@ -118,6 +118,22 @@ class Ui_EditDialog(object):
         horizontalLayout.setStretch(1, 1)
 
         self.addEditWindowMainLayout.addLayout(horizontalLayout)
+
+        # project combobox
+        self.projectSelectionLayout = QHBoxLayout()
+        self.label_Project = QLabel(EditDialog)
+        self.label_Project.setObjectName(u"label_Project")
+        self.label_Project.setStyleSheet(u"color: rgb(150, 150, 150);")
+        self.comboBoxProjects = QComboBox(EditDialog)
+        self.comboBoxProjects.setObjectName(u"comboBoxProjects")
+        self.comboBoxProjects.setMaximumSize(QSize(275, 20))
+        self.comboBoxProjects.setMinimumSize(QSize(275, 0))
+
+        self.comboBoxProjects.setStyleSheet(u"")
+        self.projectSelectionLayout.addWidget(self.label_Project)
+        self.projectSelectionLayout.addWidget(self.comboBoxProjects, 0, Qt.AlignRight)
+        self.projectSelectionLayout.setStretch(1, 1)
+        self.addEditWindowMainLayout.addLayout(self.projectSelectionLayout)
 
     # >>> begin of color selection
 
@@ -302,6 +318,8 @@ class Ui_EditDialog(object):
         self.label_NoStuckTest.setText(QCoreApplication.translate("EditDialog", u"...Number...Percentage...", None))
         self.label_NoDoneText.setText(QCoreApplication.translate("EditDialog", u"No. of tasks 'Done':", None))
         self.label_NoDone.setText(QCoreApplication.translate("EditDialog", u"...Number...Percentage...", None))
+        
+        self.label_Project.setText(QCoreApplication.translate("EditDialog", u"Project:", None))
 
         self.checkBox_1.setText("")
         self.checkBox_2.setText("")

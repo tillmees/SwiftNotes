@@ -305,6 +305,7 @@ class MainWindow(QMainWindow):
         self.ui.scrollAreaDone.drop_signal.connect(self.task_gets_dropped)
 
     def on_new_pushed(self):
+        self.project_manager.reset_instance()
         self.project_manager = ProjectManager()
         self.ui.comboBoxProjects.clear()
         self.setup_for_clean_start()
@@ -327,6 +328,7 @@ class MainWindow(QMainWindow):
         self.is_unsaved_changes = False
         self.update_title()
 
+        self.project_manager.reset_instance()
         tree = ET.parse(open_file_name)
         root = tree.getroot()
         self.project_manager = ProjectManager.from_xml(root)
@@ -373,11 +375,17 @@ class MainWindow(QMainWindow):
 
     def task_edit_in_scroll_area(self, edit_tasks_hash, edit_fields):
         current_project = self.project_manager.get_current_project()
-        task_creator = current_project.get_task_by_hash(edit_tasks_hash)
-        new_title, new_description, new_color_id = edit_fields
-        task_creator.set_title(new_title)
-        task_creator.set_description(new_description)
-        task_creator.set_color_id(new_color_id)
+        new_title, new_description, new_color_id, new_project_title = edit_fields
+        task = current_project.get_task_by_hash(edit_tasks_hash)
+
+        task.set_title(new_title)
+        task.set_description(new_description)
+        task.set_color_id(new_color_id)
+        if new_project_title != current_project.get_title():
+            new_project = self.project_manager.get_project_by_title(new_project_title)
+            new_project.add_task(task)
+            current_project.remove_task_by_hash(edit_tasks_hash)
+
         self.update_task_view()
         self.mark_unsaved_changes()
 

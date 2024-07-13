@@ -32,6 +32,9 @@ class EditProjectWindow(EditWindow):
             self.ui.buttonBoxAddCancelTask.button(QDialogButtonBox.Ok).setEnabled(False)
         else:
             self.ui.buttonBoxAddCancelTask.button(QDialogButtonBox.Ok).setEnabled(True)
+    
+    def get_attributes_from_user_input(self):
+        return self.get_title(), self.get_description(), self.get_color_id()
 
     def setup_window(self, project):
         super().setup_window(project)
@@ -50,3 +53,5 @@ class EditProjectWindow(EditWindow):
         self.ui.label_NoDone.setText(
             f"{project.get_task_count_in('done')}"
         )
+        self.ui.label_Project.hide()
+        self.ui.comboBoxProjects.hide()

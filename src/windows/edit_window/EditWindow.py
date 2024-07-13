@@ -38,7 +38,7 @@ class EditWindow(QDialog):
         )
 
     def get_attributes_from_user_input(self):
-        return self.get_title(), self.get_description(), self.get_color_id()
+        return self.get_title(), self.get_description(), self.get_color_id(), self.get_project_selection()
     
     def hide_project_info_elements(self):
         self.ui.label_NoTasksText.hide()
@@ -83,6 +83,9 @@ class EditWindow(QDialog):
     def get_color_id(self):
         checked_color_id = self.ui.buttonGroup.checkedId()
         return checked_color_id
+    
+    def get_project_selection(self):
+        return self.ui.comboBoxProjects.currentText()
 
     def setup_stylesheets(self):
         for id in range(10):

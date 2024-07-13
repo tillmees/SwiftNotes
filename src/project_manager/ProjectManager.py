@@ -10,12 +10,26 @@ project_manager_attributes = [
 
 
 class ProjectManager:    
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(ProjectManager, cls).__new__(cls)
+        return cls._instance
     
     def __init__(self,
                  projects=None,
                  current_project_hash_value=None):
-        self.projects = self._init_project_list(projects)
-        self.current_project_hash_value = current_project_hash_value
+        if not hasattr(self, 'initialized'):
+            self.projects = self._init_project_list(projects)
+            self.current_project_hash_value = current_project_hash_value
+            self.initialized = True
+
+    @classmethod
+    def reset_instance(cls):
+        if cls._instance:
+            del cls._instance
+            cls._instance = None
     
     def to_xml(self):
         element = ET.Element('ProjectManager')
@@ -72,6 +86,9 @@ class ProjectManager:
             if project.get_title() == title:
                 return project.get_hash()
         return None
+    
+    def get_project_by_title(self, title):
+        return self.get_project_by_hash(self.get_project_hash_by_title(title))
 
     def get_current_project(self):
         if self.current_project_hash_value is not None:

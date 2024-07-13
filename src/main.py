@@ -19,7 +19,11 @@ def main():
     WindowSettingsHandler()
     StyleSettingsHandler()
 
-    filename = sys.argv[1] if len(sys.argv) > 1 else None
+    filename = None
+    if len(sys.argv) > 1:
+        filename = sys.argv[1]
+        if not filename.endswith(".todo"):
+            return  # dont open the app on a non .todo file
 
     app = QApplication(sys.argv)
     version = f"{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}"

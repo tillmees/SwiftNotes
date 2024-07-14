@@ -20,7 +20,7 @@ class Task:
                  hash_value=None,
                  task_bin=None):
         self.title = title
-        self.description = "" if description is None else description
+        self.description = "" if description is "None" else description
         self.color_id = int(color_id)
         self.created_string = self._init_created_string(created_string)
         self.last_changed_string = self._init_last_changed_string(last_changed_string)

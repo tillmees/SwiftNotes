@@ -98,6 +98,7 @@ class TaskWidget(CustomBaseWidget):
 
     def setup_widget(self):
         self.ui.labelTaskTitle.setText(self.title)
+        self.ui.plainTextEditDescription.setPlainText(self.description)
         self.ui.labelTaskCreated.setText(self.created_string)
         self.ui.verticalLayoutButtons.setAlignment(Qt.AlignTop)
         self.ui.stackedWidget.setCurrentIndex(0)
@@ -155,6 +156,11 @@ class TaskWidget(CustomBaseWidget):
 
         self.ui.stackedWidget.setStyleSheet(
             "background-color: transparent;\n"
+        )
+
+        self.ui.plainTextEditDescription.setStyleSheet(
+            "background-color: transparent;\n"
+            "border: none;\n"
         )
 
         self.ui.pushButtonDeleteTask.setStyleSheet(

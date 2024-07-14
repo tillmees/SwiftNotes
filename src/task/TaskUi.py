@@ -1,8 +1,8 @@
 from PySide6.QtCore import QCoreApplication, QMetaObject, QSize, Qt
-from PySide6.QtGui import QFont, QIcon
+from PySide6.QtGui import QFont, QIcon, QCursor
 from PySide6.QtWidgets import (
     QHBoxLayout, QVBoxLayout, QLayout, QLabel, QPushButton,
-    QSizePolicy, QStackedWidget, QWidget, QSpacerItem
+    QSizePolicy, QStackedWidget, QWidget, QSpacerItem, QPlainTextEdit
 )
 
 
@@ -82,12 +82,23 @@ class Ui_TaskWidget(object):
 
         verticalLayout.addWidget(self.labelTaskTitle, 0, Qt.AlignTop)
 
+        self.plainTextEditDescription = QPlainTextEdit(TaskWidget)
+        self.plainTextEditDescription.setObjectName(u"plainTextEditDescription")
+        self.plainTextEditDescription.setReadOnly(True)
+        self.plainTextEditDescription.setTextInteractionFlags(Qt.NoTextInteraction)
+        self.plainTextEditDescription.viewport().setCursor(QCursor(Qt.ArrowCursor))
+        self.plainTextEditDescription.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.plainTextEditDescription.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        verticalLayout.addWidget(self.plainTextEditDescription, 0, Qt.AlignTop)
+
         self.labelTaskCreated = QLabel(taskOverviewWidget)
         self.labelTaskCreated.setObjectName(u"labelTaskCreated")
         font = QFont()
         self.labelTaskCreated.setFont(font)
 
         verticalLayout.addWidget(self.labelTaskCreated, 0, Qt.AlignBottom)
+
 
         return taskOverviewWidget
     
@@ -127,6 +138,7 @@ class Ui_TaskWidget(object):
     def set_text_of_buttons_and_labels(self, TaskWidget):
         TaskWidget.setWindowTitle(QCoreApplication.translate("TaskWidget", u"Form", None))
         self.labelTaskTitle.setText(QCoreApplication.translate("TaskWidget", u"Title", None))
+        self.plainTextEditDescription.setPlainText("")
         self.labelTaskCreated.setText(QCoreApplication.translate("TaskWidget", u"Created Date", None))
         self.labelDelTask.setText(QCoreApplication.translate("TaskWidget", u"Delete this task?", None))
         self.pushButton_YesDelTask.setText(QCoreApplication.translate("TaskWidget", u"Yes", None))

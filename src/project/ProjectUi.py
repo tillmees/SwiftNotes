@@ -1,14 +1,14 @@
 from PySide6.QtCore import QCoreApplication, QMetaObject, QSize, Qt
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import (
-    QHBoxLayout, QLabel, QPushButton, QSizePolicy, QStackedWidget, QWidget
+    QHBoxLayout, QLabel, QPushButton, QSizePolicy, QStackedWidget, QWidget, QVBoxLayout, QSpacerItem
 )
 
 
 class Ui_ProjectWidget(object):
     def setupUi(self, ProjectWidget):
         self.set_object_name(ProjectWidget)
-        self.set_size_policy(ProjectWidget)
+        # self.set_size_policy(ProjectWidget)
 
         # horizontal layout for the project widget
         self.projectWidgetMainLayout = QHBoxLayout(ProjectWidget)
@@ -71,10 +71,10 @@ class Ui_ProjectWidget(object):
     def configure_project_description_widget(self, ProjectWidget):
         projectDescriptionWidget = QWidget(ProjectWidget)
         projectDescriptionWidget.setObjectName(u"projectDescriptionWidget")
-        horizontalLayout = QHBoxLayout(projectDescriptionWidget)
-        horizontalLayout.setSpacing(10)
-        horizontalLayout.setObjectName(u"horizontalLayout")
-        horizontalLayout.setContentsMargins(10, 0, 10, 0)
+        verticalLayout = QVBoxLayout(projectDescriptionWidget)
+        verticalLayout.setSpacing(10)
+        verticalLayout.setObjectName(u"verticalLayout")
+        verticalLayout.setContentsMargins(10, 0, 10, 0)
 
         self.labelProjectTitle = QLabel(projectDescriptionWidget)
         self.labelProjectTitle.setObjectName(u"labelProjectTitle")
@@ -85,7 +85,21 @@ class Ui_ProjectWidget(object):
         self.labelProjectTitle.setSizePolicy(sizePolicy2)
         font = QFont()
         self.labelProjectTitle.setFont(font)
-        horizontalLayout.addWidget(self.labelProjectTitle, 0, Qt.AlignLeft|Qt.AlignVCenter)
+        verticalLayout.addWidget(self.labelProjectTitle, 0, Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.labelWidget = QWidget(projectDescriptionWidget)
+        horizontalLayout = QHBoxLayout(self.labelWidget)
+        horizontalLayout.setSpacing(0)
+        horizontalLayout.setObjectName(u"horizontalLayout")
+        horizontalLayout.setContentsMargins(0, 0, 0, 0)
+
+        self.labelProjectOpenTasksText = QLabel(projectDescriptionWidget)
+        self.labelProjectOpenTasksText.setObjectName(u"labelProjectOpenTasksText")
+        font1 = QFont()
+        font1.setPointSize(9)
+        self.labelProjectOpenTasksText.setFont(font1)
+        self.labelProjectOpenTasksText.setStyleSheet(u"")
+        horizontalLayout.addWidget(self.labelProjectOpenTasksText, 0, Qt.AlignLeft)
 
         self.labelProjectOpenTasks = QLabel(projectDescriptionWidget)
         self.labelProjectOpenTasks.setObjectName(u"labelProjectOpenTasks")
@@ -93,22 +107,39 @@ class Ui_ProjectWidget(object):
         font1.setPointSize(9)
         self.labelProjectOpenTasks.setFont(font1)
         self.labelProjectOpenTasks.setStyleSheet(u"")
-
         horizontalLayout.addWidget(self.labelProjectOpenTasks, 0, Qt.AlignLeft)
+
+
+        self.labelProjectChangedText = QLabel(projectDescriptionWidget)
+        self.labelProjectChangedText.setObjectName(u"labelProjectChangedText")
+        self.labelProjectChangedText.setFont(font1)
+        self.labelProjectChangedText.setStyleSheet(u"")
+        horizontalLayout.addWidget(self.labelProjectChangedText, 0, Qt.AlignLeft)
 
         self.labelProjectChanged = QLabel(projectDescriptionWidget)
         self.labelProjectChanged.setObjectName(u"labelProjectChanged")
         self.labelProjectChanged.setFont(font1)
         self.labelProjectChanged.setStyleSheet(u"")
-
         horizontalLayout.addWidget(self.labelProjectChanged, 0, Qt.AlignLeft)
+
+        
+        self.labelProjectCreatedText = QLabel(projectDescriptionWidget)
+        self.labelProjectCreatedText.setObjectName(u"labelProjectCreatedText")
+        self.labelProjectCreatedText.setFont(font1)
+        self.labelProjectCreatedText.setStyleSheet(u"")
+        horizontalLayout.addWidget(self.labelProjectCreatedText, 0, Qt.AlignLeft)
 
         self.labelProjectCreated = QLabel(projectDescriptionWidget)
         self.labelProjectCreated.setObjectName(u"labelProjectCreated")
         self.labelProjectCreated.setFont(font1)
         self.labelProjectCreated.setStyleSheet(u"")
-
         horizontalLayout.addWidget(self.labelProjectCreated, 0, Qt.AlignLeft)
+
+        #set spacing between elements for horizontal layout
+        horizontalLayout.addItem(QSpacerItem(200000, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+
+        verticalLayout.addWidget(self.labelWidget, 0, Qt.AlignLeft|Qt.AlignTop)
+        verticalLayout.setStretch(0, 1)
 
         return projectDescriptionWidget
     
@@ -157,9 +188,16 @@ class Ui_ProjectWidget(object):
     def set_text_of_buttons_and_labels(self, ProjectWidget):
         ProjectWidget.setWindowTitle(QCoreApplication.translate("ProjectWidget", u"Form", None))
         self.labelProjectTitle.setText(QCoreApplication.translate("ProjectWidget", u"Title", None))
+
+        self.labelProjectOpenTasksText.setText(QCoreApplication.translate("ProjectWidget", u"Open Tasks: ", None))
         self.labelProjectOpenTasks.setText(QCoreApplication.translate("ProjectWidget", u"Open Tasks", None))
+
+        self.labelProjectChangedText.setText(QCoreApplication.translate("ProjectWidget", u"Last changed: ", None))
         self.labelProjectChanged.setText(QCoreApplication.translate("ProjectWidget", u"Changed Date", None))
+
+        self.labelProjectCreatedText.setText(QCoreApplication.translate("ProjectWidget", u"Created: ", None))
         self.labelProjectCreated.setText(QCoreApplication.translate("ProjectWidget", u"Created Date", None))
+
         self.labelDelProject.setText(QCoreApplication.translate("ProjectWidget", u"Delete this project?", None))
         self.pushButton_YesDelProject.setText(QCoreApplication.translate("ProjectWidget", u"Yes", None))
         self.pushButton_NoDelProject.setText(QCoreApplication.translate("ProjectWidget", u"No", None))

@@ -43,10 +43,10 @@ class ProjectWidget(CustomBaseWidget):
         super().mouseDoubleClickEvent(event)
 
     def setup_widget(self):
-        self.ui.labelProjectTitle.setText(f" {self.title}")
-        self.ui.labelProjectOpenTasks.setText(f"{self.open_tasks_count}")
-        self.ui.labelProjectCreated.setText(self.created_string)
-        self.ui.labelProjectChanged.setText(self.last_changed_string)
+        self.ui.labelProjectTitle.setText(f"{self.title}")
+        self.ui.labelProjectOpenTasks.setText(f"{self.open_tasks_count}" + "    ")
+        self.ui.labelProjectCreated.setText(self.created_string + "    ")
+        self.ui.labelProjectChanged.setText(self.last_changed_string + "    ")
         self.ui.stackedWidget.setCurrentIndex(0)
 
     def setup_connections(self):
@@ -84,18 +84,33 @@ class ProjectWidget(CustomBaseWidget):
             "color: #000000;\n "
         )
 
+
         self.ui.labelDelProject.setStyleSheet(
-            "color: #000000;\n "
+            "color: #000000;\n font-weight: bold;"
         )
+
+
         self.ui.labelProjectOpenTasks.setStyleSheet(
-            "color: #000000;\n "
+            "color: #000000;\n font-weight: bold;"
         )
         self.ui.labelProjectCreated.setStyleSheet(
-            "color: #000000;\n "
+            "color: #000000;\n font-weight: bold;"
         )
         self.ui.labelProjectChanged.setStyleSheet(
+            "color: #000000;\n font-weight: bold;"
+        )
+        
+
+        self.ui.labelProjectOpenTasksText.setStyleSheet(
             "color: #000000;\n "
         )
+        self.ui.labelProjectCreatedText.setStyleSheet(
+            "color: #000000;\n "
+        )
+        self.ui.labelProjectChangedText.setStyleSheet(
+            "color: #000000;\n "
+        )
+
 
         self.ui.pushButtonEditProject.setStyleSheet(
             "QPushButton::hover{background-color: rgba(0, 0, 0, 0.25); "

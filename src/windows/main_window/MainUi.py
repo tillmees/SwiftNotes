@@ -41,9 +41,6 @@ class Ui_MainWindow(object):
         self.mainVerticalLayout.setObjectName(u"mainVerticalLayout")
         self.mainVerticalLayout.setContentsMargins(0, 0, 0, 0)
 
-        # self.title_bar = CustomTitleBar(MainWindow)
-        # self.mainVerticalLayout.addWidget(self.title_bar)
-
         self.centralwidget = QWidget(self.mainCentralwidget)
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setSpacing(0)

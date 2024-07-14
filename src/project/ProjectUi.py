@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
 class Ui_ProjectWidget(object):
     def setupUi(self, ProjectWidget):
         self.set_object_name(ProjectWidget)
-        # self.set_size_policy(ProjectWidget)
+        self.set_size_policy(ProjectWidget)
 
         # horizontal layout for the project widget
         self.projectWidgetMainLayout = QHBoxLayout(ProjectWidget)
@@ -17,6 +17,9 @@ class Ui_ProjectWidget(object):
         self.stackedWidget = self.configure_stacked_widget(ProjectWidget)
 
         self.labelProjectTitle = None
+        self.labelProjectOpenTasksText = None
+        self.labelProjectChangedText = None
+        self.labelProjectCreatedText = None
         self.labelProjectOpenTasks = None
         self.labelProjectChanged = None
         self.labelProjectCreated = None
@@ -49,14 +52,13 @@ class Ui_ProjectWidget(object):
             ProjectWidget.setObjectName(u"ProjectWidget")
 
     def set_size_policy(self, ProjectWidget):
-        ProjectWidget.resize(687, 60)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(ProjectWidget.sizePolicy().hasHeightForWidth())
         ProjectWidget.setSizePolicy(sizePolicy)
-        ProjectWidget.setMinimumSize(QSize(0, 40))
-        ProjectWidget.setMaximumSize(QSize(16777215, 60))
+        ProjectWidget.setMinimumSize(QSize(0, 100))
+        ProjectWidget.setMaximumSize(QSize(16777215, 100))
 
     def configure_stacked_widget(self, ProjectWidget):
         stackedWidget = QStackedWidget(ProjectWidget)

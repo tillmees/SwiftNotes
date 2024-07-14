@@ -11,7 +11,6 @@ class Ui_TaskWidget(object):
         self.set_object_name(TaskWidget)
         self.set_size_policy(TaskWidget)
 
-        # horizontal layout for the project widget
         self.taskWidgetMainLayout = QHBoxLayout(TaskWidget)
         self.taskWidgetMainLayout.setObjectName(u"horizontalLayout")
         self.taskWidgetMainLayout.setContentsMargins(10, 10, 10, 10)
@@ -19,6 +18,7 @@ class Ui_TaskWidget(object):
         self.stackedWidget = self.configure_stacked_widget(TaskWidget)
 
         self.labelTaskTitle = None
+        self.plainTextEditDescription = None
         self.labelTaskCreated = None
         self.taskOverviewWidget = self.configure_task_overview_widget(TaskWidget)
         self.stackedWidget.addWidget(self.taskOverviewWidget)
@@ -37,8 +37,8 @@ class Ui_TaskWidget(object):
         self.verticalLayoutButtons.setObjectName(u"verticalLayoutButtons")
         self.verticalLayoutButtons.setSizeConstraint(QLayout.SetMinimumSize)
 
-        verticalSpacer = QSpacerItem(20, 40000, QSizePolicy.Minimum, QSizePolicy.Maximum)
-        self.verticalLayoutButtons.addItem(verticalSpacer)
+        self.verticalSpacer = QSpacerItem(20, 40000, QSizePolicy.Minimum, QSizePolicy.Maximum)
+        self.verticalLayoutButtons.addItem(self.verticalSpacer)
 
         self.pushButtonDeleteTask = self.configure_delete_button(TaskWidget)
         self.verticalLayoutButtons.addWidget(self.pushButtonDeleteTask, 0, Qt.AlignHCenter|Qt.AlignBottom)

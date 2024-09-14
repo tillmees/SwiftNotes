@@ -43,10 +43,10 @@ class RecentFilesSettingsHandler(SettingsHandler):
 
     def get_recent_file_name_by_index(self, index):
         if index >= len(self._settings_dict["recentFiles"]):
-            return "asdf"
+            return ""
         return self._settings_dict["recentFiles"][index]["name"]
     
     def get_recent_file_path_by_index(self, index):
         if index >= len(self._settings_dict["recentFiles"]):
-            return "asasddf"
+            return ""
         return self._settings_dict["recentFiles"][index]["path"]

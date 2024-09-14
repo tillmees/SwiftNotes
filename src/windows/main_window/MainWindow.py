@@ -6,6 +6,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeySequence, QAction
 
 from settings.WindowSettingsHandler import WindowSettingsHandler
+from settings.RecentFilesSettingsHandler import RecentFilesSettingsHandler
 from windows.main_window.MainUi import Ui_MainWindow
 from windows.edit_window.EditProjectWindow import EditProjectWindow
 from windows.add_window.AddProjectWindow import AddProjectWindow
@@ -39,6 +40,7 @@ class MainWindow(QMainWindow):
 
         self.style_handler = LayoutHandler(self.ui)
         self.window_handler = WindowSettingsHandler()
+        self.recent_files_handler = RecentFilesSettingsHandler()
 
         self.add_project_window = AddProjectWindow()
         self.add_task_window = AddTaskWindow()
@@ -264,8 +266,14 @@ class MainWindow(QMainWindow):
 
         self.ui.scrollAreaWidgetContentsProjectsList.layout().setAlignment(Qt.AlignTop)
 
+        self.update_recent_file_links()
         self.stacked_widget_state = StackedWidgetState.WELCOME.value
         self.project_sort_member = "title"
+
+    def update_recent_file_links(self):
+        for i in range(3):
+            eval(f"self.ui.labelRecentFile{i+1}").setText(self.recent_files_handler.get_recent_file_name_by_index(i))
+            eval(f"self.ui.labelRecentPath{i+1}").setText(self.recent_files_handler.get_recent_file_path_by_index(i))
 
     def setup_signals(self):
         self.ui.pushButtonIconNew.clicked.connect(self.new_action.trigger)
@@ -339,6 +347,8 @@ class MainWindow(QMainWindow):
             self.on_close_project_pushed()
             self.ui.comboBoxProjects.addItems(project_titles)
 
+        self.recent_files_handler.update_recent_files(open_file_name)
+
     def on_save_pushed(self):
         if self.file_name is None:
             self.on_save_as_pushed()
@@ -363,6 +373,8 @@ class MainWindow(QMainWindow):
             return
 
         self.file_name = save_as_file_name
+
+        self.recent_files_handler.update_recent_files(self.file_name)
 
         self.on_save_pushed()
 

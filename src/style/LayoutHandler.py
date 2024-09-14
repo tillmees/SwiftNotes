@@ -445,5 +445,32 @@ class LayoutHandler():
             #ProjectPage QScrollArea {{
                 border: none;
             }}
+
+            #clickableLabelRecentFile1 {{
+                font-size: 12px;
+                color: {style_dict["recent_files"]};
+            }}
+            #clickableLabelRecentFile2 {{
+                font-size: 12px;
+                color: {style_dict["recent_files"]};
+            }}
+            #clickableLabelRecentFile3 {{
+                font-size: 12px;
+                color: {style_dict["recent_files"]};
+            }}
+
+            #labelRecentPath1 {{
+                font-size: 12px;
+                color: {style_dict["label_view"]};
+            }}
+            #labelRecentPath2 {{
+                font-size: 12px;
+                color: {style_dict["label_view"]};
+            }}
+            #labelRecentPath3 {{
+                font-size: 12px;
+                color: {style_dict["label_view"]};
+            }}
+            
         """
         return stylesheet_content

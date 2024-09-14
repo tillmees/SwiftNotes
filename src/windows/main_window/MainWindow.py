@@ -6,6 +6,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeySequence, QAction
 
 from settings.WindowSettingsHandler import WindowSettingsHandler
+from settings.RecentFilesSettingsHandler import RecentFilesSettingsHandler
 from windows.main_window.MainUi import Ui_MainWindow
 from windows.edit_window.EditProjectWindow import EditProjectWindow
 from windows.add_window.AddProjectWindow import AddProjectWindow
@@ -39,6 +40,7 @@ class MainWindow(QMainWindow):
 
         self.style_handler = LayoutHandler(self.ui)
         self.window_handler = WindowSettingsHandler()
+        self.recent_files_handler = RecentFilesSettingsHandler()
 
         self.add_project_window = AddProjectWindow()
         self.add_task_window = AddTaskWindow()
@@ -264,8 +266,17 @@ class MainWindow(QMainWindow):
 
         self.ui.scrollAreaWidgetContentsProjectsList.layout().setAlignment(Qt.AlignTop)
 
+        self.update_recent_file_links()
         self.stacked_widget_state = StackedWidgetState.WELCOME.value
         self.project_sort_member = "title"
+
+    def update_recent_file_links(self):
+        for i in range(3):
+            eval(f"self.ui.clickableLabelRecentFile{i+1}").setText(self.recent_files_handler.get_recent_file_name_by_index(i))
+            path = self.recent_files_handler.get_recent_file_path_by_index(i)
+            path_truncated = f"{path[:15]} ... {path[-15:]}" if len(path) > 33 else path
+            eval(f"self.ui.labelRecentPath{i+1}").setText(path_truncated)
+            eval(f"self.ui.labelRecentPath{i+1}").setToolTip(path)
 
     def setup_signals(self):
         self.ui.pushButtonIconNew.clicked.connect(self.new_action.trigger)
@@ -304,6 +315,20 @@ class MainWindow(QMainWindow):
         self.ui.scrollAreaStuckTest.drop_signal.connect(self.task_gets_dropped)
         self.ui.scrollAreaDone.drop_signal.connect(self.task_gets_dropped)
 
+        ###
+        self.ui.clickableLabelRecentFile1.clicked.connect(self.on_recent_file_1_pushed)
+        self.ui.clickableLabelRecentFile2.clicked.connect(self.on_recent_file_2_pushed)
+        self.ui.clickableLabelRecentFile3.clicked.connect(self.on_recent_file_3_pushed) 
+
+    def on_recent_file_1_pushed(self):
+        self.open_existing_file(self.recent_files_handler.get_recent_file_path_by_index(0))
+
+    def on_recent_file_2_pushed(self):
+        self.open_existing_file(self.recent_files_handler.get_recent_file_path_by_index(1))
+
+    def on_recent_file_3_pushed(self):
+        self.open_existing_file(self.recent_files_handler.get_recent_file_path_by_index(2))
+
     def on_new_pushed(self):
         self.project_manager.reset_instance()
         self.project_manager = ProjectManager()
@@ -339,6 +364,8 @@ class MainWindow(QMainWindow):
             self.on_close_project_pushed()
             self.ui.comboBoxProjects.addItems(project_titles)
 
+        self.recent_files_handler.update_recent_files(open_file_name)
+
     def on_save_pushed(self):
         if self.file_name is None:
             self.on_save_as_pushed()
@@ -363,6 +390,8 @@ class MainWindow(QMainWindow):
             return
 
         self.file_name = save_as_file_name
+
+        self.recent_files_handler.update_recent_files(self.file_name)
 
         self.on_save_pushed()
 

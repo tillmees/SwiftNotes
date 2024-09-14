@@ -272,8 +272,11 @@ class MainWindow(QMainWindow):
 
     def update_recent_file_links(self):
         for i in range(3):
-            eval(f"self.ui.labelRecentFile{i+1}").setText(self.recent_files_handler.get_recent_file_name_by_index(i))
-            eval(f"self.ui.labelRecentPath{i+1}").setText(self.recent_files_handler.get_recent_file_path_by_index(i))
+            eval(f"self.ui.clickableLabelRecentFile{i+1}").setText(self.recent_files_handler.get_recent_file_name_by_index(i))
+            path = self.recent_files_handler.get_recent_file_path_by_index(i)
+            path_truncated = f"{path[:15]} ... {path[-15:]}" if len(path) > 33 else path
+            eval(f"self.ui.labelRecentPath{i+1}").setText(path_truncated)
+            eval(f"self.ui.labelRecentPath{i+1}").setToolTip(path)
 
     def setup_signals(self):
         self.ui.pushButtonIconNew.clicked.connect(self.new_action.trigger)
@@ -311,6 +314,20 @@ class MainWindow(QMainWindow):
         self.ui.scrollAreaInProgress.drop_signal.connect(self.task_gets_dropped)
         self.ui.scrollAreaStuckTest.drop_signal.connect(self.task_gets_dropped)
         self.ui.scrollAreaDone.drop_signal.connect(self.task_gets_dropped)
+
+        ###
+        self.ui.clickableLabelRecentFile1.clicked.connect(self.on_recent_file_1_pushed)
+        self.ui.clickableLabelRecentFile2.clicked.connect(self.on_recent_file_2_pushed)
+        self.ui.clickableLabelRecentFile3.clicked.connect(self.on_recent_file_3_pushed) 
+
+    def on_recent_file_1_pushed(self):
+        self.open_existing_file(self.recent_files_handler.get_recent_file_path_by_index(0))
+
+    def on_recent_file_2_pushed(self):
+        self.open_existing_file(self.recent_files_handler.get_recent_file_path_by_index(1))
+
+    def on_recent_file_3_pushed(self):
+        self.open_existing_file(self.recent_files_handler.get_recent_file_path_by_index(2))
 
     def on_new_pushed(self):
         self.project_manager.reset_instance()

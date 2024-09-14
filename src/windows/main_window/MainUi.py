@@ -23,6 +23,7 @@ import resources_rc
 
 from base.CustomScrollArea import CustomScrollArea, CustomScrollAreaWidget
 from base.CustomComboBox import CustomComboBox
+from base.CustomClickableLabel import CustomClickableLabel
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -342,8 +343,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QVBoxLayout(self.WelcomePage)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
 
-        self.verticalSpacer_6 = QSpacerItem(20, 150, QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self.verticalLayout_7.addItem(self.verticalSpacer_6)
+        self.verticalLayout_7.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         self.labelWelcome = QLabel(self.WelcomePage)
         self.labelWelcome.setObjectName(u"labelWelcome")
@@ -355,68 +355,96 @@ class Ui_MainWindow(object):
         self.labelWelcomeDrop.setAlignment(Qt.AlignCenter)
         self.verticalLayout_7.addWidget(self.labelWelcomeDrop)
 
-        self.verticalSpacer_10 = QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(self.verticalSpacer_10)
 
         ########################################################
 
-        self.RecentFiles = QWidget()
+        self.RecentFiles = QWidget(self.WelcomePage)
         self.RecentFiles.setObjectName(u"RecentFiles")
-        self.verticalLayout_RecentFiles = QVBoxLayout(self.RecentFiles)
-        self.verticalLayout_RecentFiles.setObjectName(u"verticalLayout_RecentFiles")
+        self.layout_RecentFiles = QHBoxLayout(self.RecentFiles)
+        self.layout_RecentFiles.setContentsMargins(0, 10, 0, 0)
+        self.layout_RecentFiles.setObjectName(u"layout_RecentFiles")
+        self.layout_RecentFiles.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        
+        ###
 
-        self.RecentFile1 = QWidget(self.RecentFiles)
+        self.widget_filenames = QWidget(self.RecentFiles)
+        self.layout_RecentFileNames = QVBoxLayout(self.widget_filenames)  
+        self.layout_RecentFileNames.setContentsMargins(0, 0, 0, 0)
+        
+        self.RecentFile1 = QWidget(self.widget_filenames)
         self.horizontalLayout_RecentFile1 = QHBoxLayout(self.RecentFile1)
-        ###
-        self.labelRecentFile1 = QLabel(self.RecentFiles)
-        self.labelRecentFile1.setObjectName(u"labelRecentFile1")
-        self.labelRecentFile1.setAlignment(Qt.AlignRight)
-        self.horizontalLayout_RecentFile1.addWidget(self.labelRecentFile1)
-        ###
-        self.labelRecentPath1 = QLabel(self.RecentFiles)
-        self.labelRecentPath1.setObjectName(u"labelRecentPath1")
-        self.labelRecentPath1.setAlignment(Qt.AlignLeft)
-        self.horizontalLayout_RecentFile1.addWidget(self.labelRecentPath1)
-        ###
-        self.verticalLayout_RecentFiles.addWidget(self.RecentFile1)
-        ############
-        self.RecentFile2 = QWidget(self.RecentFiles)
+        self.horizontalLayout_RecentFile1.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_RecentFile1.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        self.clickableLabelRecentFile1 = CustomClickableLabel(self.RecentFile1)
+        self.clickableLabelRecentFile1.setObjectName(u"clickableLabelRecentFile1")
+        self.horizontalLayout_RecentFile1.addWidget(self.clickableLabelRecentFile1)
+        self.layout_RecentFileNames.addWidget(self.RecentFile1)
+
+        self.RecentFile2 = QWidget(self.widget_filenames)
         self.horizontalLayout_RecentFile2 = QHBoxLayout(self.RecentFile2)
-        ###
-        self.labelRecentFile2 = QLabel(self.RecentFiles)
-        self.labelRecentFile2.setObjectName(u"labelRecentFile2")
-        self.labelRecentFile2.setAlignment(Qt.AlignRight)
-        self.horizontalLayout_RecentFile2.addWidget(self.labelRecentFile2)
-        ###
-        self.labelRecentPath2 = QLabel(self.RecentFiles)
-        self.labelRecentPath2.setObjectName(u"labelRecentPath2")
-        self.labelRecentPath2.setAlignment(Qt.AlignLeft)
-        self.horizontalLayout_RecentFile2.addWidget(self.labelRecentPath2)
-        ###
-        self.verticalLayout_RecentFiles.addWidget(self.RecentFile2)
-        ############
-        self.RecentFile3 = QWidget(self.RecentFiles)
+        self.horizontalLayout_RecentFile2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_RecentFile2.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        self.clickableLabelRecentFile2 = CustomClickableLabel(self.RecentFile2)
+        self.clickableLabelRecentFile2.setObjectName(u"clickableLabelRecentFile2")
+        self.horizontalLayout_RecentFile2.addWidget(self.clickableLabelRecentFile2)
+        self.layout_RecentFileNames.addWidget(self.RecentFile2)
+
+        self.RecentFile3 = QWidget(self.widget_filenames)
         self.horizontalLayout_RecentFile3 = QHBoxLayout(self.RecentFile3)
+        self.horizontalLayout_RecentFile3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_RecentFile3.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        self.clickableLabelRecentFile3 = CustomClickableLabel(self.RecentFile3)
+        self.clickableLabelRecentFile3.setObjectName(u"clickableLabelRecentFile3")
+        self.horizontalLayout_RecentFile3.addWidget(self.clickableLabelRecentFile3)
+        self.layout_RecentFileNames.addWidget(self.RecentFile3)
+
+        self.layout_RecentFileNames.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
         ###
-        self.labelRecentFile3 = QLabel(self.RecentFiles)
-        self.labelRecentFile3.setObjectName(u"labelRecentFile3")
-        self.labelRecentFile3.setAlignment(Qt.AlignRight)
-        self.horizontalLayout_RecentFile3.addWidget(self.labelRecentFile3)
-        ###
-        self.labelRecentPath3 = QLabel(self.RecentFiles)
+
+        self.widget_filepaths = QWidget(self.RecentFiles)
+        self.layout_RecentFilePaths = QVBoxLayout(self.widget_filepaths)
+        self.layout_RecentFilePaths.setContentsMargins(0, 0, 0, 0)
+        
+        self.RecentFilePath1 = QWidget(self.widget_filepaths)
+        self.horizontalLayout_RecentFilePath1 = QHBoxLayout(self.RecentFilePath1)
+        self.horizontalLayout_RecentFilePath1.setContentsMargins(0, 0, 0, 0)
+        self.labelRecentPath1 = QLabel(self.RecentFilePath1)
+        self.labelRecentPath1.setObjectName(u"labelRecentPath1")
+        self.horizontalLayout_RecentFilePath1.addWidget(self.labelRecentPath1)
+        self.horizontalLayout_RecentFilePath1.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        self.layout_RecentFilePaths.addWidget(self.RecentFilePath1)
+
+        self.RecentFilePath2 = QWidget(self.widget_filepaths)
+        self.horizontalLayout_RecentFilePath2 = QHBoxLayout(self.RecentFilePath2)
+        self.horizontalLayout_RecentFilePath2.setContentsMargins(0, 0, 0, 0)
+        self.labelRecentPath2 = QLabel(self.RecentFilePath2)
+        self.labelRecentPath2.setObjectName(u"labelRecentPath2")
+        self.horizontalLayout_RecentFilePath2.addWidget(self.labelRecentPath2)
+        self.horizontalLayout_RecentFilePath2.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        self.layout_RecentFilePaths.addWidget(self.RecentFilePath2)
+
+        self.RecentFilePath3 = QWidget(self.widget_filepaths)
+        self.horizontalLayout_RecentFilePath3 = QHBoxLayout(self.RecentFilePath3)
+        self.horizontalLayout_RecentFilePath3.setContentsMargins(0, 0, 0, 0)
+        self.labelRecentPath3 = QLabel(self.RecentFilePath3)
         self.labelRecentPath3.setObjectName(u"labelRecentPath3")
-        self.labelRecentPath3.setAlignment(Qt.AlignLeft)
-        self.horizontalLayout_RecentFile3.addWidget(self.labelRecentPath3)
-        ###
-        self.verticalLayout_RecentFiles.addWidget(self.RecentFile3)
-        ############
+        self.horizontalLayout_RecentFilePath3.addWidget(self.labelRecentPath3)
+        self.horizontalLayout_RecentFilePath3.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        self.layout_RecentFilePaths.addWidget(self.RecentFilePath3)
+
+        self.layout_RecentFilePaths.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+
+        self.layout_RecentFiles.addWidget(self.widget_filenames)
+        self.layout_RecentFiles.addWidget(self.widget_filepaths)
+        self.layout_RecentFiles.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
 
         self.verticalLayout_7.addWidget(self.RecentFiles)
 
         ########################################################
 
-        self.verticalSpacer_5 = QSpacerItem(20, 206, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.verticalLayout_7.addItem(self.verticalSpacer_5)
+        self.verticalLayout_7.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         self.TaskWindowstackedWidget.addWidget(self.WelcomePage)
         self.TaskPage = QWidget()
@@ -719,13 +747,13 @@ class Ui_MainWindow(object):
         self.label.setText(QCoreApplication.translate("MainWindow", u"Projects", None))
         self.labelSort.setText(QCoreApplication.translate("MainWindow", u"sorted by: Title", None))
 
-        self.labelRecentFile1.setText(QCoreApplication.translate("MainWindow", u"RecentFile1", None))
+        self.clickableLabelRecentFile1.setText("RecentFile1")
         self.labelRecentPath1.setText(QCoreApplication.translate("MainWindow", u"RecentPath1", None))
 
-        self.labelRecentFile2.setText(QCoreApplication.translate("MainWindow", u"RecentFile2", None))
+        self.clickableLabelRecentFile2.setText("RecentFile2")
         self.labelRecentPath2.setText(QCoreApplication.translate("MainWindow", u"RecentPath2", None))
 
-        self.labelRecentFile3.setText(QCoreApplication.translate("MainWindow", u"RecentFile3", None))
+        self.clickableLabelRecentFile3.setText("RecentFile3")
         self.labelRecentPath3.setText(QCoreApplication.translate("MainWindow", u"RecentPath3", None))
         
 

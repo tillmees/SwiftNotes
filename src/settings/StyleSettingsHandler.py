@@ -51,7 +51,8 @@ class StyleSettingsHandler(SettingsHandler):
                 "label_dark_weight":       "regular",
                 "label_welcome":           "rgba(200, 200, 200, 1.0)",
                 "button_titlebar_hover":   "rgba(  0,   0,   0, 0.1)",
-                "button_titlebar_pressed": "rgba(  0,   0,   0, 0.2)"
+                "button_titlebar_pressed": "rgba(  0,   0,   0, 0.2)",
+                "recent_files":            "rgba(  0, 122, 204, 1.0)"
             },
             "dark": {
                 "main_background":         "rgba( 30,  31,  34, 1.0)",
@@ -78,7 +79,8 @@ class StyleSettingsHandler(SettingsHandler):
                 "label_dark_weight":       "bold",
                 "label_welcome":           "rgba(200, 200, 200, 1.0)",
                 "button_titlebar_hover":   "rgba(255, 255, 255, 0.1)",
-                "button_titlebar_pressed": "rgba(255, 255, 255, 0.2)"
+                "button_titlebar_pressed": "rgba(255, 255, 255, 0.2)",
+                "recent_files":            "rgba(  0, 122, 204, 1.0)"
             },
             "colors": {
                 "color_0": "#EE9B01",

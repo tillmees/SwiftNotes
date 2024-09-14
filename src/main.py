@@ -6,6 +6,7 @@ from windows.main_window.MainWindow import MainWindow
 
 from settings.WindowSettingsHandler import WindowSettingsHandler
 from settings.StyleSettingsHandler import StyleSettingsHandler
+from settings.RecentFilesSettingsHandler import RecentFilesSettingsHandler
 
 
 VERSION_MAJOR = 0
@@ -18,6 +19,7 @@ def main():
     # create singleton objects
     WindowSettingsHandler()
     StyleSettingsHandler()
+    RecentFilesSettingsHandler()
 
     filename = None
     if len(sys.argv) > 1:

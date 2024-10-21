@@ -1,3 +1,4 @@
+import os
 import sys
 
 from PySide6.QtWidgets import QApplication
@@ -11,21 +12,27 @@ from settings.RecentFilesSettingsHandler import RecentFilesSettingsHandler
 
 VERSION_MAJOR = 0
 VERSION_MINOR = 1
-VERSION_PATCH = 1
+VERSION_PATCH = 2
 
 
 def main():
 
-    # create singleton objects
-    WindowSettingsHandler()
-    StyleSettingsHandler()
-    RecentFilesSettingsHandler()
+    # change the working directory to the directory of the executable
+    # this ensures that the settings files will be created in the
+    # correct location
+    os.chdir(os.path.dirname(os.path.abspath(sys.executable)))
 
     filename = None
     if len(sys.argv) > 1:
         filename = sys.argv[1]
         if not filename.endswith(".todo"):
-            return  # dont open the app on a non .todo file
+            # dont open the app on a non .todo file
+            return
+    
+    # create singleton objects
+    WindowSettingsHandler()
+    StyleSettingsHandler()
+    RecentFilesSettingsHandler()
 
     app = QApplication(sys.argv)
     version = f"{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH}"
